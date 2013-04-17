@@ -84,6 +84,11 @@
             <artifactId>logback-classic</artifactId>
             <version>1.0.6</version>
         </dependency>
+        <dependency>
+            <groupId>dk.statsbiblioteket.doms.central</groupId>
+            <artifactId>centralWebservice-interface</artifactId>
+            <version>0.0.23</version>
+        </dependency>
     </dependencies>
 
     <build>

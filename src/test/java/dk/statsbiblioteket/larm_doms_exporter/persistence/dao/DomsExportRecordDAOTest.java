@@ -2,9 +2,6 @@ package dk.statsbiblioteket.larm_doms_exporter.persistence.dao;
 
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
-import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.DomsExportRecordDAO;
-import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.HibernateUtil;
-import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.HibernateUtilIF;
 import org.junit.Test;
 
 import java.util.Date;
@@ -28,6 +25,27 @@ public class DomsExportRecordDAOTest {
         dao.create(record);
         DomsExportRecord record1 = dao.read("uuid:foobar");
         assertEquals(record.getState(), record1.getState());
+    }
+
+    @Test
+    public void testGetLatestTimestamp() {
+       HibernateUtilIF hibernateUtilIF = HibernateUtil.getInstance("src/test/config/hibernate.in-memory_unittest.cfg.xml");
+        DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtilIF);
+        DomsExportRecord record1 = new DomsExportRecord();
+        record1.setID("uuid:foobar");
+        Date date1 = new Date(1000L);
+        record1.setLastDomsTimestamp(date1);
+        record1.setLastExportTimestamp(date1);
+        record1.setState(ExportStateEnum.COMPLETE);
+        dao.create(record1);
+        DomsExportRecord record2 = new DomsExportRecord();
+        record2.setID("uuid:foobarfoo");
+        Date date2 = new Date(1500L);
+        record2.setLastDomsTimestamp(date2);
+        record2.setLastExportTimestamp(date2);
+        record2.setState(ExportStateEnum.COMPLETE);
+        dao.create(record2);
+        assertEquals(1500L, (long) dao.getMostRecentExportedTimestamp());
     }
 
 }

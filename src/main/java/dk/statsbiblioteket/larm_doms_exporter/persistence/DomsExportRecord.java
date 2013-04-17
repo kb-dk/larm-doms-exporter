@@ -5,7 +5,6 @@ import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.Identifiable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import java.util.Date;
 
 /**
@@ -15,7 +14,7 @@ import java.util.Date;
 public class DomsExportRecord extends Identifiable<String> {
 
     Date lastDomsTimestamp;
-    Date lastTranscodingTimestamp;
+    Date lastExportTimestamp;
     ExportStateEnum state;
 
     @Enumerated(EnumType.STRING)
@@ -27,12 +26,12 @@ public class DomsExportRecord extends Identifiable<String> {
         this.state = state;
     }
 
-    public Date getLastTranscodingTimestamp() {
-        return lastTranscodingTimestamp;
+    public Date getLastExportTimestamp() {
+        return lastExportTimestamp;
     }
 
-    public void setLastTranscodingTimestamp(Date lastTranscodingTimestamp) {
-        this.lastTranscodingTimestamp = lastTranscodingTimestamp;
+    public void setLastExportTimestamp(Date lastExportTimestamp) {
+        this.lastExportTimestamp = lastExportTimestamp;
     }
 
     public Date getLastDomsTimestamp() {

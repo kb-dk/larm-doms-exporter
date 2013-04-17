@@ -1,5 +1,7 @@
 package dk.statsbiblioteket.larm_doms_exporter.cli;
 
+import dk.statsbiblioteket.doms.central.CentralWebservice;
+
 import java.io.File;
 
 /**
@@ -17,9 +19,17 @@ public class ExportContext {
     private Long seedTimestamp;
     private String domsViewAngle;
     private File outputDirectory;
-
+    private CentralWebservice domsCentralWebservice;
 
     /* etc */
+
+    public CentralWebservice getDomsCentralWebservice() {
+        return domsCentralWebservice;
+    }
+
+    public void setDomsCentralWebservice(CentralWebservice domsCentralWebservice) {
+        this.domsCentralWebservice = domsCentralWebservice;
+    }
 
     public File getOutputDirectory() {
         return outputDirectory;
