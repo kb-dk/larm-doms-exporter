@@ -38,10 +38,12 @@ public class ProducerApplication {
         if (startingTimestamp == null) {
             initialPull = true;
             startingTimestamp = 0L;
+            logger.info("This is the initial pull. DOMS objects unmodified since ? are assumed to have " +
+                    "already been exported.", new Date(context.getSeedTimestamp()));
         }
         CentralWebservice doms = CentralWebserviceFactory.getServiceInstance(context);
         List<RecordDescription> recordDescriptions = requestInBatches(doms, context, startingTimestamp);
-        logger.info("Retrieved " + recordDescriptions.size() + " from DOMS.");
+        logger.info("Retrieved " + recordDescriptions.size() + " records from DOMS.");
         for (RecordDescription domsRecord: recordDescriptions) {
             DomsExportRecord databaseRecord = dao.readOrCreate(domsRecord.getPid());
             if (databaseRecord.getLastDomsTimestamp() != null) {
@@ -49,9 +51,9 @@ public class ProducerApplication {
                 databaseRecord.setState(ExportStateEnum.PENDING);
                 dao.update(databaseRecord);
             } else {
-                if (initialPull && domsRecord.getDate() < startingTimestamp) {
-                    databaseRecord.setLastDomsTimestamp(new Date(startingTimestamp));
-                    databaseRecord.setLastExportTimestamp(new Date(startingTimestamp));
+                if (initialPull && domsRecord.getDate() < context.getSeedTimestamp()) {
+                    databaseRecord.setLastDomsTimestamp(new Date(context.getSeedTimestamp()));
+                    databaseRecord.setLastExportTimestamp(new Date(context.getSeedTimestamp()));
                     databaseRecord.setState(ExportStateEnum.COMPLETE);
                     dao.update(databaseRecord);
                 } else {
