@@ -26,4 +26,14 @@ public class DomsExportRecordDAO extends GenericHibernateDAO<DomsExportRecord, S
            return records.get(0).getLastDomsTimestamp().getTime();
        }
     }
+
+    /**
+     * Gets a list of all pending exports ordered by DOMS timestamp. Oldest first.
+     * @return the List of pending exports.
+     */
+    public List<DomsExportRecord> getPendingExports() {
+       return getSession().createQuery("from DomsExportRecord where state = ? ORDER BY lastDomsTimestamp ASC ")
+               .setParameter(0, ExportStateEnum.PENDING).list();
+    }
+
 }
