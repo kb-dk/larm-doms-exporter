@@ -10,9 +10,12 @@
         <fileSet>
             <directory>${basedir}/src/main/config</directory>
             <outputDirectory>config</outputDirectory>
+            <excludes>
+                <exclude>Readme</exclude>
+            </excludes>
             <!--<includes>
-                <include>bta.behaviour.properties</include>
-                <include>bta.infrastructure.properties</include>
+                <include>lde.behaviour.properties</include>
+                <include>lde.infrastructure.properties</include>
                 <include>dbschema.sql</include>
                 <include>hibernate.cfg.xml</include>
                 <include>logback.xml</include>
@@ -36,8 +39,7 @@
         <fileSet>
             <directory>src/main/scripts/</directory>
             <excludes>
-                <!--<exclude>transcodeReklame.sh</exclude>
-                <exclude>gnuparallel</exclude> -->
+                <exclude>Readme</exclude>
             </excludes>
             <outputDirectory>bin</outputDirectory>
             <fileMode>0755</fileMode>
