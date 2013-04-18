@@ -4,6 +4,12 @@ import dk.statsbiblioteket.larm_doms_exporter.cli.ExportContext;
 import dk.statsbiblioteket.larm_doms_exporter.cli.ExportOptionsParser;
 import dk.statsbiblioteket.larm_doms_exporter.cli.OptionParseException;
 import dk.statsbiblioteket.larm_doms_exporter.cli.UsageException;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.BtaStatusFetcherDispatcherProcessor;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.DoExportProcessor;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.HasShardAnalysisCheckerProcessor;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.IsRadioProgramCheckerProcessort;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.MarkAsCompleteProcessor;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.SignificantChangeCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.DomsExportRecordDAO;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.HibernateUtil;
@@ -28,12 +34,30 @@ public class ConsumerApplication {
         DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtil);
         List<DomsExportRecord> queue = dao.getPendingExports();
         for (DomsExportRecord record: queue) {
-               processRecord(record);
+            try {
+                processRecord(record, context);
+            } catch (Exception e) {  //Fault Barrier
+                logger.warn("Export processing failed for " + record.getID(), e);
+            }
         }
     }
 
-    private static void processRecord(DomsExportRecord record) {
-
+    private static void processRecord(DomsExportRecord record, ExportContext context) throws ProcessorException {
+        ProcessorChainElement radioChecker = new IsRadioProgramCheckerProcessort();
+        ProcessorChainElement hasShardChecker = new HasShardAnalysisCheckerProcessor();
+        ProcessorChainElement btaStatus = new BtaStatusFetcherDispatcherProcessor();
+        ProcessorChainElement significanceChecker = new SignificantChangeCheckerProcessor();
+        ProcessorChainElement doExporter = new DoExportProcessor();
+        ProcessorChainElement markAsCompleter = new MarkAsCompleteProcessor();
+        ProcessorChainElement completeChain = ProcessorChainElement.makeChain(
+                radioChecker,
+                hasShardChecker,
+                btaStatus,
+                significanceChecker,
+                doExporter,
+                markAsCompleter
+        );
+        completeChain.processIteratively(record, context, new ExportRequestState() );
     }
 
 }

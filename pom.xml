@@ -11,6 +11,18 @@
     <groupId>larm-doms-exporter</groupId>
     <artifactId>larm-doms-exporter</artifactId>
     <version>1.0</version>
+    <repositories>
+        <repository>
+          <id>sbprojects-nexus</id>
+          <url>https://sbprojects.statsbiblioteket.dk/nexus/content/groups/public</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
     <dependencies>
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -88,6 +100,11 @@
             <groupId>dk.statsbiblioteket.doms.central</groupId>
             <artifactId>centralWebservice-interface</artifactId>
             <version>0.0.23</version>
+        </dependency>
+        <dependency>
+          <groupId>dk.statsbiblioteket.mediestream.broadcast-transcoder-application</groupId>
+          <artifactId>broadcast-transcoder-persistence</artifactId>
+          <version>0.3.0</version>
         </dependency>
     </dependencies>
 
