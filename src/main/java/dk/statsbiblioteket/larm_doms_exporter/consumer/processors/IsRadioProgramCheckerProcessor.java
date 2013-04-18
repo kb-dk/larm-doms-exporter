@@ -7,7 +7,6 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorChainElement;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
-import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.DomsExportRecordDAO;
 import dk.statsbiblioteket.larm_doms_exporter.util.CentralWebserviceFactory;
 import dk.statsbiblioteket.util.xml.DOM;
 import dk.statsbiblioteket.util.xml.XPathSelector;
@@ -18,9 +17,9 @@ import org.w3c.dom.Document;
 /**
  *
  */
-public class IsRadioProgramCheckerProcessort extends ProcessorChainElement {
+public class IsRadioProgramCheckerProcessor extends ProcessorChainElement {
 
-    private static Logger logger = LoggerFactory.getLogger(IsRadioProgramCheckerProcessort.class);
+    private static Logger logger = LoggerFactory.getLogger(IsRadioProgramCheckerProcessor.class);
 
     @Override
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {

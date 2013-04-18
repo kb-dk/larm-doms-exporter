@@ -7,7 +7,7 @@ import dk.statsbiblioteket.larm_doms_exporter.cli.UsageException;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.BtaStatusFetcherDispatcherProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.DoExportProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.HasShardAnalysisCheckerProcessor;
-import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.IsRadioProgramCheckerProcessort;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.IsRadioProgramCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.MarkAsCompleteProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.SignificantChangeCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
@@ -44,7 +44,7 @@ public class ConsumerApplication {
     }
 
     private static void processRecord(DomsExportRecord record, ExportContext context) throws ProcessorException {
-        ProcessorChainElement radioChecker = new IsRadioProgramCheckerProcessort();
+        ProcessorChainElement radioChecker = new IsRadioProgramCheckerProcessor();
         ProcessorChainElement hasShardChecker = new HasShardAnalysisCheckerProcessor();
         ProcessorChainElement btaStatus = new BtaStatusFetcherDispatcherProcessor();
         ProcessorChainElement significanceChecker = new SignificantChangeCheckerProcessor();
