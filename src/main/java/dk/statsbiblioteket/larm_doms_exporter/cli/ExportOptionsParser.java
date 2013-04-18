@@ -14,7 +14,8 @@ public class ExportOptionsParser extends AbstractOptionsParser {
 
     protected static final Option BEHAVIOURAL_CONFIG_FILE_OPTION = new Option("behavioural_configfile", true, "The behavioural config file");
     protected static final Option INFRASTRUCTURE_CONFIG_FILE_OPTION = new Option("infrastructure_configfile", true, "The infrastructure config file");
-    protected static final Option HIBERNATE_CFG_OPTION = new Option("hibernate_configfile", true, "The hibernate config file");
+    protected static final Option LDE_HIBERNATE_CFG_OPTION = new Option("lde_hibernate_configfile", true, "The hibernate config file");
+    protected static final Option BTA_HIBERNATE_CFG_OPTION = new Option("bta_hibernate_configfile", true, "The hibernate config file");
 
     private ExportContext context;
 
@@ -23,7 +24,8 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         context = new ExportContext();
         getOptions().addOption(BEHAVIOURAL_CONFIG_FILE_OPTION);
         getOptions().addOption(INFRASTRUCTURE_CONFIG_FILE_OPTION);
-        getOptions().addOption(HIBERNATE_CFG_OPTION);
+        getOptions().addOption(LDE_HIBERNATE_CFG_OPTION);
+        getOptions().addOption(BTA_HIBERNATE_CFG_OPTION);
     }
 
 
@@ -39,7 +41,8 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         parseUsageOption(cmd);
         parseInfrastructureConfigFileOption(cmd);
         parseBehaviouralConfigFileOption(cmd);
-        parseHibernateConfigFileOption(cmd);
+        parseLDEHibernateConfigFileOption(cmd);
+        parseBTAHibernateConfigFileOption(cmd);
         try {
             readBehaviouralProperties(context);
         } catch (IOException e) {
@@ -95,21 +98,30 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         context.setInfrastructreConfigFile(configFile);
     }
 
-    protected void parseHibernateConfigFileOption(CommandLine cmd) throws OptionParseException {
-        String configFileString = cmd.getOptionValue(HIBERNATE_CFG_OPTION.getOpt());
+    protected void parseLDEHibernateConfigFileOption(CommandLine cmd) throws OptionParseException {
+        String configFileString = cmd.getOptionValue(LDE_HIBERNATE_CFG_OPTION.getOpt());
         if (configFileString == null) {
-            parseError(HIBERNATE_CFG_OPTION.toString());
-            throw new OptionParseException(HIBERNATE_CFG_OPTION.toString());
+            parseError(LDE_HIBERNATE_CFG_OPTION.toString());
+            throw new OptionParseException(LDE_HIBERNATE_CFG_OPTION.toString());
         }
         File configFile = new File(configFileString);
         if (!configFile.exists() || configFile.isDirectory()) {
             throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
         }
-        context.setHibernateConfigurationFile(configFile);
-
-
-
+        context.setLdeHibernateConfigurationFile(configFile);
     }
 
+    protected void parseBTAHibernateConfigFileOption(CommandLine cmd) throws OptionParseException {
+           String configFileString = cmd.getOptionValue(BTA_HIBERNATE_CFG_OPTION.getOpt());
+           if (configFileString == null) {
+               parseError(BTA_HIBERNATE_CFG_OPTION.toString());
+               throw new OptionParseException(BTA_HIBERNATE_CFG_OPTION.toString());
+           }
+           File configFile = new File(configFileString);
+           if (!configFile.exists() || configFile.isDirectory()) {
+               throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
+           }
+           context.setBtaHibernateConfigurationFile(configFile);
+       }
 
 }

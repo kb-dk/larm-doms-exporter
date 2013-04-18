@@ -30,8 +30,9 @@ public class ConsumerApplication {
         ExportOptionsParser optionsParser = new ExportOptionsParser();
         ExportContext context = optionsParser.parseOptions(args);
         logger.info("Context initialised: '" + context.toString() + "'");
-        HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getHibernateConfigurationFile().getAbsolutePath());
+        HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
         DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtil);
+        context.setDomsExportRecordDAO(dao);
         List<DomsExportRecord> queue = dao.getPendingExports();
         for (DomsExportRecord record: queue) {
             try {

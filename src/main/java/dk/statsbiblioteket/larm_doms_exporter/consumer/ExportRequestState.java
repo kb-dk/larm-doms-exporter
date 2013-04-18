@@ -8,4 +8,16 @@ package dk.statsbiblioteket.larm_doms_exporter.consumer;
  * To change this template use File | Settings | File Templates.
  */
 public class ExportRequestState {
+
+    private String pbcoreString;
+
+    /* ---------------------------- */
+
+    public String getPbcoreString() {
+        return pbcoreString;
+    }
+
+    public void setPbcoreString(String pbcoreString) {
+        this.pbcoreString = pbcoreString;
+    }
 }

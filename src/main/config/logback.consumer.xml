@@ -14,7 +14,7 @@
     </appender>
 
     <appender name="DEBUG_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/lde.debug.log</file>
+        <file>logs/lde.consumer.debug.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>lde.debug.log.%i</fileNamePattern>
             <minIndex>0</minIndex>
@@ -29,7 +29,7 @@
     </appender>
 
     <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/lde.error.log</file>
+        <file>logs/lde.consumer.error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>lde.error.log.%i</fileNamePattern>
             <minIndex>0</minIndex>

@@ -32,7 +32,7 @@ public class ProducerApplication {
         ExportOptionsParser optionsParser = new ExportOptionsParser();
         ExportContext context = optionsParser.parseOptions(args);
         logger.info("Context initialised: '" + context.toString() + "'");
-        HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getHibernateConfigurationFile().getAbsolutePath());
+        HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
         DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtil);
         Long startingTimestamp = dao.getMostRecentExportedTimestamp();
         if (startingTimestamp == null) {

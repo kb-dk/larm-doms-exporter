@@ -10,7 +10,7 @@ hibernate_log_config="-Dcom.mchange.v2.log.MLog=com.mchange.v2.log.FallbackMLog 
 
 java -Dlogback.configurationFile=$confDir/logback.consumer.xml $hibernate_log_config \
  -cp "$CLASSPATH" \
-  dk.statsbiblioteket.larm_doms_exporter.producer.ProducerApplication \
+  dk.statsbiblioteket.larm_doms_exporter.consumer.ConsumerApplication \
  --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\
  --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\
  --infrastructure_configfile=$confDir/lde.infrastructure.properties \

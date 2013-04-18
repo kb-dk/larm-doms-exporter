@@ -1,6 +1,7 @@
 package dk.statsbiblioteket.larm_doms_exporter.cli;
 
 import dk.statsbiblioteket.doms.central.CentralWebservice;
+import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.DomsExportRecordDAO;
 
 import java.io.File;
 
@@ -10,7 +11,8 @@ import java.io.File;
  */
 public class ExportContext {
 
-    private File hibernateConfigurationFile;
+    private File ldeHibernateConfigurationFile;
+    private File btaHibernateConfigurationFile;
     private File behaviourConfigFile;
     private File infrastructreConfigFile;
     private String domsCentralWebserviceUrl;
@@ -20,8 +22,25 @@ public class ExportContext {
     private String domsViewAngle;
     private File outputDirectory;
     private CentralWebservice domsCentralWebservice;
+    private DomsExportRecordDAO domsExportRecordDAO;
 
     /* etc */
+
+    public File getBtaHibernateConfigurationFile() {
+        return btaHibernateConfigurationFile;
+    }
+
+    public void setBtaHibernateConfigurationFile(File btaHibernateConfigurationFile) {
+        this.btaHibernateConfigurationFile = btaHibernateConfigurationFile;
+    }
+
+    public DomsExportRecordDAO getDomsExportRecordDAO() {
+        return domsExportRecordDAO;
+    }
+
+    public void setDomsExportRecordDAO(DomsExportRecordDAO domsExportRecordDAO) {
+        this.domsExportRecordDAO = domsExportRecordDAO;
+    }
 
     public CentralWebservice getDomsCentralWebservice() {
         return domsCentralWebservice;
@@ -87,12 +106,12 @@ public class ExportContext {
         this.infrastructreConfigFile = infrastructreConfigFile;
     }
 
-    public File getHibernateConfigurationFile() {
-        return hibernateConfigurationFile;
+    public File getLdeHibernateConfigurationFile() {
+        return ldeHibernateConfigurationFile;
     }
 
-    public void setHibernateConfigurationFile(File hibernateConfigurationFile) {
-        this.hibernateConfigurationFile = hibernateConfigurationFile;
+    public void setLdeHibernateConfigurationFile(File ldeHibernateConfigurationFile) {
+        this.ldeHibernateConfigurationFile = ldeHibernateConfigurationFile;
     }
 
     public String getDomsCentralWebserviceUrl() {
@@ -106,7 +125,7 @@ public class ExportContext {
     @Override
     public String toString() {
         return "ExportContext{" +
-                "hibernateConfigurationFile=" + hibernateConfigurationFile +
+                "hibernateConfigurationFile=" + ldeHibernateConfigurationFile +
                 ", behaviourConfigFile=" + behaviourConfigFile +
                 ", infrastructreConfigFile=" + infrastructreConfigFile +
                 ", domsCentralWebserviceUrl='" + domsCentralWebserviceUrl + '\'' +
