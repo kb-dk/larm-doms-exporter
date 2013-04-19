@@ -13,16 +13,16 @@
     <version>1.0</version>
     <repositories>
         <repository>
-          <id>sbprojects-nexus</id>
-          <url>https://sbprojects.statsbiblioteket.dk/nexus/content/groups/public</url>
-          <releases>
-            <enabled>true</enabled>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
+            <id>sbprojects-nexus</id>
+            <url>https://sbprojects.statsbiblioteket.dk/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
-      </repositories>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>javax.persistence</groupId>
@@ -102,54 +102,59 @@
             <version>0.0.23</version>
         </dependency>
         <dependency>
-          <groupId>dk.statsbiblioteket.mediestream.broadcast-transcoder-application</groupId>
-          <artifactId>broadcast-transcoder-persistence</artifactId>
-          <version>0.3.0</version>
+            <groupId>dk.statsbiblioteket.mediestream.broadcast-transcoder-application</groupId>
+            <artifactId>broadcast-transcoder-persistence</artifactId>
+            <version>0.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>xmlunit</groupId>
+            <artifactId>xmlunit</artifactId>
+            <version>1.3</version>
         </dependency>
     </dependencies>
 
     <build>
-           <plugins>
-               <plugin>
-                   <groupId>org.apache.maven.plugins</groupId>
-                   <artifactId>maven-compiler-plugin</artifactId>
-                   <version>3.0</version>
-                   <configuration>
-                       <source>1.6</source>
-                       <target>1.6</target>
-                   </configuration>
-               </plugin>
-               <plugin>
-                   <groupId>org.apache.maven.plugins</groupId>
-                   <artifactId>maven-surefire-plugin</artifactId>
-                   <version>2.13</version>
-               </plugin>
-               <plugin>
-                   <artifactId>maven-assembly-plugin</artifactId>
-                   <version>2.4</version>
-                   <configuration>
-                       <archive>
-                           <!--<manifest>
-                               <mainClass>dk.statsbiblioteket.broadcasttranscoder.cli.BroadcastTranscoderApplication</mainClass>
-                           </manifest>-->
-                       </archive>
-                       <descriptors>
-                           <descriptor>src/main/assembly/gzip_package.xml</descriptor>
-                       </descriptors>
-                   </configuration>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.13</version>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <!--<manifest>
+                            <mainClass>dk.statsbiblioteket.broadcasttranscoder.cli.BroadcastTranscoderApplication</mainClass>
+                        </manifest>-->
+                    </archive>
+                    <descriptors>
+                        <descriptor>src/main/assembly/gzip_package.xml</descriptor>
+                    </descriptors>
+                </configuration>
 
-                   <executions>
-                       <execution>
-                           <id>make-assembly</id> <!-- this is used for inheritance merges -->
-                           <phase>package</phase> <!-- bind to the packaging phase -->
-                           <goals>
-                               <goal>single</goal>
-                           </goals>
-                       </execution>
-                   </executions>
-               </plugin>
-           </plugins>
-       </build>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>
