@@ -8,7 +8,7 @@ confDir="$SCRIPT_PATH/../config"
 
 hibernate_log_config="-Dcom.mchange.v2.log.MLog=com.mchange.v2.log.FallbackMLog -Dcom.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL=WARNING"
 
-java -Dlogback.configurationFile=$confDir/logback.consumer.xml $hibernate_log_config \
+java -Dlogback.configurationFile=$confDir/logback.producer.xml $hibernate_log_config \
  -cp "$CLASSPATH" \
   dk.statsbiblioteket.larm_doms_exporter.producer.ProducerApplication \
  --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\
