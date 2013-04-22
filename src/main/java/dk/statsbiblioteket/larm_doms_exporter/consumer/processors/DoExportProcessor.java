@@ -116,6 +116,11 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteEndTimeString(result, record, context, state);
             result = substituteStartTimeString(result, record, context, state);
             result = substituteChannel(result, record, context, state);
+            result = substituteGeneric(result, record, context, state, "###TITLE###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreTitle[pbcore:titleType='titel']/pbcore:title");
+            result = substituteGeneric(result, record, context, state, "###ABSTRACT###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='kortomtale']/pbcore:description");
+            result = substituteGeneric(result, record, context, state, "###DESCRIPTION###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale1']/pbcore:description");
+            result = substituteGeneric(result, record, context, state, "###PUBLISHER###","/pb:PBCoreDescriptionDocument/pb:pbcorePublisher[pb:publisherRole='kanalnavn']/pb:publisher");
+
         } catch (Exception e) {
             throw new ProcessorException("Error getting start time", e);
         }
@@ -176,6 +181,14 @@ public class DoExportProcessor extends ProcessorChainElement {
         xpath.setNamespaceContext(pbcoreNamespaceContext);
         String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
         return pattern.matcher(template).replaceAll(ChannelMapper.getChaosChannel(matchingString));
+    }
+
+    private String substituteGeneric(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, String patternString, String xpathString) throws XPathExpressionException {
+        Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
+        XPath xpath = xpathFactory.newXPath();
+        xpath.setNamespaceContext(pbcoreNamespaceContext);
+        String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        return pattern.matcher(template).replaceAll(matchingString);
     }
 
 }
