@@ -1,5 +1,7 @@
 package dk.statsbiblioteket.larm_doms_exporter.consumer;
 
+import org.w3c.dom.Document;
+
 /**
  * Created with IntelliJ IDEA.
  * User: csr
@@ -10,8 +12,17 @@ package dk.statsbiblioteket.larm_doms_exporter.consumer;
 public class ExportRequestState {
 
     private String pbcoreString;
+    private Document pbcoreDocument;
 
     /* ---------------------------- */
+
+    public Document getPbcoreDocument() {
+        return pbcoreDocument;
+    }
+
+    public void setPbcoreDocument(Document pbcoreDocument) {
+        this.pbcoreDocument = pbcoreDocument;
+    }
 
     public String getPbcoreString() {
         return pbcoreString;
