@@ -100,7 +100,10 @@ public class DoExportProcessor extends ProcessorChainElement {
     @Override
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
         File outputDir = context.getOutputDirectory();
-        File outputFile = new File(outputDir, record.getID()+".xml");
+        File tempOutputDir = new File(outputDir, "tempDir");
+        tempOutputDir.mkdirs();
+        File outputFile = new File(outputDir, record.getID().replaceAll("uuid:","")+".xml");
+        File tempOutputFile = new File(tempOutputDir, outputFile.getName());
         String result = XML_TEMPLATE;
         org.w3c.dom.Document pbcoreDocument;
         dbf.setNamespaceAware(true);
@@ -118,21 +121,26 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteChannel(result, record, context, state);
             result = substituteGeneric(result, record, context, state, "###TITLE###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreTitle[pbcore:titleType='titel']/pbcore:title");
             result = substituteGeneric(result, record, context, state, "###ABSTRACT###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='kortomtale']/pbcore:description");
-            result = substituteGeneric(result, record, context, state, "###DESCRIPTION###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale1']/pbcore:description");
-            result = substituteGeneric(result, record, context, state, "###PUBLISHER###","/pb:PBCoreDescriptionDocument/pb:pbcorePublisher[pb:publisherRole='kanalnavn']/pb:publisher");
-
+            result = substituteGeneric(result, record, context, state, "###DESCRIPTION1###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale1']/pbcore:description");
+            result = substituteGeneric(result, record, context, state, "###DESCRIPTION2###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale2']/pbcore:description");
+            result = substituteEmpty(result, "###PUBLISHER###");
+            result = substituteEmpty(result, "###CREATOR###");
+            result = substituteEmpty(result, "###LOCATIONS###");
+            result = substituteProgramPid(result, record, context, state);
+            result = substituteFilename(result, record, context, state);
         } catch (Exception e) {
             throw new ProcessorException("Error getting start time", e);
         }
         logger.info("Writing new export file " + outputFile.getAbsolutePath());
         try {
-            FileOutputStream os = new FileOutputStream(outputFile);
+            FileOutputStream os = new FileOutputStream(tempOutputFile);
             os.write(result.getBytes());
             os.flush();
             os.close();
         } catch (IOException e) {
             throw new ProcessorException("Could not write output file");
         }
+        tempOutputFile.renameTo(outputFile);
     }
 
     private String substituteShardPid(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
@@ -143,7 +151,7 @@ public class DoExportProcessor extends ProcessorChainElement {
             List<Relation> relations = domsWS.getNamedRelations(record.getID(), HAS_SHARD);
             String shardPid = "";
             if (relations.size() == 1) {
-                shardPid = relations.get(0).getObject();
+                shardPid = relations.get(0).getObject().replace("uuid:","");
             }
             return pattern.matcher(template).replaceAll(shardPid);
         } catch (Exception e) {
@@ -191,4 +199,18 @@ public class DoExportProcessor extends ProcessorChainElement {
         return pattern.matcher(template).replaceAll(matchingString);
     }
 
+    private String substituteEmpty(String template, String patternString) {
+        Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
+        return pattern.matcher(template).replaceAll("");
+    }
+
+    private String substituteProgramPid(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###PROGRAM_ID###", Pattern.DOTALL);
+        return pattern.matcher(template).replaceAll(record.getID().replace("uuid:",""));
+    }
+
+    private String substituteFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###FILENAME###", Pattern.DOTALL);
+        return pattern.matcher(template).replaceAll(record.getID().replace("uuid:","")+".mp3");
+    }
 }

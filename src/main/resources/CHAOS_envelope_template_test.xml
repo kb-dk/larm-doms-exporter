@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EnvelopeContainer>
+    <!--
+Hermed et eksempel på en Envelope template til CHAOS (LARM.fm)
+
+ObjectTypeID, DestinationID, FormatID, FolderID er forskellige fra test til produktion. De værdier
+I ser her er til test. Herudover er strukturen for test og produktion helt ens. De felter I skal opdaterer
+er markeret med >>>
+
+DestinationID er afhængig af hvilke streaming server adresser, der skal peges på.
+
+8 - > rtmp://iapetus.statsbiblioteket.dk:1938/chaos?
+28 -> rtmp://hyperion.statsbiblioteket.dk:1937/chaos?
+29 -> rtmp://hyperion.statsbiblioteket.dk:1936/chaos?
+
+Har I andre?
+
+Lidt forklaring:
+
+>>>UpdateIfExistValue: Det ID i søger efter for evt. opdatering
+
+UpdateIfExistField: Det felt, der skal søges i.
+
+FolderID: Nyt objekt placeres i denne mappe
+
+Metadatas: De tre xml dokumenter pr. LARM program objekt.
+
+UpdateIfExist: True: xml dokument overskrives, False: ignorer
+
+LanguageCode: sprog på metadata (da i LARM.fm)
+
+MetadataSchemaGUID: ID på schema
+
+Larm.Program metadata
+
+>>>PublicationDateTime: start tidspunkt i formatet: 1989-07-15T03:04:00
+>>>PublicationEndDateTime: slut tidspunkt i samme format
+>>>PublicationChannel: Udsemdelseskanal. Se den præcise kanalformulering på http://larm.fm/
+>>>Title: Program titel
+>>>Abstract: kort beskrivelse
+>>>Description: lang beskrivelse
+>>>Publisher: Hvem der har udsendt programmet. Eks. DR, Radio 2, TV2 Radio osv.
+>>>Contributors: Deltagere, gæster, medvirkende i programmet.
+>>>Creator: Hvem der har lavet programmet
+>>>Name: Navn på personen
+>>>RoleName: Rollen (eks. producer, tilrettelægger)
+>>>RoleID: Bare lad denne være blank.
+>>>Locations: Optagelsessted, hvis relevant
+>>>SB.DomsID: ID på programmet
+
+Larm.FileInfos
+>>>FileName: filnavn med extention. eks. radioavisen.mp3
+
+Larm.Metadata
+Ingen rettelser her
+
+FileEnvelope: De filreferencer, der skal tilknyttes objektet
+
+>>>DestinationID: ID på url prefix setting.
+
+FolderPath: Evt. mappe mellem prefix og filnavn
+
+Filename: filnavn med extention
+
+OriginalFilename: Evt. original filnavn
+
+FormatID: Formatid.
+
+ObjectTypeID: Larm radioprogram objekt type: 40
+
+    -->
+  <Envelope>
+    <ObjectEnvelope>
+      <UpdateIfExistValue>57a6b288-6255-43a9-b74a-c2edaa707258</UpdateIfExistValue>
+      <UpdateIfExistField>m00000000-0000-0000-0000-0000df820000_da_all</UpdateIfExistField>
+      <FolderID>443</FolderID>
+      <Metadatas>
+        <MetadataEnvelope>
+          <UpdateIfExist>True</UpdateIfExist>
+          <LanguageCode>da</LanguageCode>
+          <MetadataSchemaGUID>00000000-0000-0000-0000-0000df820000</MetadataSchemaGUID>
+          <MetadataXML><![CDATA[<Larm.Program><PublicationDateTime>1989-07-15T03:04:00</PublicationDateTime><PublicationEndDateTime>1989-07-15T04:00:00</PublicationEndDateTime><PublicationChannel>DR P3</PublicationChannel><Title>SB Test title</Title><Abstract></Abstract><Description>Mere musik og snak fra New Music Seminar, der fandt sted i New York i juli måned. Poul Martin Bonde. (Sendt første gang 20. august 1988).</Description><Publisher>DR</Publisher><Subjects /><Contributors /><Creators><Creator><Name>Poul Martin Bonde</Name><RoleName>producer</RoleName><RoleID>182</RoleID></Creator></Creators><Locations /><Identifiers><DR.ProductionNumber></DR.ProductionNumber><DR.ArchiveNumber></DR.ArchiveNumber><SB.DomsID>57a6b288-6255-43a9-b74a-c2edaa707258</SB.DomsID></Identifiers></Larm.Program>]]></MetadataXML>
+        </MetadataEnvelope>
+        <MetadataEnvelope>
+          <UpdateIfExist>False</UpdateIfExist>
+          <LanguageCode>da</LanguageCode>
+          <MetadataSchemaGUID>00000000-0000-0000-0000-0000dd820000</MetadataSchemaGUID>
+          <MetadataXML><![CDATA[<Larm.FileInfos><Larm.FileInfo><StartOffSetMS>0</StartOffSetMS><EndOffSetMS>0</EndOffSetMS><FileName>P1_1645_002520_19751107_17718_Kvartifem.mp3</FileName><Index>0</Index></Larm.FileInfo></Larm.FileInfos>]]></MetadataXML>
+        </MetadataEnvelope>
+        <MetadataEnvelope>
+          <UpdateIfExist>False</UpdateIfExist>
+          <LanguageCode>da</LanguageCode>
+          <MetadataSchemaGUID>17d59e41-13fb-469a-a138-bb691f13f2ba</MetadataSchemaGUID>
+          <MetadataXML><![CDATA[<Larm.Metadata><Title></Title><Description></Description><Genre></Genre><Subjects></Subjects><Tags></Tags><Note></Note><RelatedObjects></RelatedObjects><Contributors /></Larm.Metadata>]]></MetadataXML>
+        </MetadataEnvelope>
+      </Metadatas>
+      <Files>
+        <FileEnvelope>
+          <DestinationID>3</DestinationID>
+          <FolderPath></FolderPath>
+          <Filename>P1_1645_002520_19751107_17718_Kvartifem.mp3</Filename>
+          <OriginalFilename>P1_1645_002520_19751107_17718_Kvartifem.mp3</OriginalFilename>
+          <FormatID>6</FormatID>
+        </FileEnvelope>
+        <FileEnvelope>
+          <DestinationID>7</DestinationID>
+          <FolderPath></FolderPath>
+          <Filename>P1_logo.png</Filename>
+          <OriginalFilename>P1_logo.png</OriginalFilename>
+          <FormatID>5</FormatID>
+        </FileEnvelope>
+      </Files>
+      <ObjectTypeID>40</ObjectTypeID>
+    </ObjectEnvelope>
+  </Envelope>
+</EnvelopeContainer>

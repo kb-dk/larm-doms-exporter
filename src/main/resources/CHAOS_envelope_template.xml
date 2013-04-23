@@ -15,9 +15,9 @@
           <PublicationDateTime>###START_TIME###</PublicationDateTime>
           <PublicationEndDateTime>###END_TIME###</PublicationEndDateTime>
           <PublicationChannel>###CHANNEL###</PublicationChannel>
-          <Title>###TITLE##</Title>
+          <Title>###TITLE###</Title>
           <Abstract>###ABSTRACT###</Abstract>
-          <Description>###DESCRIPTION###</Description>
+          <Description>###DESCRIPTION1### ###DESCRIPTION2###</Description>
           <Publisher>###PUBLISHER###</Publisher>
           <Subjects />
           <Contributors />
@@ -54,8 +54,8 @@
         <FileEnvelope>
           <DestinationID>3</DestinationID>
           <FolderPath></FolderPath>
-          <Filename>P1_1645_002520_19751107_17718_Kvartifem.mp3</Filename>
-          <OriginalFilename>P1_1645_002520_19751107_17718_Kvartifem.mp3</OriginalFilename>
+          <Filename>###FILENAME###</Filename>
+          <OriginalFilename>###FILENAME###</OriginalFilename>
           <FormatID>6</FormatID>
         </FileEnvelope>
         <FileEnvelope>
