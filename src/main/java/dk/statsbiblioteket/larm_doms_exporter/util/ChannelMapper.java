@@ -13,11 +13,10 @@ public class ChannelMapper {
 
     public enum ChannelEnum {
 
-       drp1("DR P1","P1_logo.png"),
-       drp2("DR P2","P2_logo.png"),
+        drp1("DR P1","P1_logo.png"),
+        drp2("DR P2","P2_logo.png"),
         drp3("DR P3","P3_logo.png"),
         drp4o("DR P4 Østjylland","P4_logo.png"),
-
         drp4b("DR P4 Bornholm","P4_logo.png"),
         drp4blm("DR P4 Bornholm","P4_logo.png"),
         drp4f("DR P4 Fyn","P4_logo.png"),
@@ -32,7 +31,6 @@ public class ChannelMapper {
         drp4s("DR P4 Syd","P4_logo.png"),
         r100fm("Radio 100FM","Radio100FM_logo.png"),
         novafm("NOVA fm","novafm_logo.png"),
-
         tv2radio("TV2 Radio","tv2radio_logo.png"),
         drp5("DR P5","drp5_logo.png"),
         voice("THE VOICE","voice_logo.png"),
@@ -40,14 +38,13 @@ public class ChannelMapper {
         drrar("DR Ramasjang","drrar_logo.png"),
         drp6b("DR P6 Beat","drp6b_logo.png"),
         drp8j("DR P8 Jazz","drp8j_logo.png"),
-
-
-        drpxyz("",""),
-
-
-
+        drp7m("DR P7 Mix","drp7m_logo.png"),
+        drmamara("DR Mama","DRmama_logo.png"),
+        drol("DR Oline","DRol_logo.png"),
+        radio2("Radio 2","radio2_logo.png"),
+        drbo("DR Boogieradio","Unknown_logo.png"),
+        drboo("DR Boogieradio","Unknown_logo.png"),
         ukendt("Ukendt","Unknown_logo.png")
-
         ;
 
         private String chaosName;
@@ -67,23 +64,19 @@ public class ChannelMapper {
             return chaosName;
         }
 
-        private ChannelEnum(String chaosName) {
-
-            this.chaosName = chaosName;
-        }
     }
 
     public static String getChaosChannel(String sbChannel) {
         if (sbChannel.equals("100fm")) {
             sbChannel = "r100fm";
         }
-         ChannelEnum channelEnum;
+        ChannelEnum channelEnum;
         try {
-           channelEnum = ChannelEnum.valueOf(sbChannel);
+            channelEnum = ChannelEnum.valueOf(sbChannel);
         } catch (IllegalArgumentException e) {
-           channelEnum = ChannelEnum.valueOf("ukendt");
+            channelEnum = ChannelEnum.valueOf("ukendt");
         }
-      return channelEnum.getChaosName();
+        return channelEnum.getChaosName();
     }
 
     public static String getPublisher(String sbChannel) {
@@ -101,11 +94,11 @@ public class ChannelMapper {
         if (sbChannel.equals("100fm")) {
             sbChannel = "r100fm";
         }
-           ChannelEnum channelEnum;
+        ChannelEnum channelEnum;
         try {
-           channelEnum = ChannelEnum.valueOf(sbChannel);
+            channelEnum = ChannelEnum.valueOf(sbChannel);
         } catch (IllegalArgumentException e) {
-           channelEnum = ChannelEnum.valueOf("ukendt");
+            channelEnum = ChannelEnum.valueOf("ukendt");
         }
         return channelEnum.getLogoFileName();
     }
