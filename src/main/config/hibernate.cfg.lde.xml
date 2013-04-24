@@ -42,8 +42,8 @@
         <!--
         THESE VALUES SHOULD BE FALSE IN PRODUCTION.
         -->
-        <property name="hibernate.show_sql">true</property>
-        <property name="format_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
+        <property name="format_sql">false</property>
 
 
         <property name="connection.driver_class">org.postgresql.Driver</property>
