@@ -1,5 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EnvelopeContainer>
+<!--
+3
+[2:34:50 PM] Colin Rosenthal: Hi Peter.
+[2:35:03 PM] Peter Overgaard: hI
+[2:35:48 PM] Colin Rosenthal: Escapes: vi er enig at data ind jeres CDATA metadata elementer skal escapes og du sender xml-skemaer.
+[2:36:30 PM] Colin Rosenthal: PublicationChannel: Jeg har taget navnene fra larm.fm faceter - er det ok?
+[2:36:58 PM] Peter Overgaard: [14:35:27] Colin Rosenthal: Escapes: vi er enig at data ind jeres CDATA metadata elementer skal escapes og du sender xml-skemaer.
+
+<<< ja..
+[2:37:07 PM] Peter Overgaard: og jeg fider lige schema frem
+[2:37:23 PM] Peter Overgaard: [14:36:09] Colin Rosenthal: PublicationChannel: Jeg har taget navnene fra larm.fm faceter - er det ok?
+
+<<< Perfekt
+[2:38:08 PM] Colin Rosenthal: Description: jeg konkatenere de to "langomtale" felter vi har. Er det ok?
+[2:39:18 PM] Peter Overgaard: ja.. det vil være helt fint
+[2:39:39 PM] Peter Overgaard: kort omtale - > abstract, Lang1 + lang2 -> description
+[2:40:00 PM] Colin Rosenthal: De andre "person" felter som Contributors osv. Dem har vi da ikke. De findes men er alle tomme.
+[2:40:23 PM] Peter Overgaard: Husk at sætte punktum eller mellemrum imellem lang1 + lang2 så sidste og første ord ikke risikerer at hænge sammen.
+[2:40:48 PM] Colin Rosenthal: "Husk at sætte punktum eller mellemrum" - Ja.
+[2:40:51 PM] Peter Overgaard: ok.. så lader vi bare Contributor og Creator være tom
+[2:41:40 PM] Colin Rosenthal: MetadataSchemaGUID og UpdateIfExistField skal stå uændret.
+[2:42:18 PM] Colin Rosenthal: Skal FolderID røres ved?
+[2:42:19 PM] Peter Overgaard: [14:41:19] Colin Rosenthal: MetadataSchemaGUID
+
+<<< uændrret.. har korrekt værdi i det jeg sendte
+[2:42:50 PM] Peter Overgaard: UpdateIfExistsField har også korrekt værdi ja
+[2:42:54 PM] Colin Rosenthal: OriginalFilename = Filename ?
+[2:43:02 PM] Peter Overgaard: I det her tilfælde det samme
+[2:43:28 PM] Peter Overgaard: Vi har to forskellige i tilfælde af transkodening af original fil osv.. men her bare det samme
+[2:44:22 PM] Colin Rosenthal: FileEnvelope til logo fil - du kan sende en liste over logo filnavne og vi sætter dem på plads.
+[2:44:30 PM] Peter Overgaard: ja det gør jeg
+[2:45:38 PM] Colin Rosenthal: "Publisher" er egentlig ikke noget vi har. Hver kanal har altid det samme publisher, ikke? Kan du også sende en liste over publishers?
+[2:47:11 PM] Peter Overgaard: Hvis det er fra DR.. så er publisher bare DR ellers kanalnavn
+[2:47:55 PM] Colin Rosenthal:  "Hvis det er fra DR.. så er publisher bare DR ellers kanalnavn" - "Danmarks Radio" eller bare "DR"?
+[2:48:33 PM] Peter Overgaard: Bare "DR"
+[2:50:24 PM] Colin Rosenthal: Ok, gotta go!
+
+-->
+
+
     <!--
 Hermed et eksempel på en Envelope template til CHAOS (LARM.fm)
 
