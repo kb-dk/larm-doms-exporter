@@ -12,6 +12,7 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.util.ChannelMapper;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -123,7 +124,8 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteGeneric(result, record, context, state, "###ABSTRACT###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='kortomtale']/pbcore:description");
             result = substituteGeneric(result, record, context, state, "###DESCRIPTION1###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale1']/pbcore:description");
             result = substituteGeneric(result, record, context, state, "###DESCRIPTION2###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale2']/pbcore:description");
-            result = substituteEmpty(result, "###PUBLISHER###");
+            result = substitutePublisher(result, record, context, state);
+            result = substituteLogoFilename(result, record, context, state);
             result = substituteEmpty(result, "###CREATOR###");
             result = substituteEmpty(result, "###LOCATIONS###");
             result = substituteProgramPid(result, record, context, state);
@@ -191,11 +193,31 @@ public class DoExportProcessor extends ProcessorChainElement {
         return pattern.matcher(template).replaceAll(ChannelMapper.getChaosChannel(matchingString));
     }
 
+    private String substitutePublisher(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) throws XPathExpressionException {
+        String patternString = "###PUBLISHER###";
+        Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
+        String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
+        XPath xpath = xpathFactory.newXPath();
+        xpath.setNamespaceContext(pbcoreNamespaceContext);
+        String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        return pattern.matcher(template).replaceAll(ChannelMapper.getPublisher(matchingString));
+    }
+
+    private String substituteLogoFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) throws XPathExpressionException {
+        String patternString = "###LOGO_FILENAME###";
+        Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
+        String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
+        XPath xpath = xpathFactory.newXPath();
+        xpath.setNamespaceContext(pbcoreNamespaceContext);
+        String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        return pattern.matcher(template).replaceAll(ChannelMapper.getLogoFileName(matchingString));
+    }
     private String substituteGeneric(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, String patternString, String xpathString) throws XPathExpressionException {
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
         XPath xpath = xpathFactory.newXPath();
         xpath.setNamespaceContext(pbcoreNamespaceContext);
         String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        matchingString = StringEscapeUtils.escapeXml(matchingString);
         return pattern.matcher(template).replaceAll(matchingString);
     }
 

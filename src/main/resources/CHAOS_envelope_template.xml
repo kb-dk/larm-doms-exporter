@@ -21,8 +21,8 @@
           <Publisher>###PUBLISHER###</Publisher>
           <Subjects />
           <Contributors />
-          <Creators><
-          Creator>
+          <Creators>
+          <Creator>
           ###CREATOR###
           </Creator>
           </Creators>
@@ -61,8 +61,8 @@
         <FileEnvelope>
           <DestinationID>7</DestinationID>
           <FolderPath></FolderPath>
-          <Filename>P1_logo.png</Filename>
-          <OriginalFilename>P1_logo.png</OriginalFilename>
+          <Filename>###LOGO_FILENAME###</Filename>
+          <OriginalFilename>###LOGO_FILENAME###</OriginalFilename>
           <FormatID>5</FormatID>
         </FileEnvelope>
       </Files>
