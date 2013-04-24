@@ -21,11 +21,7 @@
           <Publisher>###PUBLISHER###</Publisher>
           <Subjects />
           <Contributors />
-          <Creators>
-          <Creator>
-          ###CREATOR###
-          </Creator>
-          </Creators>
+          <Creators/>
           <Locations>###LOCATIONS###</Locations>
           <Identifiers>
           <DR.ProductionNumber></DR.ProductionNumber>
