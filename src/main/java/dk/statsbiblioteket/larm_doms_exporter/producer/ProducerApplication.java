@@ -68,9 +68,9 @@ public class ProducerApplication {
         }*/
         dk.statsbiblioteket.broadcasttranscoder.persistence.dao.HibernateUtil btaHibernateUtil = dk.statsbiblioteket.broadcasttranscoder.persistence.dao.HibernateUtil.getInstance(context.getBtaHibernateConfigurationFile().getAbsolutePath());
         BroadcastTranscodingRecordDAO btaDao = new BroadcastTranscodingRecordDAO(btaHibernateUtil);
-        logger.info("Retrieving all transcoded records from bta with timestamp after " + new Date(startingTimestamp));
+        logger.info("Retrieving all transcoded records from bta with timestamp after " + startingTimestamp + " == " + new Date(startingTimestamp));
         List<BroadcastTranscodingRecord> btaRecords = btaDao.getAllTranscodings(startingTimestamp, TranscodingStateEnum.COMPLETE);
-        logger.info("Retrieved " + btaRecords.size() + "transcoded records from bta.");
+        logger.info("Retrieved " + btaRecords.size() + " transcoded records from bta.");
         int pending = 0;
         int complete = 0;
         for (BroadcastTranscodingRecord btaRecord: btaRecords) {
