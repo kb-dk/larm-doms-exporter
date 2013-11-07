@@ -12,6 +12,8 @@ import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
+
 /**
  *
  */
@@ -29,6 +31,8 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
             this.setChildElement(null);
             return;
         } else {
+            Date walltime = new Date(btaRecord.getBroadcastStartTime().getTime() + btaRecord.getStartOffset()*1000L);
+            state.setWalltime(walltime);
             switch (btaRecord.getTranscodingState()) {
                 case PENDING:
                     logger.info(record.getID() + " is awaiting transcoding. " + ". Not exporting now.");
