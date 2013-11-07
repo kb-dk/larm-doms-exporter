@@ -22,7 +22,7 @@ public class DomsExportRecordDAOTest {
         DomsExportRecord record = new DomsExportRecord();
         record.setID("uuid:foobar");
         record.setLastDomsTimestamp(new Date());
-        record.setState(ExportStateEnum.PENDING);
+        record.setState(ExportStateEnum.REJECTED);
         dao.create(record);
         DomsExportRecord record1 = dao.read("uuid:foobar");
         assertEquals(record.getState(), record1.getState());
@@ -33,7 +33,7 @@ public class DomsExportRecordDAOTest {
         HibernateUtilIF hibernateUtilIF = HibernateUtil.getInstance("src/test/config/hibernate.in-memory_unittest.cfg.xml");
         DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtilIF);
         DomsExportRecord record1 = new DomsExportRecord();
-        record1.setID("uuid:foobar");
+        record1.setID("uuid:foobarbar");
         Date date1 = new Date(1000L);
         record1.setLastDomsTimestamp(date1);
         record1.setLastExportTimestamp(date1);
@@ -54,14 +54,14 @@ public class DomsExportRecordDAOTest {
         HibernateUtilIF hibernateUtilIF = HibernateUtil.getInstance("src/test/config/hibernate.in-memory_unittest.cfg.xml");
         DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtilIF);
         DomsExportRecord record1 = new DomsExportRecord();
-        record1.setID("uuid:foobar");
+        record1.setID("uuid:foobarfoobar");
         Date date1 = new Date(1000L);
         record1.setLastDomsTimestamp(date1);
         record1.setLastExportTimestamp(date1);
         record1.setState(ExportStateEnum.PENDING);
         dao.create(record1);
         DomsExportRecord record2 = new DomsExportRecord();
-        record2.setID("uuid:foobarfoo");
+        record2.setID("uuid:foobarfoobarbar");
         Date date2 = new Date(1500L);
         record2.setLastDomsTimestamp(date2);
         record2.setLastExportTimestamp(date2);

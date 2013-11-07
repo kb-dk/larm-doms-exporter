@@ -2,6 +2,8 @@ package dk.statsbiblioteket.larm_doms_exporter.consumer;
 
 import org.w3c.dom.Document;
 
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: csr
@@ -13,6 +15,7 @@ public class ExportRequestState {
 
     private String pbcoreString;
     private Document pbcoreDocument;
+    private Date walltime;
 
     /* ---------------------------- */
 
@@ -30,5 +33,13 @@ public class ExportRequestState {
 
     public void setPbcoreString(String pbcoreString) {
         this.pbcoreString = pbcoreString;
+    }
+
+    public Date getWalltime() {
+        return walltime;
+    }
+
+    public void setWalltime(Date walltime) {
+        this.walltime = walltime;
     }
 }

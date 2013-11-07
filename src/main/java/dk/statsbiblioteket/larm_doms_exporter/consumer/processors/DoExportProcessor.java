@@ -131,7 +131,7 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteProgramPid(result, record, context, state);
             result = substituteFilename(result, record, context, state);
         } catch (Exception e) {
-            throw new ProcessorException("Error getting start time", e);
+            throw new ProcessorException("Error processing " + record.getID(), e);
         }
         logger.info("Writing new export file " + outputFile.getAbsolutePath());
         try {
