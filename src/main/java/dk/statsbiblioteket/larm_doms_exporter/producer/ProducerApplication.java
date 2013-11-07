@@ -70,6 +70,8 @@ public class ProducerApplication {
         BroadcastTranscodingRecordDAO btaDao = new BroadcastTranscodingRecordDAO(btaHibernateUtil);
         logger.info("Retrieving all transcoded records from bta with timestamp after " + startingTimestamp + " == " + new Date(startingTimestamp));
         List<BroadcastTranscodingRecord> btaRecords = btaDao.getAllTranscodings(startingTimestamp, TranscodingStateEnum.COMPLETE);
+        List<BroadcastTranscodingRecord> btaRecordsPending = btaDao.getAllTranscodings(startingTimestamp, TranscodingStateEnum.PENDING);
+        btaRecords.addAll(btaRecordsPending);
         logger.info("Retrieved " + btaRecords.size() + " transcoded records from bta.");
         int pending = 0;
         int complete = 0;
