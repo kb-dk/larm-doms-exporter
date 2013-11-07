@@ -24,11 +24,12 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
         HibernateUtil btaHibernateUtil = HibernateUtil.getInstance(context.getBtaHibernateConfigurationFile().getAbsolutePath());
         BroadcastTranscodingRecordDAO btaDao = new BroadcastTranscodingRecordDAO(btaHibernateUtil);
         BroadcastTranscodingRecord btaRecord = btaDao.read(record.getID());
-        if (btaRecord == null) {
+        if (btaRecord == null || btaRecord.getTranscodingState() == null) {
             logger.info("No BTA record found for " + record.getID() + ". Not exporting now.");
             this.setChildElement(null);
             return;
         } else {
+            logger.info("Checking status for BTA record:" + btaRecord);
             switch (btaRecord.getTranscodingState()) {
                 case PENDING:
                     logger.info(record.getID() + " is awaiting transcoding. " + ". Not exporting now.");
