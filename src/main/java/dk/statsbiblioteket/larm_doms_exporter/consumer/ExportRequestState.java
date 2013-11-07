@@ -16,6 +16,7 @@ public class ExportRequestState {
     private String pbcoreString;
     private Document pbcoreDocument;
     private Date walltime;
+    private Long changeInFileStartWalltime;
 
     /* ---------------------------- */
 
@@ -41,5 +42,13 @@ public class ExportRequestState {
 
     public void setWalltime(Date walltime) {
         this.walltime = walltime;
+    }
+
+    public Long getChangeInFileStartWalltime() {
+        return changeInFileStartWalltime;
+    }
+
+    public void setChangeInFileStartWalltime(Long changeInFileStartWalltime) {
+        this.changeInFileStartWalltime = changeInFileStartWalltime;
     }
 }

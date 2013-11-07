@@ -53,8 +53,13 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                     logger.info(record.getID() + " has been successfully transcoded. Will now check if export is necessary.");
                     Date broadcastStartTime = btaRecord.getBroadcastStartTime();
                     if (broadcastStartTime != null) {
-                        Date walltime = new Date(broadcastStartTime.getTime() + btaRecord.getStartOffset()*1000L);
-                        state.setWalltime(walltime);
+                        Date newWalltime = new Date(broadcastStartTime.getTime() + btaRecord.getStartOffset()*1000L);
+                        Date oldWalltime = record.getLastExportFileStartWallTime();
+                        if (oldWalltime != null) {
+                            Long changeInStarttime = newWalltime.getTime() - oldWalltime.getTime();
+                            state.setChangeInFileStartWalltime(changeInStarttime);
+                        }
+                        state.setWalltime(newWalltime);
                     } else {
                         throw new ProcessorException("Surprised to find bta record in state COMPLETED but with null broadcastStartTime:" + record.getID());
                     }

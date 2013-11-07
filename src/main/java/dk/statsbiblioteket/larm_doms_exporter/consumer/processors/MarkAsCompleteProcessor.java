@@ -15,6 +15,7 @@ public class MarkAsCompleteProcessor extends ProcessorChainElement {
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
         record.setLastExportTimestamp(record.getLastDomsTimestamp());
         record.setState(ExportStateEnum.COMPLETE);
+        record.setLastExportFileStartWallTime(state.getWalltime());
         context.getDomsExportRecordDAO().update(record);
     }
 }

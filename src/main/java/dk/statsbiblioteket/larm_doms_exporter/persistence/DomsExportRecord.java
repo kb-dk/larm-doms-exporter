@@ -15,6 +15,7 @@ public class DomsExportRecord extends Identifiable<String> {
 
     Date lastDomsTimestamp;
     Date lastExportTimestamp;
+    Date lastExportFileStartWallTime;
     ExportStateEnum state;
 
     @Enumerated(EnumType.STRING)
@@ -40,5 +41,13 @@ public class DomsExportRecord extends Identifiable<String> {
 
     public void setLastDomsTimestamp(Date lastDomsTimestamp) {
         this.lastDomsTimestamp = lastDomsTimestamp;
+    }
+
+    public Date getLastExportFileStartWallTime() {
+        return lastExportFileStartWallTime;
+    }
+
+    public void setLastExportFileStartWallTime(Date lastExportFileStartWallTime) {
+        this.lastExportFileStartWallTime = lastExportFileStartWallTime;
     }
 }
