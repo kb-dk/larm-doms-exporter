@@ -1,5 +1,8 @@
 package dk.statsbiblioteket.larm_doms_exporter.producer;
 
+import dk.statsbiblioteket.broadcasttranscoder.persistence.TranscodingStateEnum;
+import dk.statsbiblioteket.broadcasttranscoder.persistence.dao.BroadcastTranscodingRecordDAO;
+import dk.statsbiblioteket.broadcasttranscoder.persistence.entities.BroadcastTranscodingRecord;
 import dk.statsbiblioteket.doms.central.CentralWebservice;
 import dk.statsbiblioteket.doms.central.InvalidCredentialsException;
 import dk.statsbiblioteket.doms.central.MethodFailedException;
@@ -33,36 +36,67 @@ public class ProducerApplication {
         ExportContext context = optionsParser.parseOptions(args);
         logger.info("Context initialised: '" + context.toString() + "'");
         HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
-        DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtil);
-        Long startingTimestamp = dao.getMostRecentExportedTimestamp();
+        DomsExportRecordDAO ldeDao = new DomsExportRecordDAO(hibernateUtil);
+        Long startingTimestamp = ldeDao.getMostRecentExportedTimestamp();
         if (startingTimestamp == null) {
             initialPull = true;
             startingTimestamp = 0L;
             logger.info("This is the initial pull. DOMS objects unmodified since ? are assumed to have " +
                     "already been exported.", new Date(context.getSeedTimestamp()));
         }
-        CentralWebservice doms = CentralWebserviceFactory.getServiceInstance(context);
+        /*CentralWebservice doms = CentralWebserviceFactory.getServiceInstance(context);
         List<RecordDescription> recordDescriptions = requestInBatches(doms, context, startingTimestamp);
         logger.info("Retrieved " + recordDescriptions.size() + " records from DOMS.");
         for (RecordDescription domsRecord: recordDescriptions) {
-            DomsExportRecord databaseRecord = dao.readOrCreate(domsRecord.getPid());
+            DomsExportRecord databaseRecord = ldeDao.readOrCreate(domsRecord.getPid());
             if (databaseRecord.getLastDomsTimestamp() != null) {
                 databaseRecord.setLastDomsTimestamp(new Date(domsRecord.getDate()));
                 databaseRecord.setState(ExportStateEnum.PENDING);
-                dao.update(databaseRecord);
+                ldeDao.update(databaseRecord);
             } else {
                 if (initialPull && domsRecord.getDate() < context.getSeedTimestamp()) {
                     databaseRecord.setLastDomsTimestamp(new Date(context.getSeedTimestamp()));
                     databaseRecord.setLastExportTimestamp(new Date(context.getSeedTimestamp()));
                     databaseRecord.setState(ExportStateEnum.COMPLETE);
-                    dao.update(databaseRecord);
+                    ldeDao.update(databaseRecord);
                 } else {
                     databaseRecord.setLastDomsTimestamp(new Date(domsRecord.getDate()));
                     databaseRecord.setState(ExportStateEnum.PENDING);
-                    dao.update(databaseRecord);
+                    ldeDao.update(databaseRecord);
+                }
+            }
+        }*/
+        dk.statsbiblioteket.broadcasttranscoder.persistence.dao.HibernateUtil btaHibernateUtil = dk.statsbiblioteket.broadcasttranscoder.persistence.dao.HibernateUtil.getInstance(context.getBtaHibernateConfigurationFile().getAbsolutePath());
+        BroadcastTranscodingRecordDAO btaDao = new BroadcastTranscodingRecordDAO(btaHibernateUtil);
+        logger.info("Retrieving all transcoded records from bta with timestamp after " + new Date(startingTimestamp));
+        List<BroadcastTranscodingRecord> btaRecords = btaDao.getAllTranscodings(startingTimestamp, TranscodingStateEnum.COMPLETE);
+        logger.info("Retrieved " + btaRecords.size() + "transcoded records from bta.");
+        int pending = 0;
+        int complete = 0;
+        for (BroadcastTranscodingRecord btaRecord: btaRecords) {
+            DomsExportRecord ldeDatabaseRecord = ldeDao.readOrCreate(btaRecord.getID());
+            if (ldeDatabaseRecord.getLastDomsTimestamp() != null) {  //preexisting record
+                ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
+                ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
+                ldeDao.update(ldeDatabaseRecord);
+                pending++;
+            }  else {
+                if (initialPull && btaRecord.getDomsLatestTimestamp() < context.getSeedTimestamp()) {
+                    ldeDatabaseRecord.setLastDomsTimestamp(new Date(context.getSeedTimestamp()));
+                    ldeDatabaseRecord.setLastExportTimestamp(ldeDatabaseRecord.getLastDomsTimestamp());
+                    ldeDatabaseRecord.setState(ExportStateEnum.COMPLETE);
+                    ldeDao.update(ldeDatabaseRecord);
+                    complete++;
+                } else {
+                    ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
+                    ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
+                    ldeDao.update(ldeDatabaseRecord);
+                    pending++;
                 }
             }
         }
+        logger.info("Added " + complete + " already-exported records.");
+        logger.info("Added as pending or changed to pending " + pending + " records.");
         logger.info("Exiting " + ProducerApplication.class.getName());
     }
 
