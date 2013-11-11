@@ -12,6 +12,7 @@ import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.Date;
 
 /**
@@ -62,6 +63,15 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                         state.setWalltime(newWalltime);
                     } else {
                         throw new ProcessorException("Surprised to find bta record in state COMPLETED but with null broadcastStartTime:" + record.getID());
+                    }
+                    String[] splitCommand = btaRecord.getTranscodingCommand().split("\\s");
+                    String outputFileS = splitCommand[splitCommand.length -1].replaceAll("/temp", "");
+                    File outputFile = new File(outputFileS);
+                    if (outputFile.exists()) {
+                        Long fileTimeStamp = outputFile.lastModified();
+                        state.setOutputFileTimeStamp(fileTimeStamp);
+                    } else {
+                        logger.warn("Could not find output file: " + outputFileS);
                     }
                     break;
             }

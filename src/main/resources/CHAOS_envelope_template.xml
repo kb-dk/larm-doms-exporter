@@ -37,7 +37,12 @@
           <StartOffSetMS>0</StartOffSetMS>
           <EndOffSetMS>0</EndOffSetMS>
           <FileName>###FILENAME###</FileName>
-          <Index>0</Index></Larm.FileInfo></Larm.FileInfos>]]></MetadataXML>
+          <Index>0</Index>
+          <WalltimeInfo>
+          				<ValueMS>###WALLTIMECHANGEMS###</ValueMS>
+          				<ChangeDateTime>###FILETIMESTAMP###</ChangeDateTime>
+          		  </WalltimeInfo>
+          </Larm.FileInfo></Larm.FileInfos>]]></MetadataXML>
         </MetadataEnvelope>
         <MetadataEnvelope>
           <UpdateIfExist>False</UpdateIfExist>

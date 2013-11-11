@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -38,18 +39,18 @@ import java.util.regex.Pattern;
 /**
  *  Compare with the following snippet from the old exporter:
  * .append("    <doms_id>"              + radioProgramMetadata.shardPid                                              + "</doms_id>\n")
- 					.append("    <channel_name>"         + radioProgramMetadata.getPbcoreProgramMetadata().channel                    + "</channel_name>\n")
- 					.append("    <title>"                + radioProgramMetadata.getPbcoreProgramMetadata().titel                      + "</title>\n")
- 					.append("    <title_original>"       + radioProgramMetadata.getPbcoreProgramMetadata().originaltitel              + "</title_original>\n")
- 					.append("    <title_episode>"        + radioProgramMetadata.getPbcoreProgramMetadata().episodetitel               + "</title_episode>\n")
- 					.append("    <start_time>"           + fmt.print(radioProgramMetadata.getPbcoreProgramMetadata().start.getTime()) + "</start_time>\n")
- 					.append("    <end_time>"             + fmt.print(radioProgramMetadata.getPbcoreProgramMetadata().end.getTime())   + "</end_time>\n")
- 					.append("    <description_short>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionKortOmtale      + "</description_short>\n")
- 					.append("    <description_long1>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionLangOmtale1     + "</description_long1>\n")
- 					.append("    <description_long2>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionLangOmtale2     + "</description_long2>\n")
- 					.append("    <creator>"              + radioProgramMetadata.getPbcoreProgramMetadata().forfattere                 + "</creator>\n")
- 					.append("    <contributor>"          + radioProgramMetadata.getPbcoreProgramMetadata().medvirkende                + "</contributor>\n")
- 					.append("    <contributor_director>" + radioProgramMetadata.getPbcoreProgramMetadata().instruktion                + "</contributor_director>\n")
+ .append("    <channel_name>"         + radioProgramMetadata.getPbcoreProgramMetadata().channel                    + "</channel_name>\n")
+ .append("    <title>"                + radioProgramMetadata.getPbcoreProgramMetadata().titel                      + "</title>\n")
+ .append("    <title_original>"       + radioProgramMetadata.getPbcoreProgramMetadata().originaltitel              + "</title_original>\n")
+ .append("    <title_episode>"        + radioProgramMetadata.getPbcoreProgramMetadata().episodetitel               + "</title_episode>\n")
+ .append("    <start_time>"           + fmt.print(radioProgramMetadata.getPbcoreProgramMetadata().start.getTime()) + "</start_time>\n")
+ .append("    <end_time>"             + fmt.print(radioProgramMetadata.getPbcoreProgramMetadata().end.getTime())   + "</end_time>\n")
+ .append("    <description_short>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionKortOmtale      + "</description_short>\n")
+ .append("    <description_long1>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionLangOmtale1     + "</description_long1>\n")
+ .append("    <description_long2>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionLangOmtale2     + "</description_long2>\n")
+ .append("    <creator>"              + radioProgramMetadata.getPbcoreProgramMetadata().forfattere                 + "</creator>\n")
+ .append("    <contributor>"          + radioProgramMetadata.getPbcoreProgramMetadata().medvirkende                + "</contributor>\n")
+ .append("    <contributor_director>" + radioProgramMetadata.getPbcoreProgramMetadata().instruktion                + "</contributor_director>\n")
  */
 public class DoExportProcessor extends ProcessorChainElement {
 
@@ -73,24 +74,24 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     public static class PBCoreNamespaceResolver implements NamespaceContext {
 
-           @Override
-           public String getNamespaceURI(String prefix) {
-               if (prefix.equals("pbcore")) return  "http://www.pbcore.org/PBCore/PBCoreNamespace.html";
-               else   return XMLConstants.NULL_NS_URI;
-           }
+        @Override
+        public String getNamespaceURI(String prefix) {
+            if (prefix.equals("pbcore")) return  "http://www.pbcore.org/PBCore/PBCoreNamespace.html";
+            else   return XMLConstants.NULL_NS_URI;
+        }
 
-           @Override
-           public String getPrefix(String namespaceURI) {
-               throw new RuntimeException("Not yet implemented");
+        @Override
+        public String getPrefix(String namespaceURI) {
+            throw new RuntimeException("Not yet implemented");
 
-           }
+        }
 
-           @Override
-           public Iterator getPrefixes(String namespaceURI) {
-               throw new RuntimeException("Not yet implemented");
+        @Override
+        public Iterator getPrefixes(String namespaceURI) {
+            throw new RuntimeException("Not yet implemented");
 
-           }
-       }
+        }
+    }
 
     private static XPathFactory xpathFactory = XPathFactory.newInstance();
     private static NamespaceContext pbcoreNamespaceContext = new PBCoreNamespaceResolver();
@@ -104,6 +105,10 @@ public class DoExportProcessor extends ProcessorChainElement {
         File tempOutputDir = new File(outputDir, "tempDir");
         tempOutputDir.mkdirs();
         File outputFile = new File(outputDir, record.getID().replaceAll("uuid:","")+".xml");
+        if (outputFile.exists()) {
+            throw new ProcessorException("Not exporting again at this time because " + outputFile.getAbsolutePath()
+            + " already exists. Object will be left in state PENDING and processed again next time.");
+        }
         File tempOutputFile = new File(tempOutputDir, outputFile.getName());
         String result = XML_TEMPLATE;
         org.w3c.dom.Document pbcoreDocument;
@@ -130,6 +135,8 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteEmpty(result, "###LOCATIONS###");
             result = substituteProgramPid(result, record, context, state);
             result = substituteFilename(result, record, context, state);
+            result = substituteWalltimeChange(result, record, context, state);
+            result = substituteFileTimeStamp(result, record, context, state);
         } catch (Exception e) {
             throw new ProcessorException("Error processing " + record.getID(), e);
         }
@@ -143,6 +150,26 @@ public class DoExportProcessor extends ProcessorChainElement {
             throw new ProcessorException("Could not write output file");
         }
         tempOutputFile.renameTo(outputFile);
+    }
+
+    private String substituteWalltimeChange(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###WALLTIMECHANGEMS###", Pattern.DOTALL);
+        if (state.getChangeInFileStartWalltime() != null) {
+            return pattern.matcher(template).replaceAll("" + state.getChangeInFileStartWalltime());
+        } else {
+            return pattern.matcher(template).replaceAll("");
+        }
+    }
+
+
+    private String substituteFileTimeStamp(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###FILETIMESTAMP###", Pattern.DOTALL);
+        if (state.getOutputFileTimeStamp() != null) {
+            final Date date = new Date(state.getOutputFileTimeStamp());
+            return pattern.matcher(template).replaceAll(chaosDateFormat.format(date));
+        } else {
+            return pattern.matcher(template).replaceAll(chaosDateFormat.format(new Date()));
+        }
     }
 
     private String substituteShardPid(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {

@@ -17,6 +17,7 @@ public class ExportRequestState {
     private Document pbcoreDocument;
     private Date walltime;
     private Long changeInFileStartWalltime;
+    private Long outputFileTimeStamp;
 
     /* ---------------------------- */
 
@@ -50,5 +51,13 @@ public class ExportRequestState {
 
     public void setChangeInFileStartWalltime(Long changeInFileStartWalltime) {
         this.changeInFileStartWalltime = changeInFileStartWalltime;
+    }
+
+    public Long getOutputFileTimeStamp() {
+        return outputFileTimeStamp;
+    }
+
+    public void setOutputFileTimeStamp(Long outputFileTimeStamp) {
+        this.outputFileTimeStamp = outputFileTimeStamp;
     }
 }

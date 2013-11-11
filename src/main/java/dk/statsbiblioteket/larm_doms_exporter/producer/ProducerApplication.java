@@ -37,13 +37,14 @@ public class ProducerApplication {
         logger.info("Context initialised: '" + context.toString() + "'");
         HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
         DomsExportRecordDAO ldeDao = new DomsExportRecordDAO(hibernateUtil);
-        Long startingTimestamp = ldeDao.getMostRecentExportedTimestamp() + 1L;
+        Long startingTimestamp = ldeDao.getMostRecentExportedTimestamp();
         if (startingTimestamp == null) {
             initialPull = true;
             startingTimestamp = 0L;
             logger.info("This is the initial pull. DOMS objects unmodified since " + new Date(context.getSeedTimestamp()) + " are assumed to have " +
                     "already been exported.");
         }
+        startingTimestamp++;
         /*CentralWebservice doms = CentralWebserviceFactory.getServiceInstance(context);
         List<RecordDescription> recordDescriptions = requestInBatches(doms, context, startingTimestamp);
         logger.info("Retrieved " + recordDescriptions.size() + " records from DOMS.");
