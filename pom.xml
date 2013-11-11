@@ -10,7 +10,7 @@
     </parent>
     <groupId>larm-doms-exporter</groupId>
     <artifactId>larm-doms-exporter</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <repositories>
         <repository>
             <id>sbprojects-nexus</id>
