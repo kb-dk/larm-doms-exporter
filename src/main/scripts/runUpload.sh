@@ -12,7 +12,7 @@ logfile=$logdir/run_Upload.$this_pid.log
 
 main()
 {
-tar -czf --remove-files ${fileOutputDirectory}/foobar.tar.gz ${fileOutputDirectory}/*.xml
+tar -czf  ${fileOutputDirectory}/foobar.tar.gz --remove-files ${fileOutputDirectory}/*.xml
 exit 0;
 }
 
