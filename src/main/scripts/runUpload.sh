@@ -2,7 +2,7 @@
 
 script_path=$(dirname $(readlink -f $0))
 configfile=$(readlink -f $(dirname $(readlink -f $0))/../config/lde.infrastructure.properties)
-$configfile
+. $configfile
 
 logdir=$HOME/logs
 # Save the pid of this process for later use
@@ -34,9 +34,9 @@ print_usage()
 
 
 [ -z "$fileOutputDirectory" ] && print_usage && exit 2
-[ -z "$ftpServer" ] && print_usage && exit 2
-[ -z "$ftpUsername" ] && print_usage && exit 2
-[ -z "$ftpPassword" ] && print_usage && exit 2
+[ -z "$ftpServer" ] && print_usage && exit 3
+[ -z "$ftpUsername" ] && print_usage && exit 4
+[ -z "$ftpPassword" ] && print_usage && exit 5
 
 # Save all output to the logfile aswell
 exec > >(tee $logfile) 2>&1
