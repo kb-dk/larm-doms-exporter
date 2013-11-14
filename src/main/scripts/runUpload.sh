@@ -12,7 +12,23 @@ logfile=$logdir/run_Upload.$this_pid.log
 
 main()
 {
-tar -czf  ${fileOutputDirectory}/foobar.tar.gz --remove-files ${fileOutputDirectory}/*.xml
+if stat -t ${fileOutputDirectory}/*.xml >/dev/null 2>&1 
+then  
+  filename=$(date +%s)_$(date +%FT%H-%M-%S)_envelopes.tar.gz
+  cd ${fileOutputDirectory}
+  tar -czf ${filename} --remove-files  *.xml
+  md5_original=$(openssl dgst -md5 ${fileOutputDirectory}/${filename} | cut -f2 -d' ')
+  echo ${md5_original}
+  lftp <<FTP
+    open ${ftpServer} 
+    user ${ftpUsername} ${ftpPassword}
+    put ${fileOutputDirectory}/${filename}
+    quit
+  FTP
+else
+  echo "No files found"
+fi
+
 exit 0;
 }
 
