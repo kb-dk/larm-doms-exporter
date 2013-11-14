@@ -2,7 +2,7 @@
 
 script_path=$(dirname $(readlink -f $0))
 configfile=$(readlink -f $(dirname $(readlink -f $0))/../config/lde.infrastructure.properties)
-. $configfile
+source $configfile
 
 logdir=$HOME/logs
 # Save the pid of this process for later use
@@ -17,19 +17,31 @@ then
   filename=$(date +%s)_$(date +%FT%H-%M-%S)_envelopes.tar.gz
   cd ${fileOutputDirectory}
   tar -czf ${filename} --remove-files  *.xml
-  md5_original=$(openssl dgst -md5 ${fileOutputDirectory}/${filename} | cut -f2 -d' ')
-  echo ${md5_original}
+  echo "Uploading tar-archive containing $(tar tf ${filename}|wc -l) files."
+  md5_original=$(openssl dgst -md5 ${filename} | cut -f2 -d' ')
+  tempCopyFile=$(mktemp -u)
   lftp <<FTP
     open ${ftpServer} 
     user ${ftpUsername} ${ftpPassword}
-    put ${fileOutputDirectory}/${filename}
+    put ${filename}
+    get ${filename} -o ${tempCopyFile}
     quit
-  FTP
+FTP
+  md5_copy=$(openssl dgst -md5 ${tempCopyFile} | cut -f2 -d' ')
+  if [ "${md5_original}" == "${md5_copy}" ]
+  then
+     rm -f ${tempCopyFile}
+     echo "Upload of ${filename} completed."
+     exit 0
+  else
+     echo "Upload of ${filename} failed: see ${tempCopyFile} for failed file."
+     exit 6
+  fi  
 else
   echo "No files found"
+  exit 0
 fi
 
-exit 0;
 }
 
 print_usage()
