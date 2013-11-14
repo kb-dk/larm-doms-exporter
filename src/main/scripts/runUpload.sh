@@ -12,7 +12,7 @@ logfile=$logdir/run_Upload.$this_pid.log
 
 main()
 {
-
+tar -czf ${fileOutputDirectory}/foobar.tar ${fileOutputDirectory}/*.xml
 exit 0;
 }
 
@@ -38,7 +38,7 @@ print_usage()
 [ -z "$ftpUsername" ] && print_usage && exit 4
 [ -z "$ftpPassword" ] && print_usage && exit 5
 
-# Save all output to the logfile aswell
+# Save all output to the logfile as well
 exec > >(tee $logfile) 2>&1
 
 # off we go!
