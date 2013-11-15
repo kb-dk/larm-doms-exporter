@@ -161,7 +161,7 @@
 
     <scm>
         <connection>scm:git:https://github.com/statsbiblioteket/larm-doms-exporter</connection>
-        <developerConnection>scm:git:git@github.com:statsbiblioteket/larm-doms-exporter/</developerConnection>
+        <developerConnection>scm:git:git@github.com:statsbiblioteket/larm-doms-exporter</developerConnection>
         <url>https://github.com/statsbiblioteket/larm-doms-exporter</url>
         <tag>HEAD</tag>
     </scm>
