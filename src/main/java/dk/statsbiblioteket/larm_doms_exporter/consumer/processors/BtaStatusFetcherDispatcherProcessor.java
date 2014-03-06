@@ -53,25 +53,29 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                 case COMPLETE:
                     logger.info(record.getID() + " has been successfully transcoded. Will now check if export is necessary.");
                     Date broadcastStartTime = btaRecord.getBroadcastStartTime();
+                    logger.debug("Start time {} for {}", broadcastStartTime, record.getID());
                     if (broadcastStartTime != null) {
                         Date newWalltime = new Date(broadcastStartTime.getTime() + btaRecord.getStartOffset()*1000L);
-                        Date oldWalltime = record.getLastExportFileStartWallTime();
-                        if (oldWalltime != null) {
-                            Long changeInStarttime = newWalltime.getTime() - oldWalltime.getTime();
-                            state.setChangeInFileStartWalltime(changeInStarttime);
-                        }
+                        logger.debug("Setting walltime {} for {}.", newWalltime, record.getID() );
                         state.setWalltime(newWalltime);
                     } else {
                         throw new ProcessorException("Surprised to find bta record in state COMPLETED but with null broadcastStartTime:" + record.getID());
                     }
-                    String[] splitCommand = btaRecord.getTranscodingCommand().split("\\s");
-                    String outputFileS = splitCommand[splitCommand.length -1].replaceAll("/temp", "");
-                    File outputFile = new File(outputFileS);
-                    if (outputFile.exists()) {
-                        Long fileTimeStamp = outputFile.lastModified();
-                        state.setOutputFileTimeStamp(fileTimeStamp);
+                    final String transcodingCommand = btaRecord.getTranscodingCommand();
+                    if (transcodingCommand != null) {
+                        String[] splitCommand = transcodingCommand.split("\\s");
+                        String outputFileS = splitCommand[splitCommand.length -1].replaceAll("/temp", "");
+                        File outputFile = new File(outputFileS);
+                        if (outputFile.exists()) {
+                            Long fileTimeStamp = outputFile.lastModified();
+                            state.setOutputFileTimeStamp(fileTimeStamp);
+                        } else {
+                            logger.warn("Could not find output file: " + outputFileS);
+                            state.setOutputFileTimeStamp(0L);
+                        }
                     } else {
-                        logger.warn("Could not find output file: " + outputFileS);
+                        logger.warn("Could not find output file from null transcoding command for {}.", record.getID());
+                        state.setOutputFileTimeStamp(0L);
                     }
                     break;
             }

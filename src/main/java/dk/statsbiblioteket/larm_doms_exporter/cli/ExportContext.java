@@ -24,7 +24,26 @@ public class ExportContext {
     private CentralWebservice domsCentralWebservice;
     private DomsExportRecordDAO domsExportRecordDAO;
 
+    private Long inProductionTimestamp;
+    private Long earliestExportBroadcastTimestamp;
+
     /* etc */
+
+    public Long getInProductionTimestamp() {
+        return inProductionTimestamp;
+    }
+
+    public void setInProductionTimestamp(Long inProductionTimestamp) {
+        this.inProductionTimestamp = inProductionTimestamp;
+    }
+
+    public Long getEarliestExportBroadcastTimestamp() {
+        return earliestExportBroadcastTimestamp;
+    }
+
+    public void setEarliestExportBroadcastTimestamp(Long earliestExportBroadcastTimestamp) {
+        this.earliestExportBroadcastTimestamp = earliestExportBroadcastTimestamp;
+    }
 
     public File getBtaHibernateConfigurationFile() {
         return btaHibernateConfigurationFile;

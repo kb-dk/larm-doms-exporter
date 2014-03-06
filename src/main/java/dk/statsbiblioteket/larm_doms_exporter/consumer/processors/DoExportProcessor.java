@@ -11,6 +11,7 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorChainElement;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.util.ChannelMapper;
+import dk.statsbiblioteket.util.xml.DOM;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -101,6 +103,39 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     @Override
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
+      /*  org.w3c.dom.Document pbcoreDocument;
+        dbf.setNamespaceAware(true);
+        try {
+            DocumentBuilder builder = dbf.newDocumentBuilder();
+            pbcoreDocument = builder.parse(new ByteArrayInputStream(state.getPbcoreString().getBytes()));
+            state.setPbcoreDocument(pbcoreDocument);
+        } catch (Exception e) {
+            throw new ProcessorException("Error parsing pbcore", e);
+        }*/
+        state.setPbcoreDocument(DOM.stringToDOM(state.getPbcoreString(), true));
+        String programStartTime;
+        try {
+            programStartTime = getBroadcastStartTimeString(state);
+        } catch (XPathExpressionException e) {
+            throw new ProcessorException("Error getting start-time", e);
+        }
+        //DOMS start times like 2007-08-19T00:05:00+0200
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSZ");
+        Date programDate = null;
+        try {
+            programDate = sdf.parse(programStartTime);
+        } catch (ParseException e) {
+            throw new ProcessorException("Could not parse date " + programStartTime);
+        }
+        Date earliestBroadcastDate = new Date(context.getEarliestExportBroadcastTimestamp());
+        Date earliestTimestamp = new Date(context.getInProductionTimestamp());
+        if (programDate.before(earliestBroadcastDate) && record.getLastDomsTimestamp().before(earliestTimestamp)) {
+            logger.info("Program " + record.getID() + " has Broadcast date " + programDate
+                    + " and DOMS timestamp " + record.getLastDomsTimestamp() + " and so will be marked as complete" +
+                    " without exporting");
+            this.setChildElement(new MarkAsCompleteProcessor());
+            return;
+        }
         File outputDir = context.getOutputDirectory();
         File tempOutputDir = new File(outputDir, "tempDir");
         tempOutputDir.mkdirs();
@@ -111,15 +146,6 @@ public class DoExportProcessor extends ProcessorChainElement {
         }
         File tempOutputFile = new File(tempOutputDir, outputFile.getName());
         String result = XML_TEMPLATE;
-        org.w3c.dom.Document pbcoreDocument;
-        dbf.setNamespaceAware(true);
-        try {
-            DocumentBuilder builder = dbf.newDocumentBuilder();
-            pbcoreDocument = builder.parse(new ByteArrayInputStream(state.getPbcoreString().getBytes()));
-            state.setPbcoreDocument(pbcoreDocument);
-        } catch (Exception e) {
-            throw new ProcessorException("Error parsing pbcore", e);
-        }
         try {
             result = substituteShardPid(result, record, context, state);
             result = substituteEndTimeString(result, record, context, state);
@@ -128,15 +154,15 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteGeneric(result, record, context, state, "###TITLE###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreTitle[pbcore:titleType='titel']/pbcore:title");
             result = substituteGeneric(result, record, context, state, "###ABSTRACT###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='kortomtale']/pbcore:description");
             result = substituteGeneric(result, record, context, state, "###DESCRIPTION1###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale1']/pbcore:description");
-            result = substituteGeneric(result, record, context, state, "###DESCRIPTION2###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale2']/pbcore:description");
+            result = substituteGeneric(result, record, context, state, "###DESCRIPTION2###", "/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale2']/pbcore:description");
             result = substitutePublisher(result, record, context, state);
             result = substituteLogoFilename(result, record, context, state);
             result = substituteEmpty(result, "###CREATOR###");
             result = substituteEmpty(result, "###LOCATIONS###");
             result = substituteProgramPid(result, record, context, state);
             result = substituteFilename(result, record, context, state);
-            result = substituteWalltimeChange(result, record, context, state);
             result = substituteFileTimeStamp(result, record, context, state);
+            result = substituteWalltime(result, record, context, state);
         } catch (Exception e) {
             throw new ProcessorException("Error processing " + record.getID(), e);
         }
@@ -152,10 +178,10 @@ public class DoExportProcessor extends ProcessorChainElement {
         tempOutputFile.renameTo(outputFile);
     }
 
-    private String substituteWalltimeChange(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
-        Pattern pattern = Pattern.compile("###WALLTIMECHANGEMS###", Pattern.DOTALL);
-        if (state.getChangeInFileStartWalltime() != null) {
-            return pattern.matcher(template).replaceAll("" + state.getChangeInFileStartWalltime());
+    private String substituteWalltime(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###WALLTIME###", Pattern.DOTALL);
+        if (state.getWalltime() != null) {
+            return pattern.matcher(template).replaceAll("" + state.getWalltime());
         } else {
             return pattern.matcher(template).replaceAll("");
         }
@@ -191,12 +217,27 @@ public class DoExportProcessor extends ProcessorChainElement {
     private String substituteStartTimeString(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) throws XPathExpressionException, ParseException {
         String patternString = "###START_TIME###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
+        String programStartString = getBroadcastStartTimeString(state);
+        String chaosStartString = chaosDateFormat.format(domsDateFormat.parse(programStartString));
+        return pattern.matcher(template).replaceAll(chaosStartString);
+    }
+
+    private String getBroadcastStartTimeString(ExportRequestState state) throws XPathExpressionException {
         String xpathString = "//pbcore:dateAvailableStart";
         XPath xpath = xpathFactory.newXPath();
         xpath.setNamespaceContext(pbcoreNamespaceContext);
-        String programStartString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
-        String chaosStartString = chaosDateFormat.format(domsDateFormat.parse(programStartString));
-        return pattern.matcher(template).replaceAll(chaosStartString);
+        String startTimeString = null;
+        try {
+            startTimeString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        } catch (XPathExpressionException e) {
+            try {
+                logger.warn("Could not find start time with xpath '{}' on \n{}\n.", xpathString, DOM.domToString(state.getPbcoreDocument()) );
+                throw(e);
+            } catch (TransformerException x) {
+                logger.warn("", x);
+            }
+        }
+        return startTimeString;
     }
 
     private String substituteEndTimeString(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) throws XPathExpressionException, ParseException {
