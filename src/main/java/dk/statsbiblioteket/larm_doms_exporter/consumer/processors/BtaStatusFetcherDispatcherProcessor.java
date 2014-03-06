@@ -35,7 +35,7 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
             logger.debug("Checking status for BTA record:" + btaRecord);
             switch (btaRecord.getTranscodingState()) {
                 case PENDING:
-                    logger.info(record.getID() + " is awaiting transcoding. " + ". Not exporting now.");
+                    logger.info(record.getID() + " is awaiting transcoding. " + ". Not exporting just now.");
                     this.setChildElement(null);
                     break;
                 case REJECTED:
@@ -54,13 +54,12 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                     logger.info(record.getID() + " has been successfully transcoded. Will now check if export is necessary.");
                     Date broadcastStartTime = btaRecord.getBroadcastStartTime();
                     logger.debug("Start time {} for {}", broadcastStartTime, record.getID());
-                    if (broadcastStartTime != null) {
-                        Date newWalltime = new Date(broadcastStartTime.getTime() + btaRecord.getStartOffset()*1000L);
-                        logger.debug("Setting walltime {} for {}.", newWalltime, record.getID() );
-                        state.setWalltime(newWalltime);
-                    } else {
+                    if (broadcastStartTime == null) {
                         throw new ProcessorException("Surprised to find bta record in state COMPLETED but with null broadcastStartTime:" + record.getID());
                     }
+                    Date newWalltime = new Date(broadcastStartTime.getTime() + btaRecord.getStartOffset()*1000L);
+                    logger.debug("Setting walltime {} for {}.", newWalltime, record.getID() );
+                    state.setWalltime(newWalltime);
                     final String transcodingCommand = btaRecord.getTranscodingCommand();
                     if (transcodingCommand != null) {
                         String[] splitCommand = transcodingCommand.split("\\s");
@@ -71,11 +70,11 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                             state.setOutputFileTimeStamp(fileTimeStamp);
                         } else {
                             logger.warn("Could not find output file: " + outputFileS);
-                            state.setOutputFileTimeStamp(0L);
+                            state.setOutputFileTimeStamp(btaRecord.getLastTranscodedTimestamp());
                         }
                     } else {
                         logger.warn("Could not find output file from null transcoding command for {}.", record.getID());
-                        state.setOutputFileTimeStamp(0L);
+                        state.setOutputFileTimeStamp(btaRecord.getLastTranscodedTimestamp());
                     }
                     break;
             }
