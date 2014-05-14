@@ -40,7 +40,7 @@
 					<EndOffSetMS>0</EndOffSetMS>
                     <FileName>###FILENAME###</FileName>
 					<Index>0</Index>
-					<BaseWalltime></WalltimeInfo>
+					<BaseWalltime></BaseWalltime>
 					<WalltimeInfo>
 						<ChangeDateTime>###FILETIMESTAMP###</ChangeDateTime>
 						<Walltime>###WALLTIME###</Walltime>

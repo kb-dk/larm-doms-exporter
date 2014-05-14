@@ -181,7 +181,7 @@ public class DoExportProcessor extends ProcessorChainElement {
     private String substituteWalltime(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
         Pattern pattern = Pattern.compile("###WALLTIME###", Pattern.DOTALL);
         if (state.getWalltime() != null) {
-            return pattern.matcher(template).replaceAll("" + state.getWalltime());
+            return pattern.matcher(template).replaceAll(chaosDateFormat.format(state.getWalltime()));
         } else {
             return pattern.matcher(template).replaceAll("");
         }

@@ -59,7 +59,10 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                         logger.debug("Setting walltime {} for {}.", newWalltime, record.getID() );
                         state.setWalltime(newWalltime);
                     } else {
-                        throw new ProcessorException("Surprised to find bta record in state COMPLETED but with null broadcastStartTime:" + record.getID());
+                        logger.debug("No broadcast start time found for {} so it must be an old program. " +
+                                "Marking as complete.", record.getID());
+                        this.setChildElement(new MarkAsCompleteProcessor());
+                        return;
                     }
                     final String transcodingCommand = btaRecord.getTranscodingCommand();
                     if (transcodingCommand != null) {
