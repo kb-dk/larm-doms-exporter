@@ -13,6 +13,7 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.SignificantCha
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.DomsExportRecordDAO;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.HibernateUtil;
+import dk.statsbiblioteket.larm_doms_exporter.producer.ProducerApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,11 +25,39 @@ import java.util.List;
 public class ConsumerApplication {
 
     private static Logger logger = LoggerFactory.getLogger(ConsumerApplication.class);
+    public static final String USAGE_MESSAGE = "Usage: java " +
+            "  dk.statsbiblioteket.larm_doms_exporter.producer.ProducerApplication \n" +
+            " --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\n" +
+            " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
+            " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
+            " --behavioural_configfile=$confDir/lde.behaviour.properties";
 
+    /**
+     * This application exports all appropriate objects to LARM as xml files. The details
+     * of how it determines which objects are ready to export are documented at
+     * https://sbforge.org/display/CHAOS/LARM-DOMS-Exporter
+     *
+     * Usage: java " +
+     "  dk.statsbiblioteket.larm_doms_exporter.consumer.ConsumerApplication \n" +
+     " --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\n" +
+     " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
+     " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
+     " --behavioural_configfile=$confDir/lde.behaviour.properties
+     *
+     * @param args
+     * @throws UsageException
+     * @throws OptionParseException
+     */
     public static void main(String[] args) throws UsageException, OptionParseException {
         logger.info("Entered main method of " + ConsumerApplication.class.getName());
         ExportOptionsParser optionsParser = new ExportOptionsParser();
-        ExportContext context = optionsParser.parseOptions(args);
+        ExportContext context = null;
+        try {
+            context = optionsParser.parseOptions(args);
+        } catch (Exception e) {
+            usage();
+            System.exit(1);
+        }
         logger.info("Context initialised: '" + context.toString() + "'");
         HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
         DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtil);
@@ -60,6 +89,11 @@ public class ConsumerApplication {
                 markAsCompleter
         );
         completeChain.processIteratively(record, context, new ExportRequestState() );
+    }
+
+    private static void usage() {
+        logger.error(USAGE_MESSAGE);
+        System.out.println(USAGE_MESSAGE);
     }
 
 }
