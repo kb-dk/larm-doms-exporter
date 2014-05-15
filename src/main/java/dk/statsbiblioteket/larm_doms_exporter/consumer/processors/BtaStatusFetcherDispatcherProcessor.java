@@ -16,7 +16,10 @@ import java.io.File;
 import java.util.Date;
 
 /**
- *
+ * Check the BTA status for this program. Failed and Rejected transcodings are also rejected for export.
+ * Pending transcodings are left as Pending but the processing stops here.
+ * Completed transcodings are allowed to continue processing and this class also calculates the file timestamp and
+ * walltime for the export. If walltime cannot be calculated then the export is Rejected.
  */
 public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
 

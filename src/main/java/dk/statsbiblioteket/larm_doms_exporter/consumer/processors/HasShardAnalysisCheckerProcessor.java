@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ *  Check for shard-analysis. If there is none, delete this program from LDE.
  */
 public class HasShardAnalysisCheckerProcessor extends ProcessorChainElement {
 

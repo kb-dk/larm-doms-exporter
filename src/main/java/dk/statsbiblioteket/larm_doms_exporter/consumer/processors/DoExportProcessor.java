@@ -39,6 +39,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 /**
+ * Does the actual xml export.
+ *
+ *
  *  Compare with the following snippet from the old exporter:
  * .append("    <doms_id>"              + radioProgramMetadata.shardPid                                              + "</doms_id>\n")
  .append("    <channel_name>"         + radioProgramMetadata.getPbcoreProgramMetadata().channel                    + "</channel_name>\n")

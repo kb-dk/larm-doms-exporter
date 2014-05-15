@@ -1,5 +1,8 @@
 #!/bin/bash
-
+#
+# Script for bulk ftp upload of xml envelope files as a timestamped tar-file. The file
+# is uploaded then downloaded again to check for bitwise integrity.
+#
 script_path=$(dirname $(readlink -f $0))
 configfile=$(readlink -f $(dirname $(readlink -f $0))/../config/lde.infrastructure.properties)
 source $configfile

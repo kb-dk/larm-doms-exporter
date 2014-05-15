@@ -1,11 +1,7 @@
 package dk.statsbiblioteket.larm_doms_exporter.util;
 
 /**
- * Created with IntelliJ IDEA.
- * User: csr
- * Date: 4/22/13
- * Time: 2:46 PM
- * To change this template use File | Settings | File Templates.
+ * Class to map channel names to the logo-file names supplied by Geckon.
  */
 public class ChannelMapper {
 

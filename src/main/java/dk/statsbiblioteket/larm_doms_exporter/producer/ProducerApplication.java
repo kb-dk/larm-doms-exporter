@@ -23,7 +23,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * Application class which reads information on newly transcoded programs from the BTA database and loads them into
+ * the LDE database.
  */
 public class ProducerApplication {
 
@@ -37,7 +38,10 @@ public class ProducerApplication {
 
     /**
      * This application pulls information on newly transcoded programs from the BTA database and puts them in the LDE
-     * database, where they form a persistent queue of programs to be exported to LARM.
+     * database, where they form a persistent queue of programs to be exported to LARM. If the record is already in
+     * the LDE database it is marked as PENDING. If it is either PENDING in BTA or COMPLETE in BTA and has a
+     * broadcast-start-time then it is created as PENDING in LDE. If it is complete in BTA but has no broadcast-start-time
+     * then it is imported to LDE as REJECTED. (LDE cannot export records for which it cannot calculate a Walltime.)
      *
      * Usage: java " +
      "  dk.statsbiblioteket.larm_doms_exporter.producer.ProducerApplication \n" +
