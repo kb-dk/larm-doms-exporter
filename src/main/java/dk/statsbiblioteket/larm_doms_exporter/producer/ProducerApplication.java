@@ -48,7 +48,6 @@ public class ProducerApplication {
      *
      */
     public static void main(String[] args) throws UsageException, OptionParseException, InvalidCredentialsException, MethodFailedException {
-        boolean initialPull = false;
         logger.info("Entered main method of " + ProducerApplication.class.getName());
         ExportOptionsParser optionsParser = new ExportOptionsParser();
         ExportContext context = null;
@@ -63,10 +62,8 @@ public class ProducerApplication {
         DomsExportRecordDAO ldeDao = new DomsExportRecordDAO(hibernateUtil);
         Long startingTimestamp = ldeDao.getMostRecentExportedTimestamp();
         if (startingTimestamp == null) {
-            initialPull = true;
             startingTimestamp = 0L;
-            logger.info("This is the initial pull. DOMS objects unmodified since " + new Date(context.getSeedTimestamp()) + " are assumed to have " +
-                    "already been exported.");
+            logger.info("This is the initial pull.");
         }
         startingTimestamp++;
         dk.statsbiblioteket.broadcasttranscoder.persistence.dao.HibernateUtil btaHibernateUtil = dk.statsbiblioteket.broadcasttranscoder.persistence.dao.HibernateUtil.getInstance(context.getBtaHibernateConfigurationFile().getAbsolutePath());
@@ -77,31 +74,35 @@ public class ProducerApplication {
         btaRecords.addAll(btaRecordsPending);
         logger.info("Retrieved " + btaRecords.size() + " records in state COMPLETE or PENDING from bta.");
         int pending = 0;
-        int complete = 0;
+        int rejected = 0;
         for (BroadcastTranscodingRecord btaRecord: btaRecords) {
             DomsExportRecord ldeDatabaseRecord = ldeDao.readOrCreate(btaRecord.getID());
-            if (ldeDatabaseRecord.getLastDomsTimestamp() != null) {  //preexisting record
+            if (ldeDatabaseRecord.getLastDomsTimestamp() != null && !ldeDatabaseRecord.getState().equals(ExportStateEnum.PENDING)) {  //preexisting record
                 ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
                 ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
                 ldeDao.update(ldeDatabaseRecord);
                 pending++;
-            }  else {
-                if (initialPull && btaRecord.getDomsLatestTimestamp() < context.getSeedTimestamp()) {
-                    ldeDatabaseRecord.setLastDomsTimestamp(new Date(context.getSeedTimestamp()));
-                    ldeDatabaseRecord.setLastExportTimestamp(ldeDatabaseRecord.getLastDomsTimestamp());
-                    ldeDatabaseRecord.setState(ExportStateEnum.COMPLETE);
-                    ldeDao.update(ldeDatabaseRecord);
-                    complete++;
-                } else {
-                    ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
-                    ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
-                    ldeDao.update(ldeDatabaseRecord);
-                    pending++;
-                }
+            }
+            else if (btaRecord.getTranscodingState().equals(TranscodingStateEnum.COMPLETE) && btaRecord.getBroadcastStartTime() != null) {
+                ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
+                ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
+                ldeDao.update(ldeDatabaseRecord);
+                pending++;
+            }
+            else if (btaRecord.getTranscodingState().equals(TranscodingStateEnum.PENDING)) {
+                ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
+                ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
+                ldeDao.update(ldeDatabaseRecord);
+                pending++;
+            } else {
+                ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
+                ldeDatabaseRecord.setState(ExportStateEnum.REJECTED);
+                ldeDao.update(ldeDatabaseRecord);
+                rejected++;
             }
         }
-        logger.info("Added " + complete + " already-exported records.");
         logger.info("Added as pending or changed to pending " + pending + " records.");
+        logger.info("Rejected {} records", rejected);
         logger.info("Exiting " + ProducerApplication.class.getName());
     }
 

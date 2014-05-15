@@ -60,7 +60,6 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         Properties props = new Properties();
         props.load(new FileInputStream(context.getBehaviourConfigFile()));
         context.setDomsViewAngle(readStringProperty("domsViewAngle", props));
-        context.setSeedTimestamp(readLongProperty("seedTimestamp", props));
         context.setInProductionTimestamp(readLongProperty("inProductionTimestamp", props));
         context.setEarliestExportBroadcastTimestamp(readLongProperty("earliestExportBroadcastTimestamp", props));
     }

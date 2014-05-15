@@ -149,7 +149,7 @@ public class ExportContext {
                 ", infrastructreConfigFile=" + infrastructreConfigFile +
                 ", domsCentralWebserviceUrl='" + domsCentralWebserviceUrl + '\'' +
                 ", domsUsername='" + domsUsername + '\'' +
-                ", domsPassword='" + domsPassword + '\'' +
+                ", domsPassword='" + "***********" + '\'' +
                 ", seedTimestamp=" + seedTimestamp +
                 ", domsViewAngle='" + domsViewAngle + '\'' +
                 ", outputDirectory=" + outputDirectory +

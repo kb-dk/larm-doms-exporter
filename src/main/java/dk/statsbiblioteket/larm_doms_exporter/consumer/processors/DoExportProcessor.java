@@ -103,15 +103,6 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     @Override
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
-      /*  org.w3c.dom.Document pbcoreDocument;
-        dbf.setNamespaceAware(true);
-        try {
-            DocumentBuilder builder = dbf.newDocumentBuilder();
-            pbcoreDocument = builder.parse(new ByteArrayInputStream(state.getPbcoreString().getBytes()));
-            state.setPbcoreDocument(pbcoreDocument);
-        } catch (Exception e) {
-            throw new ProcessorException("Error parsing pbcore", e);
-        }*/
         state.setPbcoreDocument(DOM.stringToDOM(state.getPbcoreString(), true));
         String programStartTime;
         try {
