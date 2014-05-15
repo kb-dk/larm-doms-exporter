@@ -8,7 +8,7 @@ import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
 
 /**
-*
+ * Mark the given record as Complete in the persistent queue.
  */
 public class MarkAsCompleteProcessor extends ProcessorChainElement {
     @Override

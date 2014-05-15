@@ -8,7 +8,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 import java.io.File;
 
 /**
- *
+ * Hibernate utility for building hibernate sessions for this set of applications from a configuration file.
  */
 public class HibernateUtil implements HibernateUtilIF {
 
@@ -21,6 +21,11 @@ public class HibernateUtil implements HibernateUtilIF {
 
     }
 
+    /**
+     * Encapsulate logic for hibernate sessions for persisting instances of the DomsExportRecord class.
+     * @param configFilePath  the Configuration file.
+     * @return  the singleton instance of this class
+     */
     public static synchronized HibernateUtil getInstance(String configFilePath) {
         HibernateUtil.configFilePath = configFilePath;
         if (instance == null) {

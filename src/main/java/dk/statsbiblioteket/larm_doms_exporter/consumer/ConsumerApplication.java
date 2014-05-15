@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
-
+ * Application for export as xml envelopes the entries in the persistent (database) queue.
  */
 public class ConsumerApplication {
 
@@ -85,12 +85,12 @@ public class ConsumerApplication {
         ProcessorChainElement doExporter = new DoExportProcessor();
         ProcessorChainElement markAsCompleter = new MarkAsCompleteProcessor();
         ProcessorChainElement completeChain = ProcessorChainElement.makeChain(
-                radioChecker,
-                hasShardChecker,
-                btaStatus,
-                significanceChecker,
-                doExporter,
-                markAsCompleter
+                radioChecker,      //is radio program
+                hasShardChecker,   //has been exported
+                btaStatus,         //has been analysed for holes etc.
+                significanceChecker, //Change from previous export doms timestamp is significant
+                doExporter,          //Do the export
+                markAsCompleter      //Update the database
         );
         completeChain.processIteratively(record, context, new ExportRequestState() );
     }

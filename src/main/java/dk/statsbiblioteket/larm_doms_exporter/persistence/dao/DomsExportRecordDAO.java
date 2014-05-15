@@ -15,7 +15,8 @@ public class DomsExportRecordDAO extends GenericHibernateDAO<DomsExportRecord, S
     }
 
     /**
-     * Get the most recent DOMS timestamp for all records in state "COMPLETE" or null if there are none.
+     * Get the most recent DOMS timestamp for all records in state "COMPLETE" or null if there are none. The
+     * null return value can be used to identify the initial run.
      * @return the timestamp.
      */
     public Long getMostRecentExportedTimestamp() {

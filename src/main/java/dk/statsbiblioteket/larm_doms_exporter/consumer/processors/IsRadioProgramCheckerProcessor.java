@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 /**
- *
+ * Simple check that the given program is a radio program. If not, it is rejected.
  */
 public class IsRadioProgramCheckerProcessor extends ProcessorChainElement {
 

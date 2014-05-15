@@ -30,7 +30,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
+ * For a previously-exported program, compare the two versions of the DOMS metadata and check whether the
+ * change affects any fields relevant to the export.
  */
 public class SignificantChangeCheckerProcessor extends ProcessorChainElement {
 

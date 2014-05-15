@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- *
+ * Parser for command line options to the LARM-DOMS-Exporter applications.
  */
 public class ExportOptionsParser extends AbstractOptionsParser {
 
