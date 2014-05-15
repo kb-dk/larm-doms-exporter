@@ -64,6 +64,10 @@ public class ConsumerApplication {
         context.setDomsExportRecordDAO(dao);
         List<DomsExportRecord> queue = dao.getPendingExports();
         for (DomsExportRecord record: queue) {
+            if (context.getNumExports() >= context.getMaxExportsPerRun()) {
+                logger.info("Maximum number of exports reached. Next consumer run will continue from here.");
+                System.exit(0);
+            }
             try {
                 processRecord(record, context);
                 logger.info("Finished all processing for " + record.getID());

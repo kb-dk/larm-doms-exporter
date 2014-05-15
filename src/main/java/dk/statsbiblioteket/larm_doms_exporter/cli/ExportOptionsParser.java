@@ -62,6 +62,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         context.setDomsViewAngle(readStringProperty("domsViewAngle", props));
         context.setInProductionTimestamp(readLongProperty("inProductionTimestamp", props));
         context.setEarliestExportBroadcastTimestamp(readLongProperty("earliestExportBroadcastTimestamp", props));
+        context.setMaxExportsPerRun(readLongProperty("maxExportsPerRun", props));
     }
 
     private void readInfrastructureProperties(ExportContext context) throws IOException, OptionParseException {

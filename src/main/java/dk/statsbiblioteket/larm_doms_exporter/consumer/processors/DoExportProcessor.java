@@ -163,6 +163,8 @@ public class DoExportProcessor extends ProcessorChainElement {
             os.write(result.getBytes());
             os.flush();
             os.close();
+            context.incrementNumExports();
+            logger.debug("{} records exported so far.");
         } catch (IOException e) {
             throw new ProcessorException("Could not write output file");
         }

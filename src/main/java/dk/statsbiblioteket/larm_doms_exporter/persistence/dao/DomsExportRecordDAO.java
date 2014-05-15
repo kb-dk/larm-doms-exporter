@@ -36,4 +36,6 @@ public class DomsExportRecordDAO extends GenericHibernateDAO<DomsExportRecord, S
                .setParameter(0, ExportStateEnum.PENDING).list();
     }
 
+
+
 }

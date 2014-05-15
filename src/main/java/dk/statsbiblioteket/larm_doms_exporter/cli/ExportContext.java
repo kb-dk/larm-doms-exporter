@@ -27,7 +27,30 @@ public class ExportContext {
     private Long inProductionTimestamp;
     private Long earliestExportBroadcastTimestamp;
 
+    private Long maxExportsPerRun;
+    private Long numExports = 0L;
+
     /* etc */
+
+    public Long getNumExports() {
+        return numExports;
+    }
+
+    public void setNumExports(Long numExports) {
+        this.numExports = numExports;
+    }
+
+    public void incrementNumExports() {
+        numExports++;
+    }
+
+    public Long getMaxExportsPerRun() {
+        return maxExportsPerRun;
+    }
+
+    public void setMaxExportsPerRun(Long maxExportsPerRun) {
+        this.maxExportsPerRun = maxExportsPerRun;
+    }
 
     public Long getInProductionTimestamp() {
         return inProductionTimestamp;
