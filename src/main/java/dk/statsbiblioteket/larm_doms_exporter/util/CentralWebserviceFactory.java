@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- *
+ * Class encapsulating the logic for getting a DOMS CentralWebservice instance,
  */
 public class CentralWebserviceFactory {
     private static final QName CENTRAL_WEBSERVICE_SERVICE = new QName(

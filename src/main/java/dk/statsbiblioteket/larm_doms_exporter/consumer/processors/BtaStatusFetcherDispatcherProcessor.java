@@ -32,24 +32,24 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
         BroadcastTranscodingRecord btaRecord = btaDao.read(record.getID());
         if (btaRecord == null || btaRecord.getTranscodingState() == null) {
             logger.info("No BTA record found for " + record.getID() + ". Not exporting now.");
-            this.setChildElement(null);
+            this.setNextElement(null);
             return;
         } else {
             logger.debug("Checking status for BTA record:" + btaRecord);
             switch (btaRecord.getTranscodingState()) {
                 case PENDING:
                     logger.info(record.getID() + " is awaiting transcoding. " + ". Not exporting now.");
-                    this.setChildElement(null);
+                    this.setNextElement(null);
                     break;
                 case REJECTED:
                     logger.info(record.getID() + " has been rejected for transcoding. Not exporting.");
-                    this.setChildElement(null);
+                    this.setNextElement(null);
                     record.setState(ExportStateEnum.REJECTED);
                     context.getDomsExportRecordDAO().update(record);
                     break;
                 case FAILED:
                     logger.info(record.getID() + " failed during transcoding. Not exporting.");
-                    this.setChildElement(null);
+                    this.setNextElement(null);
                     record.setState(ExportStateEnum.REJECTED);
                     context.getDomsExportRecordDAO().update(record);
                     break;
@@ -62,9 +62,9 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                         logger.debug("Setting walltime {} for {}.", newWalltime, record.getID() );
                         state.setWalltime(newWalltime);
                     } else {
-                        logger.debug("No broadcast start time found for {} so it must be an old program. " +
+                        logger.debug("No broadcast start time found for {} so it must be an old BES transcoding. " +
                                 "Marking as complete.", record.getID());
-                        this.setChildElement(new MarkAsCompleteProcessor());
+                        this.setNextElement(new MarkAsCompleteProcessor());
                         return;
                     }
                     final String transcodingCommand = btaRecord.getTranscodingCommand();

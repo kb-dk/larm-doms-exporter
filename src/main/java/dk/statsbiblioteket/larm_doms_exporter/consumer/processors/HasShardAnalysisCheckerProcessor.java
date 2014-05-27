@@ -1,7 +1,6 @@
 package dk.statsbiblioteket.larm_doms_exporter.consumer.processors;
 
 import dk.statsbiblioteket.doms.central.CentralWebservice;
-import dk.statsbiblioteket.doms.central.InvalidResourceException;
 import dk.statsbiblioteket.larm_doms_exporter.cli.ExportContext;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ExportRequestState;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorChainElement;
@@ -26,7 +25,7 @@ public class HasShardAnalysisCheckerProcessor extends ProcessorChainElement {
             structureXmlString = domsAPI.getDatastreamContents(record.getID(), "PROGRAM_STRUCTURE");
         } catch (Exception e) {
             logger.info("No PROGRAM_STRUCTURE datastream in " + record.getID() + ". Not exporting.");
-            this.setChildElement(null);
+            this.setNextElement(null);
             context.getDomsExportRecordDAO().delete(record);
         }
         logger.info(record.getID() + " has a program structure (shard analysis). Proceeding.");

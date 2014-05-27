@@ -1,15 +1,13 @@
 package dk.statsbiblioteket.larm_doms_exporter.consumer.processors;
 
 import dk.statsbiblioteket.doms.central.CentralWebservice;
-import dk.statsbiblioteket.doms.central.InvalidCredentialsException;
-import dk.statsbiblioteket.doms.central.InvalidResourceException;
-import dk.statsbiblioteket.doms.central.MethodFailedException;
 import dk.statsbiblioteket.doms.central.Relation;
 import dk.statsbiblioteket.larm_doms_exporter.cli.ExportContext;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ExportRequestState;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorChainElement;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
+import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
 import dk.statsbiblioteket.larm_doms_exporter.util.ChannelMapper;
 import dk.statsbiblioteket.util.xml.DOM;
 import org.apache.commons.io.IOUtils;
@@ -19,14 +17,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -99,9 +95,11 @@ public class DoExportProcessor extends ProcessorChainElement {
     }
 
     private static XPathFactory xpathFactory = XPathFactory.newInstance();
+
     private static NamespaceContext pbcoreNamespaceContext = new PBCoreNamespaceResolver();
 
-
+    //TODO replace with following library call:
+    //private static NamespaceContext namespaceContext = new DefaultNamespaceContext("http://www.pbcore.org/PBCore/PBCoreNamespace.html", "pbcore");
 
 
     @Override
@@ -111,7 +109,9 @@ public class DoExportProcessor extends ProcessorChainElement {
         try {
             programStartTime = getBroadcastStartTimeString(state);
         } catch (XPathExpressionException e) {
-            throw new ProcessorException("Error getting start-time", e);
+            record.setState(ExportStateEnum.FAILED);
+            context.getDomsExportRecordDAO().update(record);
+            throw new ProcessorException("Error getting start-time. Export state set to FAILED.", e);
         }
         //DOMS start times like 2007-08-19T00:05:00+0200
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSZ");
@@ -127,9 +127,12 @@ public class DoExportProcessor extends ProcessorChainElement {
             logger.info("Program " + record.getID() + " has Broadcast date " + programDate
                     + " and DOMS timestamp " + record.getLastDomsTimestamp() + " and so will be marked as complete" +
                     " without exporting");
-            this.setChildElement(new MarkAsCompleteProcessor());
+            this.setNextElement(new MarkAsCompleteProcessor());
             return;
         }
+        //TODO move some of this functionalty out of here and into a prior processor. In particular, write data to a
+        //general OutputStream stored in the state or record. This will make it much easier to test the class.
+        //Renaming will need to be moved to a postprocessingProcessor.
         File outputDir = context.getOutputDirectory();
         File tempOutputDir = new File(outputDir, "tempDir");
         tempOutputDir.mkdirs();
@@ -139,6 +142,23 @@ public class DoExportProcessor extends ProcessorChainElement {
             + " already exists. Object will be left in state PENDING and processed again next time.");
         }
         File tempOutputFile = new File(tempOutputDir, outputFile.getName());
+        String result = getOutputString(record, context, state);
+        logger.info("Writing new export file " + outputFile.getAbsolutePath());
+        try {
+            FileOutputStream os = new FileOutputStream(tempOutputFile);
+            os.write(result.getBytes());
+            os.flush();
+            os.close();
+            context.incrementNumExports();
+            logger.debug("{} records exported so far.");
+        } catch (IOException e) {
+            throw new ProcessorException("Could not write output file: " + tempOutputFile.getAbsolutePath() + ". Export of this program is left" +
+                    "in the state PENDING.", e);
+        }
+        tempOutputFile.renameTo(outputFile);
+    }
+
+    private String getOutputString(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
         String result = XML_TEMPLATE;
         try {
             result = substituteShardPid(result, record, context, state);
@@ -160,18 +180,7 @@ public class DoExportProcessor extends ProcessorChainElement {
         } catch (Exception e) {
             throw new ProcessorException("Error processing " + record.getID(), e);
         }
-        logger.info("Writing new export file " + outputFile.getAbsolutePath());
-        try {
-            FileOutputStream os = new FileOutputStream(tempOutputFile);
-            os.write(result.getBytes());
-            os.flush();
-            os.close();
-            context.incrementNumExports();
-            logger.debug("{} records exported so far.");
-        } catch (IOException e) {
-            throw new ProcessorException("Could not write output file");
-        }
-        tempOutputFile.renameTo(outputFile);
+        return result;
     }
 
     private String substituteWalltime(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
@@ -206,7 +215,7 @@ public class DoExportProcessor extends ProcessorChainElement {
             }
             return pattern.matcher(template).replaceAll(shardPid);
         } catch (Exception e) {
-            throw new ProcessorException("Could not get hasShard relation", e);
+            throw new ProcessorException("Error while checking for the existence of a hasShard relation", e);
         }
     }
 

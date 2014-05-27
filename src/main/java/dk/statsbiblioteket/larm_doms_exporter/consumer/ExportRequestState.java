@@ -5,18 +5,13 @@ import org.w3c.dom.Document;
 import java.util.Date;
 
 /**
- * Created with IntelliJ IDEA.
- * User: csr
- * Date: 17/04/13
- * Time: 15:37
- * To change this template use File | Settings | File Templates.
+ * This is a bean class which is used to store information relevant to the export of a given record.
  */
 public class ExportRequestState {
 
     private String pbcoreString;
     private Document pbcoreDocument;
     private Date walltime;
-    private Long changeInFileStartWalltime;
     private Long outputFileTimeStamp;
 
     /* ---------------------------- */
@@ -43,14 +38,6 @@ public class ExportRequestState {
 
     public void setWalltime(Date walltime) {
         this.walltime = walltime;
-    }
-
-    public Long getChangeInFileStartWalltime() {
-        return changeInFileStartWalltime;
-    }
-
-    public void setChangeInFileStartWalltime(Long changeInFileStartWalltime) {
-        this.changeInFileStartWalltime = changeInFileStartWalltime;
     }
 
     public Long getOutputFileTimeStamp() {

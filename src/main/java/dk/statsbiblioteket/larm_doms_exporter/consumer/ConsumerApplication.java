@@ -26,7 +26,7 @@ public class ConsumerApplication {
 
     private static Logger logger = LoggerFactory.getLogger(ConsumerApplication.class);
     public static final String USAGE_MESSAGE = "Usage: java " +
-            "  dk.statsbiblioteket.larm_doms_exporter.producer.ProducerApplication \n" +
+            "  " + ConsumerApplication.class.getName() + "\n" +
             " --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\n" +
             " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
             " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
@@ -59,6 +59,10 @@ public class ConsumerApplication {
             System.exit(1);
         }
         logger.info("Context initialised: '" + context.toString() + "'");
+        processAllExports(context);
+    }
+
+    private static void processAllExports(ExportContext context) {
         HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
         DomsExportRecordDAO dao = new DomsExportRecordDAO(hibernateUtil);
         context.setDomsExportRecordDAO(dao);
@@ -96,6 +100,7 @@ public class ConsumerApplication {
     }
 
     private static void usage() {
+        //TODO consider using library method from apache commons cli
         logger.error(USAGE_MESSAGE);
         System.out.println(USAGE_MESSAGE);
     }

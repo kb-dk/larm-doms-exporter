@@ -1,10 +1,3 @@
-/* $Id$
- * $Revision$
- * $Date$
- * $Author$
- *
- *
- */
 package dk.statsbiblioteket.larm_doms_exporter.persistence.dao;
 
 import org.hibernate.Session;
@@ -22,7 +15,7 @@ public class GenericHibernateDAO<T extends Identifiable<PK>, PK extends Serializ
     }
 
     @SuppressWarnings("unchecked")
-   public PK create(T o) {
+    public PK create(T o) {
         Session sess = getSession();
         PK key;
         try {

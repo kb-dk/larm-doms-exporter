@@ -1,9 +1,6 @@
 package dk.statsbiblioteket.larm_doms_exporter.consumer.processors;
 
 import dk.statsbiblioteket.doms.central.CentralWebservice;
-import dk.statsbiblioteket.doms.central.InvalidCredentialsException;
-import dk.statsbiblioteket.doms.central.InvalidResourceException;
-import dk.statsbiblioteket.doms.central.MethodFailedException;
 import dk.statsbiblioteket.doms.central.ViewBundle;
 import dk.statsbiblioteket.larm_doms_exporter.cli.ExportContext;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ExportRequestState;
@@ -16,13 +13,11 @@ import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.text.DateFormat;
@@ -46,7 +41,7 @@ public class SignificantChangeCheckerProcessor extends ProcessorChainElement {
             logger.info(record.getID() + " has changed siginificantly. Proceeding.");
         } else {
             logger.info(record.getID() + " has not changed siginificantly. Not exporting.");
-            this.setChildElement(null);
+            this.setNextElement(null);
             record.setLastExportTimestamp(record.getLastDomsTimestamp());
             record.setState(ExportStateEnum.COMPLETE);
             context.getDomsExportRecordDAO().update(record);

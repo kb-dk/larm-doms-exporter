@@ -30,7 +30,7 @@ public class ProducerApplication {
 
     private static Logger logger = LoggerFactory.getLogger(ProducerApplication.class);
     public static final String USAGE_MESSAGE = "Usage: java " +
-            "  dk.statsbiblioteket.larm_doms_exporter.producer.ProducerApplication \n" +
+            " " + ProducerApplication.class.getName() + " \n" +
             " --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\n" +
             " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
             " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
@@ -62,6 +62,11 @@ public class ProducerApplication {
             System.exit(1);
         }
         logger.info("Context initialised: '" + context.toString() + "'");
+        queueRecordsForExport(context);
+        logger.info("Exiting " + ProducerApplication.class.getName());
+    }
+
+    private static void queueRecordsForExport(ExportContext context) {
         HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
         DomsExportRecordDAO ldeDao = new DomsExportRecordDAO(hibernateUtil);
         Long startingTimestamp = ldeDao.getMostRecentExportedTimestamp();
@@ -107,7 +112,6 @@ public class ProducerApplication {
         }
         logger.info("Added as pending or changed to pending " + pending + " records.");
         logger.info("Rejected {} records", rejected);
-        logger.info("Exiting " + ProducerApplication.class.getName());
     }
 
     private static void usage() {

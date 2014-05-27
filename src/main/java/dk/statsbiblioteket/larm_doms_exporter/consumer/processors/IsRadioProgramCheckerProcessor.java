@@ -36,7 +36,7 @@ public class IsRadioProgramCheckerProcessor extends ProcessorChainElement {
         }
         if (!isRadio(state.getPbcoreString())) {
             logger.info(record.getID() + " is not a radio program. Not exporting.");
-            this.setChildElement(null);
+            this.setNextElement(null);
             record.setState(ExportStateEnum.REJECTED);
             context.getDomsExportRecordDAO().update(record);
         } else {
