@@ -57,7 +57,7 @@ public class ProducerApplication {
         ExportContext context = null;
         try {
             context = optionsParser.parseOptions(args);
-        } catch (Exception e) {
+        } catch (UsageException e) {
             usage();
             System.exit(1);
         }
