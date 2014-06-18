@@ -177,6 +177,8 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteFilename(result, record, context, state);
             result = substituteFileTimeStamp(result, record, context, state);
             result = substituteWalltime(result, record, context, state);
+            result = substituteStreamingServerFolder(result, record, context, state);
+            result = substituteStreamingServerId(result, record, context, state);
         } catch (Exception e) {
             throw new ProcessorException("Error processing " + record.getID(), e);
         }
@@ -185,11 +187,23 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     private String substituteWalltime(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
         Pattern pattern = Pattern.compile("###WALLTIME###", Pattern.DOTALL);
+
         if (state.getWalltime() != null) {
             return pattern.matcher(template).replaceAll(chaosDateFormat.format(state.getWalltime()));
         } else {
             return pattern.matcher(template).replaceAll("");
         }
+    }
+
+    private String substituteStreamingServerId (String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###STREAMING_SERVER_ID###", Pattern.DOTALL);
+        return pattern.matcher(template).replaceAll(context.getGeckonStreamingserverDestinationId() + "");
+    }
+
+
+    private String substituteStreamingServerFolder (String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###STREAMING_SERVER_FOLDER###", Pattern.DOTALL);
+        return pattern.matcher(template).replaceAll(context.getGeckonStreamingserverFolderpath());
     }
 
 

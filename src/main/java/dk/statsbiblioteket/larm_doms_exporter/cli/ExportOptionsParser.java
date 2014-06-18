@@ -63,6 +63,8 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         context.setInProductionTimestamp(readLongProperty("inProductionTimestamp", props));
         context.setEarliestExportBroadcastTimestamp(readLongProperty("earliestExportBroadcastTimestamp", props));
         context.setMaxExportsPerRun(readLongProperty("maxExportsPerRun", props));
+        context.setGeckonStreamingserverDestinationId(readIntegerProperty("geckon.streamingserver.destinationid", props));
+        context.setGeckonStreamingserverFolderpath(readStringProperty("geckon.streamingserver.folderpath", props));
     }
 
     private void readInfrastructureProperties(ExportContext context) throws IOException, OptionParseException {

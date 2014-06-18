@@ -30,6 +30,9 @@ public class ExportContext {
     private Long maxExportsPerRun;
     private Long numExports = 0L;
 
+    private int geckonStreamingserverDestinationId;
+    private String geckonStreamingserverFolderpath;
+
     /* etc */
 
     public Long getNumExports() {
@@ -162,6 +165,22 @@ public class ExportContext {
 
     public void setDomsCentralWebserviceUrl(String domsCentralWebserviceUrl) {
         this.domsCentralWebserviceUrl = domsCentralWebserviceUrl;
+    }
+
+    public int getGeckonStreamingserverDestinationId() {
+        return geckonStreamingserverDestinationId;
+    }
+
+    public void setGeckonStreamingserverDestinationId(int geckonStreamingserverDestinationId) {
+        this.geckonStreamingserverDestinationId = geckonStreamingserverDestinationId;
+    }
+
+    public String getGeckonStreamingserverFolderpath() {
+        return geckonStreamingserverFolderpath;
+    }
+
+    public void setGeckonStreamingserverFolderpath(String geckonStreamingserverFolderpath) {
+        this.geckonStreamingserverFolderpath = geckonStreamingserverFolderpath;
     }
 
     @Override

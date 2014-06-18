@@ -57,8 +57,8 @@
             </Metadatas>
             <Files>
                 <FileEnvelope>
-                    <DestinationID>88</DestinationID>
-                    <FolderPath>/11500/Disc22/</FolderPath>
+                    <DestinationID>###STREAMING_SERVER_ID###</DestinationID>
+                    <FolderPath>###STREAMING_SERVER_FOLDER###</FolderPath>
                     <Filename>###FILENAME###</Filename>
                     <OriginalFilename>###FILENAME###</OriginalFilename>
                     <FormatID>49</FormatID>

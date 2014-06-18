@@ -42,7 +42,7 @@ public abstract class AbstractOptionsParser {
 
     protected String readStringProperty(String propName, Properties props) throws OptionParseException {
         String prop = props.getProperty(propName);
-        if (prop == null || "".equals(prop)) {
+        if (prop == null) {
             throw new OptionParseException("Property " + propName + " not set.");
         }
         return prop;
