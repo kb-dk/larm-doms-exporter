@@ -16,6 +16,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
     protected static final Option INFRASTRUCTURE_CONFIG_FILE_OPTION = new Option("infrastructure_configfile", true, "The infrastructure config file");
     protected static final Option LDE_HIBERNATE_CFG_OPTION = new Option("lde_hibernate_configfile", true, "The hibernate config file");
     protected static final Option BTA_HIBERNATE_CFG_OPTION = new Option("bta_hibernate_configfile", true, "The hibernate config file");
+    protected static final Option CHAOS_CHANNELMAPPING_CFG_OPTION = new Option("chaos_channelmapping_configfile", true, "The chaos channel mapping file");
 
     private ExportContext context;
 
@@ -26,6 +27,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         getOptions().addOption(INFRASTRUCTURE_CONFIG_FILE_OPTION);
         getOptions().addOption(LDE_HIBERNATE_CFG_OPTION);
         getOptions().addOption(BTA_HIBERNATE_CFG_OPTION);
+        getOptions().addOption(CHAOS_CHANNELMAPPING_CFG_OPTION);
     }
 
 
@@ -43,6 +45,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         parseBehaviouralConfigFileOption(cmd);
         parseLDEHibernateConfigFileOption(cmd);
         parseBTAHibernateConfigFileOption(cmd);
+        parseChaosChannelMappingConfigFileOption(cmd);
         try {
             readBehaviouralProperties(context);
         } catch (IOException e) {
@@ -128,4 +131,16 @@ public class ExportOptionsParser extends AbstractOptionsParser {
            context.setBtaHibernateConfigurationFile(configFile);
        }
 
+    protected void parseChaosChannelMappingConfigFileOption(CommandLine cmd) throws OptionParseException {
+        String configFileString = cmd.getOptionValue(CHAOS_CHANNELMAPPING_CFG_OPTION.getOpt());
+        if (configFileString == null) {
+            parseError(CHAOS_CHANNELMAPPING_CFG_OPTION.toString());
+            throw new OptionParseException(CHAOS_CHANNELMAPPING_CFG_OPTION.toString());
+        }
+        File configFile = new File(configFileString);
+        if (!configFile.exists() || configFile.isDirectory()) {
+            throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
+        }
+        context.setChaosChannelMappingConfigFile(configFile);
+    }
 }

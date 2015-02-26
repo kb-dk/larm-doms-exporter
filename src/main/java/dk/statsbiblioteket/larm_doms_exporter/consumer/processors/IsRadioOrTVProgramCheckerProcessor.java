@@ -17,9 +17,9 @@ import org.w3c.dom.Document;
 /**
  * Simple check that the given program is a radio program. If not, it is rejected.
  */
-public class IsRadioProgramCheckerProcessor extends ProcessorChainElement {
+public class IsRadioOrTVProgramCheckerProcessor extends ProcessorChainElement {
 
-    private static Logger logger = LoggerFactory.getLogger(IsRadioProgramCheckerProcessor.class);
+    private static Logger logger = LoggerFactory.getLogger(IsRadioOrTVProgramCheckerProcessor.class);
 
     @Override
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
@@ -34,20 +34,20 @@ public class IsRadioProgramCheckerProcessor extends ProcessorChainElement {
         } catch (Exception e) {
             throw new ProcessorException("Failed to get PBCORE for " + record.getID(),e);
         }
-        if (!isRadio(state.getPbcoreString())) {
-            logger.info(record.getID() + " is not a radio program. Not exporting.");
+        if (!isRadioOrTV(state.getPbcoreString())) {
+            logger.info(record.getID() + " is not a radio or tv program. Not exporting.");
             this.setNextElement(null);
             record.setState(ExportStateEnum.REJECTED);
             context.getDomsExportRecordDAO().update(record);
         } else {
-            logger.info(record.getID() + " is a radio program. Proceeding.");
+            logger.info(record.getID() + " is a radio or tv program. Proceeding.");
         }
     }
 
-    private boolean isRadio(String pbcoreString) {
+    private boolean isRadioOrTV(String pbcoreString) {
         XPathSelector xpath = DOM.createXPathSelector("pb", "http://www.pbcore.org/PBCore/PBCoreNamespace.html");
         Document doc = DOM.stringToDOM(pbcoreString, true);
         String formatMediaType = xpath.selectString(doc, "/pb:PBCoreDescriptionDocument/pb:pbcoreInstantiation/pb:formatMediaType/text()");
-        return formatMediaType.trim().equalsIgnoreCase("Sound");
+        return formatMediaType.trim().equalsIgnoreCase("Sound") || formatMediaType.trim().equalsIgnoreCase("Moving Image");
     }
 }

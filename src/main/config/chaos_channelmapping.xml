@@ -1,0 +1,173 @@
+<channels>
+	<!-- these are radio channels -->
+	<channel>
+		<sb_channel_name>drbo</sb_channel_name>
+		<chaos_display_name>DR Boogieradio</chaos_display_name>
+		<chaos_logo>Unknown_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drboo</sb_channel_name>
+		<chaos_display_name>DR Boogieradio</chaos_display_name>
+		<chaos_logo>Unknown_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drmamara</sb_channel_name>
+		<chaos_display_name>DR Mama</chaos_display_name>
+		<chaos_logo>DRmama_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drol</sb_channel_name>
+		<chaos_display_name>DR Oline</chaos_display_name>
+		<chaos_logo>DRol_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp1</sb_channel_name>
+		<chaos_display_name>DR P1</chaos_display_name>
+		<chaos_logo>P1_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp2</sb_channel_name>
+		<chaos_display_name>DR P2</chaos_display_name>
+		<chaos_logo>P2_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp3</sb_channel_name>
+		<chaos_display_name>DR P3</chaos_display_name>
+		<chaos_logo>P3_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4b</sb_channel_name>
+		<chaos_display_name>DR P4 Bornholm</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4blm</sb_channel_name>
+		<chaos_display_name>DR P4 Bornholm</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4f</sb_channel_name>
+		<chaos_display_name>DR P4 Fyn</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4fyn</sb_channel_name>
+		<chaos_display_name>DR P4 Fyn</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4k94</sb_channel_name>
+		<chaos_display_name>DR P4 K94</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4k</sb_channel_name>
+		<chaos_display_name>DR P4 København</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4miv</sb_channel_name>
+		<chaos_display_name>DR P4 Midt og Vest</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4mv</sb_channel_name>
+		<chaos_display_name>DR P4 Midt og Vest</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4nj</sb_channel_name>
+		<chaos_display_name>DR P4 Nordjylland</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4nor</sb_channel_name>
+		<chaos_display_name>DR P4 Nordjylland</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4o</sb_channel_name>
+		<chaos_display_name>DR P4 Østjylland</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4re</sb_channel_name>
+		<chaos_display_name>DR P4 Regional</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp4s</sb_channel_name>
+		<chaos_display_name>DR P4 Syd</chaos_display_name>
+		<chaos_logo>P4_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp5</sb_channel_name>
+		<chaos_display_name>DR P5</chaos_display_name>
+		<chaos_logo>drp5_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp5000</sb_channel_name>
+		<chaos_display_name>DR P5000</chaos_display_name>
+		<chaos_logo>drp5000_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp6b</sb_channel_name>
+		<chaos_display_name>DR P6 Beat</chaos_display_name>
+		<chaos_logo>drp6b_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp7m</sb_channel_name>
+		<chaos_display_name>DR P7 Mix</chaos_display_name>
+		<chaos_logo>drp7m_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drp8j</sb_channel_name>
+		<chaos_display_name>DR P8 Jazz</chaos_display_name>
+		<chaos_logo>drp8j_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>drrar</sb_channel_name>
+		<chaos_display_name>DR Ramasjang</chaos_display_name>
+		<chaos_logo>drrar_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>novafm</sb_channel_name>
+		<chaos_display_name>NOVA fm</chaos_display_name>
+		<chaos_logo>novafm_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>100fm</sb_channel_name>
+		<chaos_display_name>Radio 100FM</chaos_display_name>
+		<chaos_logo>Radio100FM_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>radio2</sb_channel_name>
+		<chaos_display_name>Radio 2</chaos_display_name>
+		<chaos_logo>radio2_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>tv2radio</sb_channel_name>
+		<chaos_display_name>TV2 Radio</chaos_display_name>
+		<chaos_logo>tv2radio_logo.png</chaos_logo>
+	</channel>
+	<channel>
+		<sb_channel_name>voice</sb_channel_name>
+		<chaos_display_name>THE VOICE</chaos_display_name>
+		<chaos_logo>voice_logo.png</chaos_logo>
+	</channel>
+
+	<!-- this entry is used, if no match can be found -->
+	<!-- IMPORTANT: sb_channel_name must be 'unknown' -->
+	<channel>
+		<sb_channel_name>unknown</sb_channel_name>
+		<chaos_display_name>Ukendt</chaos_display_name>
+		<chaos_logo>Unknown_logo.png</chaos_logo>
+	</channel>
+
+	<!-- these are tv channels -->
+	<channel>
+		<sb_channel_name>tv2z</sb_channel_name>
+		<chaos_display_name>TV 2 Zulu</chaos_display_name>
+		<chaos_logo>tv2z_logo.png</chaos_logo>
+	</channel>
+</channels>

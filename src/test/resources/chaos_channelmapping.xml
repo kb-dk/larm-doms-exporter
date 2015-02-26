@@ -1,0 +1,16 @@
+<channels>
+	<!-- these are radio channels -->
+	<channel>
+		<sb_channel_name>drp1</sb_channel_name>
+		<chaos_display_name>DR P1</chaos_display_name>
+		<chaos_logo>P1_logo.png</chaos_logo>
+	</channel>
+
+	<!-- this entry is used, if no match can be found -->
+	<!-- IMPORTANT: sb_channel_name must be 'unknown' -->
+	<channel>
+		<sb_channel_name>unknown</sb_channel_name>
+		<chaos_display_name>Ukendt</chaos_display_name>
+		<chaos_logo>Unknown_logo.png</chaos_logo>
+	</channel>
+</channels>

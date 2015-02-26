@@ -75,9 +75,11 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                         if (outputFile.exists()) {
                             Long fileTimeStamp = outputFile.lastModified();
                             state.setOutputFileTimeStamp(fileTimeStamp);
+                            state.setMediaFileName(outputFile.getName());
                         } else {
                             logger.warn("Could not find output file: " + outputFileS);
                             state.setOutputFileTimeStamp(0L);
+                            state.setMediaFileName("");
                         }
                     } else {
                         logger.warn("Could not find output file from null transcoding command for {}.", record.getID());

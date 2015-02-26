@@ -6,3 +6,8 @@
 *.ear
 
 .idea/
+/target/
+
+.classpath
+.project
+.settings/

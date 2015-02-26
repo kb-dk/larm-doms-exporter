@@ -13,6 +13,7 @@ public class ExportRequestState {
     private Document pbcoreDocument;
     private Date walltime;
     private Long outputFileTimeStamp;
+    private String mediaFileName;
 
     /* ---------------------------- */
 
@@ -47,4 +48,12 @@ public class ExportRequestState {
     public void setOutputFileTimeStamp(Long outputFileTimeStamp) {
         this.outputFileTimeStamp = outputFileTimeStamp;
     }
+
+	public String getMediaFileName() {
+		return mediaFileName;
+	}
+
+	public void setMediaFileName(String mediaFileName) {
+		this.mediaFileName = mediaFileName;
+	}
 }

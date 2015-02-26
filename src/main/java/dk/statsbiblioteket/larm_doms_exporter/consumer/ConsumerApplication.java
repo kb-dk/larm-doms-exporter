@@ -7,13 +7,12 @@ import dk.statsbiblioteket.larm_doms_exporter.cli.UsageException;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.BtaStatusFetcherDispatcherProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.DoExportProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.HasShardAnalysisCheckerProcessor;
-import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.IsRadioProgramCheckerProcessor;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.IsRadioOrTVProgramCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.MarkAsCompleteProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.SignificantChangeCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.DomsExportRecordDAO;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.HibernateUtil;
-import dk.statsbiblioteket.larm_doms_exporter.producer.ProducerApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +29,8 @@ public class ConsumerApplication {
             " --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\n" +
             " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
             " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
-            " --behavioural_configfile=$confDir/lde.behaviour.properties";
+            " --behavioural_configfile=$confDir/lde.behaviour.properties\n" +
+            " --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml";
 
     /**
      * This application exports all appropriate objects to LARM as xml files. The details
@@ -82,7 +82,7 @@ public class ConsumerApplication {
     }
 
     private static void processRecord(DomsExportRecord record, ExportContext context) throws ProcessorException {
-        ProcessorChainElement radioChecker = new IsRadioProgramCheckerProcessor();
+        ProcessorChainElement radioChecker = new IsRadioOrTVProgramCheckerProcessor();
         ProcessorChainElement hasShardChecker = new HasShardAnalysisCheckerProcessor();
         ProcessorChainElement btaStatus = new BtaStatusFetcherDispatcherProcessor();
         ProcessorChainElement significanceChecker = new SignificantChangeCheckerProcessor();
@@ -104,5 +104,4 @@ public class ConsumerApplication {
         logger.error(USAGE_MESSAGE);
         System.out.println(USAGE_MESSAGE);
     }
-
 }

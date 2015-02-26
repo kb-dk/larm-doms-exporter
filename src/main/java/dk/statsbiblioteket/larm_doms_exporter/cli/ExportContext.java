@@ -15,6 +15,7 @@ public class ExportContext {
     private File btaHibernateConfigurationFile;
     private File behaviourConfigFile;
     private File infrastructreConfigFile;
+    private File chaosChannelMappingConfigFile;
     private String domsCentralWebserviceUrl;
     private String domsUsername;
     private String domsPassword;
@@ -79,7 +80,15 @@ public class ExportContext {
         this.btaHibernateConfigurationFile = btaHibernateConfigurationFile;
     }
 
-    public DomsExportRecordDAO getDomsExportRecordDAO() {
+    public File getChaosChannelMappingConfigFile() {
+		return chaosChannelMappingConfigFile;
+	}
+
+	public void setChaosChannelMappingConfigFile(File chaosChannelMappingConfigFile) {
+		this.chaosChannelMappingConfigFile = chaosChannelMappingConfigFile;
+	}
+
+	public DomsExportRecordDAO getDomsExportRecordDAO() {
         return domsExportRecordDAO;
     }
 
