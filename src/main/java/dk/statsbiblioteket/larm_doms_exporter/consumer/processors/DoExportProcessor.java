@@ -158,8 +158,8 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     private String getOutputString(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
         String result = XML_TEMPLATE;
-        ChannelMapper channelMapper = ChannelMapper.getChannelMapper(context);
         try {
+        	ChannelMapper channelMapper = ChannelMapper.getChannelMapper(context);
             result = substituteShardPid(result, record, context, state);
             result = substituteEndTimeString(result, record, context, state);
             result = substituteStartTimeString(result, record, context, state);

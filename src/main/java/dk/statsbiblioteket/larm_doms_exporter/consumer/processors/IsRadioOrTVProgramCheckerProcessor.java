@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 /**
- * Simple check that the given program is a radio program. If not, it is rejected.
+ * Simple check that the given program is a radio or tv program. If not, it is rejected.
  */
 public class IsRadioOrTVProgramCheckerProcessor extends ProcessorChainElement {
 

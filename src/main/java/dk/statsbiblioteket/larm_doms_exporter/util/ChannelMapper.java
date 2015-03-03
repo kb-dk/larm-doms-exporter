@@ -1,10 +1,8 @@
 package dk.statsbiblioteket.larm_doms_exporter.util;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -25,6 +23,9 @@ public class ChannelMapper {
     
     private static ChannelMapper channelMapper = null;
 
+    /**
+     * key in hashmap is the SB channel_name, found in digitv database for ritzau channelmapping table
+     */
     private static HashMap<String, ChaosChannelEntity> chaosChannelMapping;
 	private final static String sb_unknown_channel = "unknown";
 	private final static String chaos_unknown_channel = "Ukendt";
@@ -32,7 +33,7 @@ public class ChannelMapper {
 
     private ChannelMapper(){};
     
-    public static ChannelMapper getChannelMapper(ExportContext context){
+    public static ChannelMapper getChannelMapper(ExportContext context) throws Exception{
     	if(channelMapper == null)
     		channelMapper = new ChannelMapper();
     	
@@ -41,7 +42,7 @@ public class ChannelMapper {
     	return channelMapper;
     }
 
-    private void initialise(File chaosChannelMappingConfigFile){
+    private void initialise(File chaosChannelMappingConfigFile) throws Exception{
     	chaosChannelMapping = new ChannelMapper().parseChaosChannelMapping(chaosChannelMappingConfigFile);
     	
     	if(chaosChannelMapping.get(sb_unknown_channel) == null){
@@ -77,7 +78,7 @@ public class ChannelMapper {
         return chaosChannelEntity.getLogoFilename();
     }
     
-    public HashMap<String, ChaosChannelEntity> parseChaosChannelMapping(File configFile){
+    public HashMap<String, ChaosChannelEntity> parseChaosChannelMapping(File configFile) throws Exception {
     	final HashMap<String, ChaosChannelEntity> chaosChannelMapping = new HashMap<String, ChaosChannelEntity>();
     	SAXParserFactory factory = SAXParserFactory.newInstance();
 
@@ -105,7 +106,14 @@ public class ChannelMapper {
 				@Override
 				public void endElement(String uri, String localName, String qName) throws SAXException {
 					if("channel".equals(qName)){
-						chaosChannelMapping.put(sb_channel_name, chaosChannelEntity); //store values
+						if(sb_channel_name == null || "".equals(sb_channel_name))
+							throw new RuntimeException("sb_channel_name not present");
+						else if(chaosChannelEntity.getDisplayName() == null || "".equals(chaosChannelEntity.getDisplayName()))
+							throw new RuntimeException("Chaos display name not found for " + sb_channel_name);
+						else if(chaosChannelEntity.getLogoFilename() == null || "".equals(chaosChannelEntity.getLogoFilename()))
+							throw new RuntimeException("Chaos logo filename not found for " + sb_channel_name);
+						else
+							chaosChannelMapping.put(sb_channel_name, chaosChannelEntity); //store values
 						
 						//reset all variables
 						sb_channel_name = null;
@@ -126,19 +134,12 @@ public class ChannelMapper {
 				}
 				
 			});
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			    logger.error("Error occured during parsing", e);
+			    throw e;
 		}
     	
     	return chaosChannelMapping;
-    	
     }
     
     public class ChaosChannelEntity {
@@ -168,5 +169,4 @@ public class ChannelMapper {
 			this.logoFilename = logoFilename;
 		}
     }
-
 }
