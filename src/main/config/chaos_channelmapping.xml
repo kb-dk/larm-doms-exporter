@@ -328,7 +328,7 @@
 	<channel>
 		<sb_channel_name>tv2oj</sb_channel_name>
 		<chaos_display_name>TV2 Østjylland</chaos_display_name>
-		<chaos_logo></chaos_logo>
+		<chaos_logo>tv2oj_logo.png</chaos_logo>
 	</channel>
 	<channel>
 		<sb_channel_name>tv3</sb_channel_name>

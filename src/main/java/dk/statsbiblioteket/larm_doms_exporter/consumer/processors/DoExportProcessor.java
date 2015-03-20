@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -58,7 +59,7 @@ public class DoExportProcessor extends ProcessorChainElement {
     public static String XML_TEMPLATE = null;
     public static final String HAS_SHARD = "http://doms.statsbiblioteket.dk/relations/default/0/1/#hasShard";
     SimpleDateFormat domsDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-    SimpleDateFormat chaosDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    static SimpleDateFormat chaosDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 
     static {
@@ -102,27 +103,13 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     @Override
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
-        state.setPbcoreDocument(DOM.stringToDOM(state.getPbcoreString(), true));
-        String programStartTime;
-        try {
-            programStartTime = getBroadcastStartTimeString(state);
-        } catch (XPathExpressionException e) {
-            record.setState(ExportStateEnum.FAILED);
-            context.getDomsExportRecordDAO().update(record);
-            throw new ProcessorException("Error getting start-time. Export state set to FAILED.", e);
-        }
-        //DOMS start times like 2007-08-19T00:05:00+0200
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSZ");
-        Date programDate = null;
-        try {
-            programDate = sdf.parse(programStartTime);
-        } catch (ParseException e) {
-            throw new ProcessorException("Could not parse date " + programStartTime);
-        }
+
+
+
         Date earliestBroadcastDate = new Date(context.getEarliestExportBroadcastTimestamp());
         Date earliestTimestamp = new Date(context.getInProductionTimestamp());
-        if (programDate.before(earliestBroadcastDate) && record.getLastDomsTimestamp().before(earliestTimestamp)) {
-            logger.info("Program " + record.getID() + " has Broadcast date " + programDate
+        if (state.getProgramStart().before(earliestBroadcastDate) && record.getLastDomsTimestamp().before(earliestTimestamp)) {
+            logger.info("Program " + record.getID() + " has Broadcast date " + state.getProgramStart()
                     + " and DOMS timestamp " + record.getLastDomsTimestamp() + " and so will be marked as complete" +
                     " without exporting");
             this.setNextElement(new MarkAsCompleteProcessor());
@@ -155,6 +142,7 @@ public class DoExportProcessor extends ProcessorChainElement {
         }
         tempOutputFile.renameTo(outputFile);
     }
+
 
     private String getOutputString(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
         String result = XML_TEMPLATE;
@@ -240,7 +228,7 @@ public class DoExportProcessor extends ProcessorChainElement {
         return pattern.matcher(template).replaceAll(chaosStartString);
     }
 
-    private String getBroadcastStartTimeString(ExportRequestState state) throws XPathExpressionException {
+    static String getBroadcastStartTimeString(ExportRequestState state) throws XPathExpressionException {
         String xpathString = "//pbcore:dateAvailableStart";
         XPath xpath = xpathFactory.newXPath();
         xpath.setNamespaceContext(pbcoreNamespaceContext);
@@ -272,30 +260,28 @@ public class DoExportProcessor extends ProcessorChainElement {
     private String substituteChannel(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
         String patternString = "###CHANNEL###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
+        String matchingString = getChannelName(state);
+        return pattern.matcher(template).replaceAll(channelMapper.getChaosChannel(matchingString));
+    }
+
+    static String getChannelName(ExportRequestState state) throws XPathExpressionException {
         String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
         XPath xpath = xpathFactory.newXPath();
         xpath.setNamespaceContext(pbcoreNamespaceContext);
-        String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
-        return pattern.matcher(template).replaceAll(channelMapper.getChaosChannel(matchingString));
+        return (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
     }
 
     private String substitutePublisher(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
         String patternString = "###PUBLISHER###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
-        String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
-        XPath xpath = xpathFactory.newXPath();
-        xpath.setNamespaceContext(pbcoreNamespaceContext);
-        String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        String matchingString = getChannelName(state);
         return pattern.matcher(template).replaceAll(channelMapper.getPublisher(matchingString));
     }
 
     private String substituteLogoFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
         String patternString = "###LOGO_FILENAME###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
-        String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
-        XPath xpath = xpathFactory.newXPath();
-        xpath.setNamespaceContext(pbcoreNamespaceContext);
-        String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        String matchingString = getChannelName(state);
         return pattern.matcher(template).replaceAll(channelMapper.getLogoFileName(matchingString));
     }
     

@@ -62,10 +62,12 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                         logger.debug("Setting walltime {} for {}.", newWalltime, record.getID() );
                         state.setWalltime(newWalltime);
                     } else {
-                        logger.debug("No broadcast start time found for {} so it must be an old BES transcoding. " +
-                                "Marking as complete.", record.getID());
-                        this.setNextElement(new MarkAsCompleteProcessor());
-                        return;
+                        //logger.debug("No broadcast start time found for {} so it must be an old BES transcoding. " +
+                        //        "Marking as complete.", record.getID());
+                        //this.setNextElement(new MarkAsCompleteProcessor());
+                        //return;
+                        logger.debug("No broadcast start time found for {} so it must be an old BES transcoding. Proceeding" +
+                                " with caution.");
                     }
                     final String transcodingCommand = btaRecord.getTranscodingCommand();
                     if (transcodingCommand != null) {

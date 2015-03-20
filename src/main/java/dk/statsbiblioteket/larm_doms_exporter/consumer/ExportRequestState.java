@@ -14,6 +14,8 @@ public class ExportRequestState {
     private Date walltime;
     private Long outputFileTimeStamp;
     private String mediaFileName;
+    private boolean isRadio; //or tv
+    private Date programStart;
 
     /* ---------------------------- */
 
@@ -56,4 +58,20 @@ public class ExportRequestState {
 	public void setMediaFileName(String mediaFileName) {
 		this.mediaFileName = mediaFileName;
 	}
+
+    public boolean isRadio() {
+        return isRadio;
+    }
+
+    public void setRadio(boolean isRadio) {
+        this.isRadio = isRadio;
+    }
+
+    public Date getProgramStart() {
+        return programStart;
+    }
+
+    public void setProgramStart(Date programStart) {
+        this.programStart = programStart;
+    }
 }

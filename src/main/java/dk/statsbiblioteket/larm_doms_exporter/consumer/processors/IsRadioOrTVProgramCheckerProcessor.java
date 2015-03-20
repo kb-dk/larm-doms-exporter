@@ -34,7 +34,7 @@ public class IsRadioOrTVProgramCheckerProcessor extends ProcessorChainElement {
         } catch (Exception e) {
             throw new ProcessorException("Failed to get PBCORE for " + record.getID(),e);
         }
-        if (!isRadioOrTV(state.getPbcoreString())) {
+        if (!isRadioOrTV(state.getPbcoreString(), state)) {
             logger.info(record.getID() + " is not a radio or tv program. Not exporting.");
             this.setNextElement(null);
             record.setState(ExportStateEnum.REJECTED);
@@ -44,10 +44,16 @@ public class IsRadioOrTVProgramCheckerProcessor extends ProcessorChainElement {
         }
     }
 
-    private boolean isRadioOrTV(String pbcoreString) {
+    private boolean isRadioOrTV(String pbcoreString, ExportRequestState state) {
         XPathSelector xpath = DOM.createXPathSelector("pb", "http://www.pbcore.org/PBCore/PBCoreNamespace.html");
         Document doc = DOM.stringToDOM(pbcoreString, true);
         String formatMediaType = xpath.selectString(doc, "/pb:PBCoreDescriptionDocument/pb:pbcoreInstantiation/pb:formatMediaType/text()");
-        return formatMediaType.trim().equalsIgnoreCase("Sound") || formatMediaType.trim().equalsIgnoreCase("Moving Image");
+        final boolean sound = formatMediaType.trim().equalsIgnoreCase("Sound");
+        if (sound) {
+            state.setRadio(true);
+        } else {
+            state.setRadio(false);
+        }
+        return sound || formatMediaType.trim().equalsIgnoreCase("Moving Image");
     }
 }

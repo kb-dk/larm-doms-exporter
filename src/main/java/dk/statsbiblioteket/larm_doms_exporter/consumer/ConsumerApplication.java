@@ -6,6 +6,7 @@ import dk.statsbiblioteket.larm_doms_exporter.cli.OptionParseException;
 import dk.statsbiblioteket.larm_doms_exporter.cli.UsageException;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.BtaStatusFetcherDispatcherProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.DoExportProcessor;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.FixerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.HasShardAnalysisCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.IsRadioOrTVProgramCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.MarkAsCompleteProcessor;
@@ -82,16 +83,18 @@ public class ConsumerApplication {
     }
 
     private static void processRecord(DomsExportRecord record, ExportContext context) throws ProcessorException {
-        ProcessorChainElement radioChecker = new IsRadioOrTVProgramCheckerProcessor();
+        ProcessorChainElement radioOrTvChecker = new IsRadioOrTVProgramCheckerProcessor();
         ProcessorChainElement hasShardChecker = new HasShardAnalysisCheckerProcessor();
         ProcessorChainElement btaStatus = new BtaStatusFetcherDispatcherProcessor();
+        ProcessorChainElement fixer = new FixerProcessor();
         ProcessorChainElement significanceChecker = new SignificantChangeCheckerProcessor();
         ProcessorChainElement doExporter = new DoExportProcessor();
         ProcessorChainElement markAsCompleter = new MarkAsCompleteProcessor();
         ProcessorChainElement completeChain = ProcessorChainElement.makeChain(
-                radioChecker,      //is radio program
+                radioOrTvChecker,      //is radio program
                 hasShardChecker,   //has been exported
                 btaStatus,         //has been analysed for holes etc.
+                fixer,             //Guess walltime and output filename for old rejected TV programs
                 significanceChecker, //Change from previous export doms timestamp is significant
                 doExporter,          //Do the export
                 markAsCompleter      //Update the database
