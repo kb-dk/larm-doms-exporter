@@ -7,7 +7,6 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.ExportRequestState;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorChainElement;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
-import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
 import dk.statsbiblioteket.larm_doms_exporter.util.ChannelMapper;
 import dk.statsbiblioteket.util.xml.DOM;
 import org.apache.commons.io.IOUtils;
@@ -28,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -39,19 +37,19 @@ import java.util.regex.Pattern;
  *
  *
  *  Compare with the following snippet from the old exporter:
- * .append("    <doms_id>"              + radioProgramMetadata.shardPid                                              + "</doms_id>\n")
- .append("    <channel_name>"         + radioProgramMetadata.getPbcoreProgramMetadata().channel                    + "</channel_name>\n")
- .append("    <title>"                + radioProgramMetadata.getPbcoreProgramMetadata().titel                      + "</title>\n")
- .append("    <title_original>"       + radioProgramMetadata.getPbcoreProgramMetadata().originaltitel              + "</title_original>\n")
- .append("    <title_episode>"        + radioProgramMetadata.getPbcoreProgramMetadata().episodetitel               + "</title_episode>\n")
- .append("    <start_time>"           + fmt.print(radioProgramMetadata.getPbcoreProgramMetadata().start.getTime()) + "</start_time>\n")
- .append("    <end_time>"             + fmt.print(radioProgramMetadata.getPbcoreProgramMetadata().end.getTime())   + "</end_time>\n")
- .append("    <description_short>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionKortOmtale      + "</description_short>\n")
- .append("    <description_long1>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionLangOmtale1     + "</description_long1>\n")
- .append("    <description_long2>"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionLangOmtale2     + "</description_long2>\n")
- .append("    <creator>"              + radioProgramMetadata.getPbcoreProgramMetadata().forfattere                 + "</creator>\n")
- .append("    <contributor>"          + radioProgramMetadata.getPbcoreProgramMetadata().medvirkende                + "</contributor>\n")
- .append("    <contributor_director>" + radioProgramMetadata.getPbcoreProgramMetadata().instruktion                + "</contributor_director>\n")
+ * .append("    &#60;doms_id&#62;"              + radioProgramMetadata.shardPid                                              + "&#60;/doms_id&#62;\n")
+ * .append("    &#60;channel_name&#62;"         + radioProgramMetadata.getPbcoreProgramMetadata().channel                    + "&#60;/channel_name&#62;\n")
+ * .append("    &#60;title&#62;"                + radioProgramMetadata.getPbcoreProgramMetadata().titel                      + "&#60;/title&#62;\n")
+ * .append("    &#60;title_original&#62;"       + radioProgramMetadata.getPbcoreProgramMetadata().originaltitel              + "&#60;/title_original&#62;\n")
+ * .append("    &#60;title_episode&#62;"        + radioProgramMetadata.getPbcoreProgramMetadata().episodetitel               + "&#60;/title_episode&#62;\n")
+ * .append("    &#60;start_time&#62;"           + fmt.print(radioProgramMetadata.getPbcoreProgramMetadata().start.getTime()) + "&#60;/start_time&#62;\n")
+ * .append("    &#60;end_time&#62;"             + fmt.print(radioProgramMetadata.getPbcoreProgramMetadata().end.getTime())   + "&#60;/end_time&#62;\n")
+ * .append("    &#60;description_short&#62;"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionKortOmtale      + "&#60;/description_short&#62;\n")
+ * .append("    &#60;description_long1&#62;"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionLangOmtale1     + "&#60;/description_long1&#62;\n")
+ * .append("    &#60;description_long2&#62;"    + radioProgramMetadata.getPbcoreProgramMetadata().descriptionLangOmtale2     + "&#60;/description_long2&#62;\n")
+ * .append("    &#60;creator&#62;"              + radioProgramMetadata.getPbcoreProgramMetadata().forfattere                 + "&#60;/creator&#62;\n")
+ * .append("    &#60;contributor&#62;"          + radioProgramMetadata.getPbcoreProgramMetadata().medvirkende                + "&#60;/contributor&#62;\n")
+ * .append("    &#60;contributor_director&#62;" + radioProgramMetadata.getPbcoreProgramMetadata().instruktion                + "&#60;/contributor_director&#62;\n")
  */
 public class DoExportProcessor extends ProcessorChainElement {
 
