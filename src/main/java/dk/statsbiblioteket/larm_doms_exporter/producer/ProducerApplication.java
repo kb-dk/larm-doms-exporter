@@ -3,10 +3,8 @@ package dk.statsbiblioteket.larm_doms_exporter.producer;
 import dk.statsbiblioteket.broadcasttranscoder.persistence.TranscodingStateEnum;
 import dk.statsbiblioteket.broadcasttranscoder.persistence.dao.BroadcastTranscodingRecordDAO;
 import dk.statsbiblioteket.broadcasttranscoder.persistence.entities.BroadcastTranscodingRecord;
-import dk.statsbiblioteket.doms.central.CentralWebservice;
 import dk.statsbiblioteket.doms.central.InvalidCredentialsException;
 import dk.statsbiblioteket.doms.central.MethodFailedException;
-import dk.statsbiblioteket.doms.central.RecordDescription;
 import dk.statsbiblioteket.larm_doms_exporter.cli.ExportContext;
 import dk.statsbiblioteket.larm_doms_exporter.cli.ExportOptionsParser;
 import dk.statsbiblioteket.larm_doms_exporter.cli.OptionParseException;
@@ -15,7 +13,6 @@ import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.DomsExportRecordDAO;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.HibernateUtil;
-import dk.statsbiblioteket.larm_doms_exporter.util.CentralWebserviceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +31,8 @@ public class ProducerApplication {
             " --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\n" +
             " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
             " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
-            " --behavioural_configfile=$confDir/lde.behaviour.properties";
+            " --behavioural_configfile=$confDir/lde.behaviour.properties\n" +
+            " --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml";
 
     /**
      * This application pulls information on newly transcoded programs from the BTA database and puts them in the LDE
@@ -48,7 +46,8 @@ public class ProducerApplication {
      " --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\n" +
      " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
      " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
-     " --behavioural_configfile=$confDir/lde.behaviour.properties
+     " --behavioural_configfile=$confDir/lde.behaviour.properties\n" +
+     " --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml";
      *
      */
     public static void main(String[] args) throws UsageException, OptionParseException, InvalidCredentialsException, MethodFailedException {

@@ -154,6 +154,8 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteGeneric(result, record, context, state, "###ABSTRACT###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='kortomtale']/pbcore:description");
             result = substituteGeneric(result, record, context, state, "###DESCRIPTION1###","/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale1']/pbcore:description");
             result = substituteGeneric(result, record, context, state, "###DESCRIPTION2###", "/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreDescription[pbcore:descriptionType='langomtale2']/pbcore:description");
+            result = substituteGeneric(result, record, context, state, "###MAJORGENRE###", "substring-after(/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreGenre/pbcore:genre[contains(text(), 'hovedgenre')]/text(), 'hovedgenre: ')");
+            result = substituteGeneric(result, record, context, state, "###MINORGENRE###", "substring-after(/pbcore:PBCoreDescriptionDocument/pbcore:pbcoreGenre/pbcore:genre[contains(text(), 'undergenre')]/text(), 'undergenre: ')");
             result = substitutePublisher(result, record, context, state, channelMapper);
             result = substituteLogoFilename(result, record, context, state, channelMapper);
             result = substituteEmpty(result, "###CREATOR###");

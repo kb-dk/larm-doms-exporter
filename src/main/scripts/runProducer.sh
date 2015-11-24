@@ -14,4 +14,5 @@ java -Dlogback.configurationFile=$confDir/logback.producer.xml $hibernate_log_co
  --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\
  --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\
  --infrastructure_configfile=$confDir/lde.infrastructure.properties \
- --behavioural_configfile=$confDir/lde.behaviour.properties
+ --behavioural_configfile=$confDir/lde.behaviour.properties \
+ --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml

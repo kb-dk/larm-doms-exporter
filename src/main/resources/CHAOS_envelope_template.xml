@@ -19,6 +19,8 @@
                     <Abstract>###ABSTRACT###</Abstract>
                     <Description>###DESCRIPTION1### ###DESCRIPTION2###</Description>
                     <Publisher>###PUBLISHER###</Publisher>
+                    <MajorGenre>###MAJORGENRE###</MajorGenre>
+                    <MinorGenre>###MINORGENRE###</MinorGenre>
                     <Subjects />
                     <Contributors />
                     <Creators/>
