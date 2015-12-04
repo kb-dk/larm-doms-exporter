@@ -39,6 +39,10 @@ public class ProducerApplication {
      * database, where they form a persistent queue of programs to be exported to LARM. If the record is already in
      * the LDE database it is marked as PENDING. If it is either PENDING in BTA or COMPLETE in BTA and has a
      * broadcast-start-time then it is created as PENDING in LDE. If it is complete in BTA but has no broadcast-start-time
+     * then it is imported to LDE as PENDING and the FixerProcessor will estimate Walltime.
+     * 
+     * 2015-12-04
+     * If it is complete in BTA but has no broadcast-start-time
      * then it is imported to LDE as REJECTED. (LDE cannot export records for which it cannot calculate a Walltime.)
      *
      * Usage: java " +
@@ -91,13 +95,7 @@ public class ProducerApplication {
                 ldeDao.update(ldeDatabaseRecord);
                 pending++;
             }
-            else if (btaRecord.getTranscodingState().equals(TranscodingStateEnum.COMPLETE) && btaRecord.getBroadcastStartTime() != null) {
-                ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
-                ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
-                ldeDao.update(ldeDatabaseRecord);
-                pending++;
-            }
-            else if (btaRecord.getTranscodingState().equals(TranscodingStateEnum.PENDING)) {
+            else if (btaRecord.getTranscodingState().equals(TranscodingStateEnum.COMPLETE) || btaRecord.getTranscodingState().equals(TranscodingStateEnum.PENDING)) {
                 ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
                 ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
                 ldeDao.update(ldeDatabaseRecord);
