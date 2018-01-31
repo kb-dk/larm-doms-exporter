@@ -67,13 +67,13 @@ check_parameters() {
 # Output: Requested fields as csv
 function get_fields() {
     if [[ "json" == "$FORMAT" ]]; then
-        jq -c ' .response.docs[]?' < "$1"
+        jq -c ' .response.docs[]' < "$1"
     elif [[ "csv" == "$FORMAT" ]]; then
         local EXPAND=.$(sed 's/,/, ./g' <<< "$FIELDS")
         if [[ "true" == "$QUOTE_CSV_STRINGS" ]]; then
-            <$1 jq -c ".response.docs[]? | [$EXPAND]" | sed -e 's/^\[//' -e 's/\]$//'
+            <$1 jq -c ".response.docs[] | [$EXPAND]" | sed -e 's/^\[//' -e 's/\]$//'
         else
-            <$1 jq -c " .response.docs[]? | [$EXPAND]" | sed -e 's/^\["//' -e 's/","/,/' -e 's/"\]$//'
+            <$1 jq -c " .response.docs[] | [$EXPAND]" | sed -e 's/^\["//' -e 's/","/,/' -e 's/"\]$//'
         fi
     else
         >&2 echo "Error: Unknown FORMAT '$FORMAT"
