@@ -8,6 +8,11 @@ FORMAT=csv FIELDS=stime,recordID ./get_solr_docs.sh "stime:[2018-01-08T16:39:00Z
 ```
 This will produce a file with the data. Note that the content is not sorted.
 
+To exclude programs not covered by Copydan
+```
+FORMAT=csv FIELDS=stime,recordID ./get_solr_docs.sh "stime:[2018-01-08T16:39:00Z TO *] NOT (lhovedgenre:film NOT (lsubject:miniserie OR no:"miniserie" OR no:"thrillerserie" OR no:"tvfilm")) NOT (channel_name:(canal8sport OR tv2sport1hd OR eurosportdk OR idinvestigation OR tv3max)) AND lma_long:"tv"  "
+```
+
 Extract the last timestamp to use on the next document request:
 ```
 sort < documents_20180130-134914.dat | tail -n 1 | cut -d, -f1
