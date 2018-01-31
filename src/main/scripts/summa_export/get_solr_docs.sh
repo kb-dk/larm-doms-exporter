@@ -16,7 +16,7 @@ fi
 : ${PAGE:=1000}
 : ${REQUEST_EXTRA:=""} # Additional custom params. Prefix with '&'
 
-: ${SOLR:="http://mars.statsbiblioteket.dk:50001/solr/doms.1.stage/select"} # Devel
+: ${SOLR:="http://mars.statsbiblioteket.dk:50001/solr/doms.1.devel/select"} # Devel
 : ${QUERY:="$1"}
 
 : ${FIELDS:="$2"}
