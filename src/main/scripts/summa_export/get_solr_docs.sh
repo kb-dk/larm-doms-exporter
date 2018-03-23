@@ -84,11 +84,11 @@ function get_fields() {
 # Output: HITS
 function get_hit_count() {
     HITS=$(curl -s -G "$SOLR?${REQUEST_BASE}&rows=0" --data-urlencode "q=${QUERY}" | jq .response.numFound)
-    if [[ ! "$HITS" -gt "0" ]]; then
-        >&2 echo "Error: No hits for query '$QUERY' with call"
-        >&2 echo "$SOLR?${REQUEST_BASE}&rows=0&q=${QUERY}"
-        usage 4
-    fi
+#    if [[ ! "$HITS" -gt "0" ]]; then
+#        >&2 echo "Error: No hits for query '$QUERY' with call"
+#        >&2 echo "$SOLR?${REQUEST_BASE}&rows=0&q=${QUERY}"
+#        usage 4
+#    fi
 }
 
 function get_documents() {
