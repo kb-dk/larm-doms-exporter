@@ -12,7 +12,7 @@ check_parameters() {
     fi
 }
 
-do_stuff() {
+do_export() {
     echo "Exporting programs with timestamp after $TIME to $OUT"
     FORMAT=csv ./get_solr_docs.sh "stime:{$TIME TO *]  NOT (lhovedgenre:film NOT (lsubject:miniserie OR no:"miniserie" OR no:"thrillerserie" OR no:"tvfilm")) NOT (channel_name:(canal8sport OR tv2sport1hd OR eurosportdk OR idinvestigation OR tv3max)) AND lma_long:"tv"  " stime,recordID $OUT
     if [[ -s $OUT ]]; then
@@ -26,6 +26,15 @@ do_stuff() {
     fi
 }
 
+do_transform() {
+   for file in $OUTDIR/*xml; do
+        echo Transforming $file
+        tempfile=$file.larm.xml
+        $XALAN -xsl XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $file
+   done
+}
+
+
 function usage() {
     cat <<EOF
 
@@ -37,6 +46,7 @@ If the timestamp parameter is absent, the script attempts to read the timestamp 
 In addition the script reads two environment variables from the file summarise.conf:
 OUTDIR - the directory for output
 SOLR - the Solr endpoint to query
+XALAN - path to the xalan executable
 
 EOF
     exit $1
@@ -55,6 +65,7 @@ TIME=$(head -1 timestamp.txt 2> /dev/null)
 : ${TIME:=$1}
 
 check_parameters
-do_stuff
+do_export
+do_transform
 popd > /dev/null
 
