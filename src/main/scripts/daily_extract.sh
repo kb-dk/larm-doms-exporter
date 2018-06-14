@@ -30,7 +30,7 @@ do_transform() {
    for file in $OUTDIR/*xml; do
         echo Transforming $file
         tempfile=$file.larm.xml
-        $XALAN -xsl XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $file
+        $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $file
    done
 }
 
@@ -41,12 +41,12 @@ function usage() {
 Usage:  ./daily_extract.sh [timestamp]
 
 timestamp: The timestamp from which to start extraction. The format is like 2018-01-08T16:39:00Z
-If the timestamp parameter is absent, the script attempts to read the timestamp from the file timestamp.txt
+If the file timestamp.txt exists then the value is read from the file and the parameter is ignored.
 
-In addition the script reads two environment variables from the file summarise.conf:
+In addition the script reads three environment variables from the file summarise.conf:
 OUTDIR - the directory for output
 SOLR - the Solr endpoint to query
-XALAN - path to the xalan executable
+XALAN - path to the xalan jar-file
 
 EOF
     exit $1
@@ -54,8 +54,8 @@ EOF
 
 
 pushd ${BASH_SOURCE%/*} > /dev/null
-if [[ -s summarise.conf ]]; then
-    source summarise.conf
+if [[ -s ../config/summarise.conf ]]; then
+    source ../config/summarise.conf
 fi
 : ${OUTDIR:="."}
 echo Creating directory $OUTDIR if necessary

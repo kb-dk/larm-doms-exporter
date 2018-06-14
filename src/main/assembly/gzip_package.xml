@@ -8,6 +8,12 @@
 
     <fileSets>
         <fileSet>
+            <directory>${basedir}</directory>
+            <includes>
+                <include>README.md</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>${basedir}/src/main/config</directory>
             <outputDirectory>config</outputDirectory>
             <excludes>
@@ -40,6 +46,8 @@
             <directory>src/main/scripts/</directory>
             <excludes>
                 <exclude>Readme</exclude>
+                <exclude>summa_export/**</exclude>
+                <exclude>larm_export/**</exclude>
             </excludes>
             <outputDirectory>bin</outputDirectory>
             <fileMode>0755</fileMode>
@@ -55,15 +63,12 @@
 
 
     </fileSets>
+    <!--
     <dependencySets>
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
             <useTransitiveFiltering>true</useTransitiveFiltering>
-            <!--<includes>
-                <include>broadcast-transcoder-application</include>
-            </includes>
-            <useProjectArtifact>false</useProjectArtifact> -->
         </dependencySet>
     </dependencySets>
-
+    -->
 </assembly>
