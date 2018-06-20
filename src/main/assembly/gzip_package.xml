@@ -63,12 +63,12 @@
 
 
     </fileSets>
-    <!--
+
     <dependencySets>
         <dependencySet>
             <outputDirectory>lib</outputDirectory>
             <useTransitiveFiltering>true</useTransitiveFiltering>
         </dependencySet>
     </dependencySets>
-    -->
+
 </assembly>

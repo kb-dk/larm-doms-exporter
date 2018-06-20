@@ -10,7 +10,7 @@
 
 pushd ${BASH_SOURCE%/*} > /dev/null
 if [[ -s summarise.conf ]]; then
-    source summa_export/summarise.conf
+    source ../config/summarise.conf
 fi
 : ${ID:=recordID}
 : ${PAGE:=1000}
