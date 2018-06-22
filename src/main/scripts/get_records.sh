@@ -9,7 +9,7 @@
 ###############################################################################
 
 pushd ${BASH_SOURCE%/*} > /dev/null
-if [[ -s summarise.conf ]]; then
+if [[ -s ../config/summarise.conf ]]; then
     source ../config/summarise.conf
 fi
 : ${SUMMA_STORAGE:="http://mars.statsbiblioteket.dk:57308/doms/storage/services/StorageWS"}

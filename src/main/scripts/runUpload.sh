@@ -5,7 +5,7 @@
 #
 
 script_path=$(dirname $(readlink -f $0))
-configfile=$(readlink -f $(dirname $(readlink -f $0))/../config/lde.infrastructure.properties)
+configfile=$(readlink -f $(dirname $(readlink -f $0))/../config/summarise.conf)
 source $configfile
 
 logdir=$HOME/logs

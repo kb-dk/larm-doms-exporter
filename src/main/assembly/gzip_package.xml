@@ -19,16 +19,6 @@
             <excludes>
                 <exclude>Readme</exclude>
             </excludes>
-            <!--<includes>
-                <include>lde.behaviour.properties</include>
-                <include>lde.infrastructure.properties</include>
-                <include>dbschema.sql</include>
-                <include>hibernate.cfg.xml</include>
-                <include>logback.xml</include>
-                <include>bta.fetcher.Broadcast.properties</include>
-                <include>bta.fetcher.Reklamefilm.properties</include>
-                <include>run_transcoder.conf</include>
-            </includes>-->
             <filtered>false</filtered>
         </fileSet>
         <fileSet>
@@ -40,6 +30,7 @@
             <excludes>
                 <exclude>*dependencies*.jar</exclude>
                 <exclude>*tests*.jar</exclude>
+                <exclude>larm-kuana-exporter*.jar</exclude>
             </excludes>
         </fileSet>
         <fileSet>
@@ -51,16 +42,7 @@
             </excludes>
             <outputDirectory>bin</outputDirectory>
             <fileMode>0755</fileMode>
-            <directoryMode>0755</directoryMode>
-        </fileSet>
-
-        <!--<fileSet>
-            <directory>${basedir}/src/main/scripts</directory>
-            <outputDirectory>${project.build.finalName}/bin</outputDirectory>
-
-            <filtered>true</filtered>
-        </fileSet> -->
-
+            <directoryMode>0755</directoryMode></fileSet>
 
     </fileSets>
 

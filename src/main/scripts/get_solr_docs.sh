@@ -9,7 +9,7 @@
 ###############################################################################
 
 pushd ${BASH_SOURCE%/*} > /dev/null
-if [[ -s summarise.conf ]]; then
+if [[ -s ../config/summarise.conf ]]; then
     source ../config/summarise.conf
 fi
 : ${ID:=recordID}
@@ -57,6 +57,10 @@ check_parameters() {
         >&2 echo "Error: $OUT already processed"
         usage 3
     fi
+    if ! [ -x "$(command -v $JQ)" ]; then
+      >&2 echo 'Error: jq is not installed and executable at the specified location ($JQ)' >&2
+      usage 4
+    fi
 }
 
 ################################################################################
@@ -67,13 +71,13 @@ check_parameters() {
 # Output: Requested fields as csv
 function get_fields() {
     if [[ "json" == "$FORMAT" ]]; then
-        jq -c ' .response.docs[]' < "$1"
+        $JQ -c ' .response.docs[]' < "$1"
     elif [[ "csv" == "$FORMAT" ]]; then
         local EXPAND=.$(sed 's/,/, ./g' <<< "$FIELDS")
         if [[ "true" == "$QUOTE_CSV_STRINGS" ]]; then
-            <$1 jq -c ".response.docs[] | [$EXPAND]" | sed -e 's/^\[//' -e 's/\]$//'
+            <$1 $JQ -c ".response.docs[] | [$EXPAND]" | sed -e 's/^\[//' -e 's/\]$//'
         else
-            <$1 jq -c " .response.docs[] | [$EXPAND]" | sed -e 's/^\["//' -e 's/","/,/' -e 's/"\]$//'
+            <$1 $JQ -c " .response.docs[] | [$EXPAND]" | sed -e 's/^\["//' -e 's/","/,/' -e 's/"\]$//'
         fi
     else
         >&2 echo "Error: Unknown FORMAT '$FORMAT"
@@ -83,7 +87,7 @@ function get_fields() {
 
 # Output: HITS
 function get_hit_count() {
-    HITS=$(curl -s -G "$SOLR?${REQUEST_BASE}&rows=0" --data-urlencode "q=${QUERY}" | jq .response.numFound)
+    HITS=$(curl -s -G "$SOLR?${REQUEST_BASE}&rows=0" --data-urlencode "q=${QUERY}" | $JQ .response.numFound)
 #    if [[ ! "$HITS" -gt "0" ]]; then
 #        >&2 echo "Error: No hits for query '$QUERY' with call"
 #        >&2 echo "$SOLR?${REQUEST_BASE}&rows=0&q=${QUERY}"
@@ -102,7 +106,7 @@ function get_documents() {
         curl -s -G "$SOLR?${PAGE_BASE}" --data-urlencode "q=${QUERY}" --data-urlencode "cursorMark=$NEXT_MARK" > $T
         get_fields "$T"
         OLD_MARK="$NEXT_MARK"
-        NEXT_MARK=$(jq -r .nextCursorMark < "$T")
+        NEXT_MARK=$($JQ -r .nextCursorMark < "$T")
         if [[ "$NEXT_MARK" == "null" ]]; then
             >&2 echo "Error: Got 'null' as cursorMark for query $SOLR?${PAGE_BASE}&q=${QUERY}&cursorMark=$OLD_MARK"
             exit 6
