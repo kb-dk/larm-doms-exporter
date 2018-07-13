@@ -28,9 +28,23 @@ do_export() {
 
 do_transform() {
    for file in $OUTDIR/*xml; do
-        echo Transforming $file
-        tempfile=$file.larm.xml
-        $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $file
+        local channel_name=`xmllint \
+            --xpath "/*[local-name()='record']/*[local-name()='content']/*[local-name()='record']/*[local-name()='metadata']/*[local-name()='DeliverableUnit']/*[local-name()='Metadata']/*[local-name()='PBCoreDescriptionDocument']/*[local-name()='pbcorePublisher']/*[local-name()='publisherRole' and text() = 'channel_name']/../*[local-name()='publisher']/text()" \
+            $file`
+        if grep -q "\"$channel_name\"" ../config/whitelistedChannels.csv ; then
+            echo Transforming $file
+            tempfile=$file.larm.xml
+            $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $file
+        else
+            if grep -q "\"$channel_name\"" ../config/blacklistedChannels.csv ; then
+                echo "Channel $channel_name is blacklisted. Removing $file"
+                rm $file
+            else
+                echo "Channel $channel_name is not known. Moving $file to $STALLEDDIR"
+                mv $file $STALLEDDIR/.
+            fi
+        fi
+
    done
 }
 
@@ -43,8 +57,9 @@ Usage:  ./daily_extract.sh [timestamp]
 timestamp: The timestamp from which to start extraction. The format is like 2018-01-08T16:39:00Z
 If the file timestamp.txt exists then the value is read from the file and the parameter is ignored.
 
-In addition the script reads three environment variables from the file summarise.conf:
+In addition the script reads four environment variables from the file summarise.conf:
 OUTDIR - the directory for output
+STALLEDDIR - the directory for stalled program metadata
 SOLR - the Solr endpoint to query
 XALAN - path to the xalan jar-file
 
@@ -60,6 +75,10 @@ fi
 : ${OUTDIR:="."}
 echo Creating directory $OUTDIR if necessary
 mkdir -p $OUTDIR
+: ${STALLEDDIR:="./stalled"}
+echo Creating directory $STALLEDDIR if necessary
+mkdir -p $STALLEDDIR
+
 : ${OUT:="$OUTDIR/documents_$(date +%Y%m%d-%H%M%S).dat"}
 TIME=$(head -1 timestamp.txt 2> /dev/null)
 : ${TIME:=$1}
