@@ -17,6 +17,8 @@ public class ExportOptionsParser extends AbstractOptionsParser {
     protected static final Option LDE_HIBERNATE_CFG_OPTION = new Option("lde_hibernate_configfile", true, "The hibernate config file");
     protected static final Option BTA_HIBERNATE_CFG_OPTION = new Option("bta_hibernate_configfile", true, "The hibernate config file");
     protected static final Option CHAOS_CHANNELMAPPING_CFG_OPTION = new Option("chaos_channelmapping_configfile", true, "The chaos channel mapping file");
+    protected static final Option WHITELISTED_CHANNELS_OPTION = new Option("whitelisted_channelsfile", true, "The whitelisted channels file");
+    protected static final Option BLACKLISTED_CHANNELS_OPTION = new Option("blacklisted_channelsfile", true, "The blacklisted channels file");
 
     private ExportContext context;
 
@@ -28,6 +30,8 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         getOptions().addOption(LDE_HIBERNATE_CFG_OPTION);
         getOptions().addOption(BTA_HIBERNATE_CFG_OPTION);
         getOptions().addOption(CHAOS_CHANNELMAPPING_CFG_OPTION);
+        getOptions().addOption(WHITELISTED_CHANNELS_OPTION);
+        getOptions().addOption(BLACKLISTED_CHANNELS_OPTION);
     }
 
 
@@ -46,6 +50,8 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         parseLDEHibernateConfigFileOption(cmd);
         parseBTAHibernateConfigFileOption(cmd);
         parseChaosChannelMappingConfigFileOption(cmd);
+        parseWhitelistedChannelsFileOption(cmd);
+        parseBlacklistedChannelsFileOption(cmd);
         try {
             readBehaviouralProperties(context);
         } catch (IOException e) {
@@ -129,7 +135,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
                throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
            }
            context.setBtaHibernateConfigurationFile(configFile);
-       }
+    }
 
     protected void parseChaosChannelMappingConfigFileOption(CommandLine cmd) throws OptionParseException {
         String configFileString = cmd.getOptionValue(CHAOS_CHANNELMAPPING_CFG_OPTION.getOpt());
@@ -142,5 +148,31 @@ public class ExportOptionsParser extends AbstractOptionsParser {
             throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
         }
         context.setChaosChannelMappingConfigFile(configFile);
+    }
+
+    protected void parseWhitelistedChannelsFileOption(CommandLine cmd) throws OptionParseException {
+        String configFileString = cmd.getOptionValue(WHITELISTED_CHANNELS_OPTION.getOpt());
+        if (configFileString == null) {
+            parseError(WHITELISTED_CHANNELS_OPTION.toString());
+            throw new OptionParseException(WHITELISTED_CHANNELS_OPTION.toString());
+        }
+        File configFile = new File(configFileString);
+        if (!configFile.exists() || configFile.isDirectory()) {
+            throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
+        }
+        context.setWhitelistedChannelsFile(configFile);
+    }
+
+    protected void parseBlacklistedChannelsFileOption(CommandLine cmd) throws OptionParseException {
+        String configFileString = cmd.getOptionValue(BLACKLISTED_CHANNELS_OPTION.getOpt());
+        if (configFileString == null) {
+            parseError(BLACKLISTED_CHANNELS_OPTION.toString());
+            throw new OptionParseException(BLACKLISTED_CHANNELS_OPTION.toString());
+        }
+        File configFile = new File(configFileString);
+        if (!configFile.exists() || configFile.isDirectory()) {
+            throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
+        }
+        context.setBlacklistedChannelsFile(configFile);
     }
 }

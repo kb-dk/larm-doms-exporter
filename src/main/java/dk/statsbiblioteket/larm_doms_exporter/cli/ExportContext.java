@@ -16,6 +16,8 @@ public class ExportContext {
     private File behaviourConfigFile;
     private File infrastructreConfigFile;
     private File chaosChannelMappingConfigFile;
+    private File whitelistedChannelsFile;
+    private File blacklistedChannelsFile;
     private String domsCentralWebserviceUrl;
     private String domsUsername;
     private String domsPassword;
@@ -86,6 +88,22 @@ public class ExportContext {
 
 	public void setChaosChannelMappingConfigFile(File chaosChannelMappingConfigFile) {
 		this.chaosChannelMappingConfigFile = chaosChannelMappingConfigFile;
+	}
+
+    public File getWhitelistedChannelsFile() {
+		return whitelistedChannelsFile;
+	}
+
+	public void setWhitelistedChannelsFile(File whitelistedChannelsFile) {
+		this.whitelistedChannelsFile = whitelistedChannelsFile;
+	}
+
+    public File getBlacklistedChannelsFile() {
+		return blacklistedChannelsFile;
+	}
+
+	public void setBlacklistedChannelsFile(File blacklistedChannelsFile) {
+		this.blacklistedChannelsFile = blacklistedChannelsFile;
 	}
 
 	public DomsExportRecordDAO getDomsExportRecordDAO() {
