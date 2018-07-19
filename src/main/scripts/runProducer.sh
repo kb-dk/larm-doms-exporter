@@ -15,4 +15,6 @@ java -Dlogback.configurationFile=$confDir/logback.producer.xml $hibernate_log_co
  --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\
  --infrastructure_configfile=$confDir/lde.infrastructure.properties \
  --behavioural_configfile=$confDir/lde.behaviour.properties \
- --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml
+ --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml \
+ --whitelisted_channelsfile=$confDir/whitelistedChannels.csv \
+ --blacklisted_channelsfile=$confDir/blacklistedChannels.csv
