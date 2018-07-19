@@ -288,10 +288,6 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 <xsl:text>TV2 Radio</xsl:text>
 </xsl:if>
 
-	<xsl:if test=".='unknown'">
-<xsl:text>Ukendt</xsl:text>
-</xsl:if>
-
 			   <!-- these are tv channels -->
 	<xsl:if test=".='7eren'">
 <xsl:text>7'eren</xsl:text>
@@ -514,10 +510,6 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 </xsl:if>
 	<xsl:if test=".='tv2radio'">
 <xsl:text>tv2radio_logo.png</xsl:text>
-</xsl:if>
-
-	<xsl:if test=".='unknown'">
-<xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 
 			   <!-- these are tv channels -->
@@ -813,14 +805,6 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 				   <sb_channel_name>tv2radio</sb_channel_name>
 				   <chaos_display_name>TV2 Radio</chaos_display_name>
 				   <chaos_logo>tv2radio_logo.png</chaos_logo>
-			   </channel>
-
-			   <!-- this entry is used, if no match can be found -->
-			   <!-- IMPORTANT: sb_channel_name must be 'unknown' -->
-			   <channel>
-				   <sb_channel_name>unknown</sb_channel_name>
-				   <chaos_display_name>Ukendt</chaos_display_name>
-				   <chaos_logo>Unknown_logo.png</chaos_logo>
 			   </channel>
 
 			   <!-- these are tv channels -->
