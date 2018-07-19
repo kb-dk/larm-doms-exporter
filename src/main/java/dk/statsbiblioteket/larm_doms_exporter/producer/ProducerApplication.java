@@ -89,6 +89,8 @@ public class ProducerApplication {
         int rejected = 0;
         for (BroadcastTranscodingRecord btaRecord: btaRecords) {
             DomsExportRecord ldeDatabaseRecord = ldeDao.readOrCreate(btaRecord.getID());
+            //TODO if channel is blacklisted, mark as rejected
+            //TODO if channel is not whitelisted, mark as rejected and send warning email
             if (ldeDatabaseRecord.getLastDomsTimestamp() != null && !ldeDatabaseRecord.getState().equals(ExportStateEnum.PENDING)) {  //preexisting record
                 ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
                 ldeDatabaseRecord.setState(ExportStateEnum.PENDING);

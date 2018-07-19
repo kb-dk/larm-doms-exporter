@@ -76,8 +76,10 @@ public class ChannelMapper {
 
     public String getChaosChannel(String sbChannel) {
         ChaosChannelEntity chaosChannelEntity = chaosChannelMapping.get(sbChannel);
-        if(chaosChannelEntity == null)
+        if(chaosChannelEntity == null) //Should never happen
         	chaosChannelEntity = chaosChannelMapping.get(sb_unknown_channel);
+            logger.warn("Channel " + sbChannel + " have no mapping. Setting chaos display name to " + chaosChannelEntity.getDisplayName());
+            //TODO: throw exception?
 
         return chaosChannelEntity.getDisplayName();
     }
