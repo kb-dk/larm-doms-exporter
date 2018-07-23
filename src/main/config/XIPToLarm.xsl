@@ -288,6 +288,22 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 <xsl:text>TV2 Radio</xsl:text>
 </xsl:if>
 
+	<xsl:if test=".='drp4oj'">
+<xsl:text>DR P4 Østjylland</xsl:text>
+</xsl:if>
+	<xsl:if test=".='rakl'">
+<xsl:text>Radio Klassisk</xsl:text>
+</xsl:if>
+	<xsl:if test=".='voice'">
+<xsl:text>THE VOICE</xsl:text>
+</xsl:if>
+	<xsl:if test=".='drp4sj'">
+<xsl:text>DR P4 Sjælland</xsl:text>
+</xsl:if>
+	<xsl:if test=".='drp4esb'">
+<xsl:text>DR P4 Esbjerg</xsl:text>
+</xsl:if>
+
 			   <!-- these are tv channels -->
 	<xsl:if test=".='7eren'">
 <xsl:text>7'eren</xsl:text>
@@ -400,6 +416,42 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 		<xsl:if test=".='voicetv'">
 <xsl:text>Voice TV</xsl:text>
 </xsl:if>
+
+		<xsl:if test=".='tv3sport'">
+<xsl:text>TV3 Sport</xsl:text>
+</xsl:if>
+		<xsl:if test=".='tv2mv'">
+<xsl:text>TV2 Midt/Vest</xsl:text>
+</xsl:if>
+		<xsl:if test=".='drk'">
+<xsl:text>DR K</xsl:text>
+</xsl:if>
+		<xsl:if test=".='boomerang'">
+<xsl:text>Boomerang</xsl:text>
+</xsl:if>
+		<xsl:if test=".='mtv'">
+<xsl:text>MTV</xsl:text>
+</xsl:if>
+		<xsl:if test=".='eurosportdk'">
+<xsl:text>Eurosport Danmark version 2</xsl:text>
+</xsl:if>
+		<xsl:if test=".='tlcdanmark'">
+<xsl:text>TLC Danmark</xsl:text>
+</xsl:if>
+		<xsl:if test=".='AKTV'">
+<xsl:text>AKTV</xsl:text>
+</xsl:if>
+		<xsl:if test=".='EfterskoleTV'">
+<xsl:text>EfterskoleTV</xsl:text>
+</xsl:if>
+		<xsl:if test=".='TVGaderummet'">
+<xsl:text>TVGaderummet</xsl:text>
+</xsl:if>
+		<xsl:if test=".='tlc'">
+<xsl:text>TLC</xsl:text>
+</xsl:if>
+
+
 </xsl:for-each>
 </xsl:template>
 
@@ -510,6 +562,22 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 </xsl:if>
 	<xsl:if test=".='tv2radio'">
 <xsl:text>tv2radio_logo.png</xsl:text>
+</xsl:if>
+
+	<xsl:if test=".='drp4oj'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='rakl'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='voice'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='drp4sj'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='drp4esb'">
+<xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 
 			   <!-- these are tv channels -->
@@ -624,6 +692,41 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 		<xsl:if test=".='voicetv'">
 <xsl:text>voicetv_logo.png</xsl:text>
 </xsl:if>
+
+	<xsl:if test=".='tv3sport'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='tv2mv'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='drk'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='boomerang'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='mtv'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='eurosportdk'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='tlcdanmark'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='AKTV'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='EfterskoleTV'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='TVGaderummet'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='tlc'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+
 </xsl:for-each>
 
 </xsl:template>
@@ -805,6 +908,32 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 				   <sb_channel_name>tv2radio</sb_channel_name>
 				   <chaos_display_name>TV2 Radio</chaos_display_name>
 				   <chaos_logo>tv2radio_logo.png</chaos_logo>
+			   </channel>
+
+			   <channel>
+				   <sb_channel_name>drp4oj</sb_channel_name>
+				   <chaos_display_name>DR P4 Østjylland</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>rakl</sb_channel_name>
+				   <chaos_display_name>Radio Klassisk</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>voice</sb_channel_name>
+				   <chaos_display_name>THE VOICE</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>drp4sj</sb_channel_name>
+				   <chaos_display_name>DR P4 Sjælland</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>drp4esb</sb_channel_name>
+				   <chaos_display_name>DR P4 Esbjerg</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
 			   </channel>
 
 			   <!-- these are tv channels -->
@@ -992,6 +1121,62 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 				   <sb_channel_name>voicetv</sb_channel_name>
 				   <chaos_display_name>Voice TV</chaos_display_name>
 				   <chaos_logo>voicetv_logo.png</chaos_logo>
+			   </channel>
+
+			   <channel>
+				   <sb_channel_name>tv3sport</sb_channel_name>
+				   <chaos_display_name>TV3 Sport</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>tv2mv</sb_channel_name>
+				   <chaos_display_name>TV2 Midt/Vest</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>drk</sb_channel_name>
+				   <chaos_display_name>DR K</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>boomerang</sb_channel_name>
+				   <chaos_display_name>Boomerang</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>mtv</sb_channel_name>
+				   <chaos_display_name>MTV</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>eurosportdk</sb_channel_name>
+				   <chaos_display_name>Eurosport Danmark version 2</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>tlcdanmark</sb_channel_name>
+				   <chaos_display_name>TLC Danmark</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>AKTV</sb_channel_name>
+				   <chaos_display_name>AKTV</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>EfterskoleTV</sb_channel_name>
+				   <chaos_display_name>EfterskoleTV</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>TVGaderummet</sb_channel_name>
+				   <chaos_display_name>TVGaderummet</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>tlc</sb_channel_name>
+				   <chaos_display_name>TLC</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
 			   </channel>
 		   </channels>
 	   </xsl:template>
