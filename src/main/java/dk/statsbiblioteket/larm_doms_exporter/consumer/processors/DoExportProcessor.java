@@ -9,6 +9,7 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.util.ChannelMapper;
 import dk.statsbiblioteket.util.xml.DOM;
+import dk.statsbiblioteket.util.xml.DefaultNamespaceContext;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
@@ -97,6 +98,8 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     //TODO replace with following library call:
     //private static NamespaceContext namespaceContext = new DefaultNamespaceContext("http://www.pbcore.org/PBCore/PBCoreNamespace.html", "pbcore");
+    
+    private static NamespaceContext program_broadcast_namespaceContext = new DefaultNamespaceContext("http://doms.statsbiblioteket.dk/types/program_broadcast/0/1/#", "pbc");
 
 
     @Override
@@ -265,10 +268,11 @@ public class DoExportProcessor extends ProcessorChainElement {
     }
 
     static String getChannelName(ExportRequestState state) throws XPathExpressionException {
-        String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
+//        String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
+        String xpathString = "/pbc:programBroadcast/pbc:channelId";
         XPath xpath = xpathFactory.newXPath();
-        xpath.setNamespaceContext(pbcoreNamespaceContext);
-        return (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        xpath.setNamespaceContext(program_broadcast_namespaceContext);
+        return (String) xpath.evaluate(xpathString, state.getProgramBroadcast(), XPathConstants.STRING);
     }
 
     private String substitutePublisher(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
