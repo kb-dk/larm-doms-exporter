@@ -41,6 +41,15 @@ public class IsRadioOrTVProgramCheckerProcessor extends ProcessorChainElement {
             context.getDomsExportRecordDAO().update(record);
         } else {
             logger.info(record.getID() + " is a radio or tv program. Proceeding.");
+            try {
+                String program_broadcast_string = domsWS.getDatastreamContents(record.getID(), "PROGRAM_BROADCAST");
+                if (program_broadcast_string == null){
+                    throw new ProcessorException("No PROGRAM_BROADCAST found for " + record.getID());
+                }
+                state.setProgramBroadcast(program_broadcast_string);
+            } catch (Exception e) {
+                throw new ProcessorException("Failed to get PROGRAM_BROADCAST for " + record.getID(),e);
+             }
         }
     }
 
