@@ -42,6 +42,7 @@ do_transform() {
             else
                 echo "Channel $channel_name is not known. Moving $file to $STALLEDDIR"
                 mv $file $STALLEDDIR/.
+#                TODO: send warning mail
             fi
         fi
 
@@ -87,4 +88,3 @@ check_parameters
 do_export
 do_transform
 popd > /dev/null
-
