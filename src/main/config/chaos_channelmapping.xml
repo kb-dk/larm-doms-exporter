@@ -176,14 +176,6 @@
 		<chaos_logo>tv2radio_logo.png</chaos_logo>
 	</channel>
 
-	<!-- this entry is used, if no match can be found -->
-	<!-- IMPORTANT: sb_channel_name must be 'unknown' -->
-	<channel>
-		<sb_channel_name>unknown</sb_channel_name>
-		<chaos_display_name>Ukendt</chaos_display_name>
-		<chaos_logo>Unknown_logo.png</chaos_logo>
-	</channel>
-
 	<!-- these are tv channels -->
 	<channel>
 		<sb_channel_name>7eren</sb_channel_name>
