@@ -36,6 +36,8 @@ public class ExportContext {
     private int geckonStreamingserverDestinationId;
     private String geckonStreamingserverFolderpath;
 
+    private String unknownChannelPage;
+
     /* etc */
 
     public Long getNumExports() {
@@ -210,6 +212,14 @@ public class ExportContext {
         this.geckonStreamingserverFolderpath = geckonStreamingserverFolderpath;
     }
 
+    public String getUnknownChannelPage() {
+        return unknownChannelPage;
+    }
+
+    public void setUnknownChannelPage(String unknownChannelPage) {
+        this.unknownChannelPage = unknownChannelPage;
+    }
+
     @Override
     public String toString() {
         return "ExportContext{" +
@@ -222,6 +232,7 @@ public class ExportContext {
                 ", seedTimestamp=" + seedTimestamp +
                 ", domsViewAngle='" + domsViewAngle + '\'' +
                 ", outputDirectory=" + outputDirectory +
+                ", unknownChannelPage=" + unknownChannelPage +
                 '}';
     }
 }

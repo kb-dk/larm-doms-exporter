@@ -83,6 +83,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         context.setDomsUsername(readStringProperty("domsUsername", props));
         context.setDomsPassword(readStringProperty("domsPassword", props));
         context.setOutputDirectory(readFileProperty("fileOutputDirectory", props));
+        context.setUnknownChannelPage(readStringProperty("unknownChannelPage", props));
     }
 
     protected void parseBehaviouralConfigFileOption(CommandLine cmd) throws OptionParseException {

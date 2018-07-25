@@ -106,8 +106,10 @@ public class ProducerApplication {
                 rejected++;
             }
             else if(!whitelistedChannels.contains("\"" + btaRecord.getChannel() + "\"")){
-                //TODO: send warning mail
-                logger.warn("Channel {} is neither whitelisted nor blacklisted. Record {} is rejected.", btaRecord.getChannel(), ldeDatabaseRecord.getID());
+                String warning = String.format("Channel %s is not known. Record %s is rejected. Go to the following page for instructions: %s",
+                        btaRecord.getChannel(), ldeDatabaseRecord.getID(), context.getUnknownChannelPage());
+                System.out.println(warning);
+                logger.warn(warning);
                 ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
                 ldeDatabaseRecord.setState(ExportStateEnum.REJECTED);
                 ldeDao.update(ldeDatabaseRecord);
