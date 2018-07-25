@@ -4,7 +4,6 @@
 # As its name implies, this script is the entry point for the daily extraction of data for larm export.
 #
 
-
 check_parameters() {
     if [[ -z "$TIME" ]]; then
         >&2 echo "Error: Initial time must be specified as parameter or in timestamp.txt"
@@ -13,7 +12,7 @@ check_parameters() {
 }
 
 do_export() {
-    echo "Exporting programs with timestamp after $TIME to $OUT"
+    log "Exporting programs with timestamp after $TIME to $OUT"
     FORMAT=csv ./get_solr_docs.sh "stime:{$TIME TO *]  NOT (lhovedgenre:film NOT (lsubject:miniserie OR no:"miniserie" OR no:"thrillerserie" OR no:"tvfilm")) NOT (channel_name:(canal8sport OR tv2sport1hd OR eurosportdk OR idinvestigation OR tv3max)) AND lma_long:"tv"  " stime,recordID $OUT
     if [[ -s $OUT ]]; then
         sort < $OUT | tail -n 1 | cut -d, -f1 > timestamp.txt
@@ -21,7 +20,7 @@ do_export() {
         cut -d, -f2 < $OUT > $IDFILE
         ./get_records.sh $IDFILE $OUTDIR
     else
-        echo No new records found since $TIME
+        log "No new records found since $TIME"
         exit 0
     fi
 }
@@ -32,17 +31,16 @@ do_transform() {
             --xpath "/*[local-name()='record']/*[local-name()='content']/*[local-name()='record']/*[local-name()='metadata']/*[local-name()='DeliverableUnit']/*[local-name()='Metadata']/*[local-name()='PBCoreDescriptionDocument']/*[local-name()='pbcorePublisher']/*[local-name()='publisherRole' and text() = 'channel_name']/../*[local-name()='publisher']/text()" \
             $file`
         if grep -q "\"$channel_name\"" ../config/whitelistedChannels.csv ; then
-            echo Transforming $file
+            log "Transforming $file"
             tempfile=$file.larm.xml
             $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $file
         else
             if grep -q "\"$channel_name\"" ../config/blacklistedChannels.csv ; then
-                echo "Channel $channel_name is blacklisted. Removing $file"
+                log "Channel $channel_name is blacklisted. Removing $file"
                 rm $file
             else
-                echo "Channel $channel_name is not known. Moving $file to $STALLEDDIR"
+                report_error "Channel $channel_name is not known. Moving $file to $STALLEDDIR. Go to the following page for instructions: $unknownChannelPage"
                 mv $file $STALLEDDIR/.
-#                TODO: send warning mail
             fi
         fi
 
@@ -70,14 +68,15 @@ EOF
 
 
 pushd ${BASH_SOURCE%/*} > /dev/null
-if [[ -s ../config/summarise.conf ]]; then
-    source ../config/summarise.conf
+if [[ ! -s ../config/summarise.conf ]]; then
+    echo "summarise.conf is missing" >&2
 fi
-: ${OUTDIR:="."}
-echo Creating directory $OUTDIR if necessary
+source ../config/summarise.conf
+source "common.sh"
+
+log "Creating directory $OUTDIR if necessary"
 mkdir -p $OUTDIR
-: ${STALLEDDIR:="./stalled"}
-echo Creating directory $STALLEDDIR if necessary
+log "Creating directory $STALLEDDIR if necessary"
 mkdir -p $STALLEDDIR
 
 : ${OUT:="$OUTDIR/documents_$(date +%Y%m%d-%H%M%S).dat"}

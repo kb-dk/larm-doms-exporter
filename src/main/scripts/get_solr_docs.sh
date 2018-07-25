@@ -9,25 +9,22 @@
 ###############################################################################
 
 pushd ${BASH_SOURCE%/*} > /dev/null
-if [[ -s ../config/summarise.conf ]]; then
-    source ../config/summarise.conf
+if [[ ! -s ../config/summarise.conf ]]; then
+    echo "summarise.conf is missing" >&2
 fi
+source ../config/summarise.conf
+source "common.sh"
+
 : ${ID:=recordID}
 : ${PAGE:=1000}
 : ${REQUEST_EXTRA:=""} # Additional custom params. Prefix with '&'
-
-: ${SOLR:="http://mars.statsbiblioteket.dk:50001/solr/doms.1.devel/select"} # Devel
 : ${QUERY:="$1"}
-
 : ${FIELDS:="$2"}
 : ${FIELDS:="$ID"}
-
 : ${OUT:="$3"}
 : ${OUT:="documents_$(date +%Y%m%d-%H%M%S).dat"} # Use '/dev/stdout' for direct output
-
 : ${FORMAT:="csv"} # Possible values: cvs, json
 : ${QUOTE_CSV_STRINGS:=false}
-
 : ${REQUEST_BASE:="wt=json&groups=false&facet=false&hl=false&fl=${FIELDS}${REQUEST_EXTRA}"}
 popd > /dev/null
 
@@ -47,18 +44,18 @@ EOF
 
 check_parameters() {
     if [[ -z "$QUERY" ]]; then
-        >&2 echo "Error: No query specified"
+        report_error "Error: No query specified"
         usage 2
     fi
     if [[ "-h" == "$QUERY" || "-?" == "$QUERY" ]]; then
         usage 0
     fi
     if [[ -f "$OUT" || -f "${OUT}.gz" ]]; then
-        >&2 echo "Error: $OUT already processed"
+        report_error "Error: $OUT already processed"
         usage 3
     fi
     if ! [ -x "$(command -v $JQ)" ]; then
-      >&2 echo 'Error: jq is not installed and executable at the specified location ($JQ)' >&2
+      report_error 'Error: jq is not installed and executable at the specified location ($JQ)' >&2
       usage 4
     fi
 }
@@ -80,7 +77,7 @@ function get_fields() {
             <$1 $JQ -c " .response.docs[] | [$EXPAND]" | sed -e 's/^\["//' -e 's/","/,/' -e 's/"\]$//'
         fi
     else
-        >&2 echo "Error: Unknown FORMAT '$FORMAT"
+        report_error "Error: Unknown FORMAT '$FORMAT"
         usage 5
     fi
 }
@@ -108,17 +105,18 @@ function get_documents() {
         OLD_MARK="$NEXT_MARK"
         NEXT_MARK=$($JQ -r .nextCursorMark < "$T")
         if [[ "$NEXT_MARK" == "null" ]]; then
-            >&2 echo "Error: Got 'null' as cursorMark for query $SOLR?${PAGE_BASE}&q=${QUERY}&cursorMark=$OLD_MARK"
+            report_error "Error: Got 'null' as cursorMark for query $SOLR?${PAGE_BASE}&q=${QUERY}&cursorMark=$OLD_MARK"
             exit 6
         fi
         if [ ".$OLD_MARK" == ".$NEXT_MARK" ]; then
             break
         fi
-        >&2 echo -ne "\033[2K$COUNT/$HITS $NEXT_MARK\r"
+        # Comment this in for debugging
+        #>&2 echo -ne "\033[2K$COUNT/$HITS $NEXT_MARK\r"
         #    echo -ne "\033[2K$COUNT/$HITS\r"
         COUNT=$((COUNT+$PAGE))
     done
-    >&2 echo ""
+    #>&2 echo ""
     rm $T
 }
 
@@ -128,6 +126,6 @@ function get_documents() {
 
 check_parameters "$@"
 get_hit_count
->&2 echo "Total hits for query '${QUERY}': ${HITS} documents"
+log "Total hits for query '${QUERY}': ${HITS} documents"
 get_documents > "$OUT"
->&2 echo "Finished extracting data for $HITS documents, result stored in $OUT"
+log "Finished extracting data for $HITS documents, result stored in $OUT"

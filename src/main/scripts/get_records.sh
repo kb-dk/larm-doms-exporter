@@ -9,13 +9,13 @@
 ###############################################################################
 
 pushd ${BASH_SOURCE%/*} > /dev/null
-if [[ -s ../config/summarise.conf ]]; then
-    source ../config/summarise.conf
+if [[ ! -s ../config/summarise.conf ]]; then
+    echo "summarise.conf is missing" >&2
 fi
-: ${SUMMA_STORAGE:="http://mars.statsbiblioteket.dk:57308/doms/storage/services/StorageWS"}
+source ../config/summarise.conf
+source "common.sh"
 
 : ${SOURCE:="$1"}
-
 : ${OUT_FOLDER:="$2"}
 : ${OUT_FOLDER:="records_$(date +%Y%m%d-%H%M%S)"} # This will be a folder
 
@@ -39,7 +39,7 @@ EOF
 
 check_parameters() {
     if [[ -z "$SOURCE" ]]; then
-        >&2 echo "Error: No source file specified"
+        report_error "Error: No source file specified"
         usage 2
     fi
 }
@@ -52,15 +52,15 @@ get_record() {
     local RECORD_ID="$1"
     local OUT_NAME=$(sed 's/[^a-zA-Z_0-9.]/_/g' <<< "$RECORD_ID").xml
     if [[ "false" == "$FORCE" && -s "$OUT_FOLDER/$OUT_NAME" ]]; then
-        echo " - Skipping $RECORD_ID as is has already been fetched"
+        log " - Skipping $RECORD_ID as is has already been fetched"
         return
     fi
-    echo " - Fetching $OUT_FOLDER/$OUT_NAME"
+    log " - Fetching $OUT_FOLDER/$OUT_NAME"
     if [[ "true" == "$EXPAND" ]]; then
         # expand is ignored
         curl -s -G "$SUMMA_STORAGE?method=getCustomRecord&expand=false&legacyMerge=false&escapeContent=false&" --data-urlencode "id=${RECORD_ID}" | sed -e 's/<soapenv.*getCustomRecordReturn[^>]*>//' -e 's/<\/ns1:getCustomRecordReturn.*//' -e 's/&lt;/</g' -e 's/&gt;/>/g' -e 's/&quot;/"/g' -e 's/&amp;/&/g' | xmllint --format - > "$OUT_FOLDER/$OUT_NAME"
     else
-        >&2 echo "EXPAND=false not supported yet"
+        report_error "EXPAND=false not supported yet"
         exit 4
     fi
 }
@@ -81,4 +81,4 @@ get_records() {
 
 check_parameters "$@"
 get_records
-echo "Finished extracting $(wc -l < "$SOURCE") records, result stored in folder $OUT_FOLDER"
+log "Finished extracting $(wc -l < "$SOURCE") records, result stored in folder $OUT_FOLDER"
