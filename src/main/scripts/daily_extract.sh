@@ -18,7 +18,7 @@ do_export() {
         sort < $OUT | tail -n 1 | cut -d, -f1 > timestamp.txt
         IDFILE=$OUT.ids.dat
         cut -d, -f2 < $OUT > $IDFILE
-        ./get_records.sh $IDFILE $OUTDIR
+        ./get_records.sh $IDFILE $EXPORTDIR
     else
         log "No new records found since $TIME"
         exit 0
@@ -26,14 +26,14 @@ do_export() {
 }
 
 do_transform() {
-   for file in $OUTDIR/*xml; do
+   for file in $EXPORTDIR/*xml; do
         local channel_name=`xmllint \
             --xpath "/*[local-name()='record']/*[local-name()='content']/*[local-name()='record']/*[local-name()='metadata']/*[local-name()='DeliverableUnit']/*[local-name()='Metadata']/*[local-name()='PBCoreDescriptionDocument']/*[local-name()='pbcorePublisher']/*[local-name()='publisherRole' and text() = 'channel_name']/../*[local-name()='publisher']/text()" \
             $file`
         if grep -q "\"$channel_name\"" ../config/whitelistedChannels.csv ; then
             log "Transforming $file"
             tempfile=$file.larm.xml
-            $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $file
+            $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $TRANSFORMEDDIR/. && rm $file
         else
             if grep -q "\"$channel_name\"" ../config/blacklistedChannels.csv ; then
                 log "Channel $channel_name is blacklisted. Removing $file"
@@ -57,7 +57,8 @@ timestamp: The timestamp from which to start extraction. The format is like 2018
 If the file timestamp.txt exists then the value is read from the file and the parameter is ignored.
 
 In addition the script reads four environment variables from the file summarise.conf:
-OUTDIR - the directory for output
+EXPORTDIR - the directory for exported metadata
+TRANSFORMEDDIR - the directory for transformed metadata
 STALLEDDIR - the directory for stalled program metadata
 SOLR - the Solr endpoint to query
 XALAN - path to the xalan jar-file
@@ -74,12 +75,14 @@ fi
 source ../config/summarise.conf
 source "common.sh"
 
-log "Creating directory $OUTDIR if necessary"
-mkdir -p $OUTDIR
+log "Creating directory $EXPORTDIR if necessary"
+mkdir -p $EXPORTDIR
+log "Creating directory $TRANSFORMEDDIR if necessary"
+mkdir -p $TRANSFORMEDDIR
 log "Creating directory $STALLEDDIR if necessary"
 mkdir -p $STALLEDDIR
 
-: ${OUT:="$OUTDIR/documents_$(date +%Y%m%d-%H%M%S).dat"}
+: ${OUT:="$EXPORTDIR/documents_$(date +%Y%m%d-%H%M%S).dat"}
 TIME=$(head -1 timestamp.txt 2> /dev/null)
 : ${TIME:=$1}
 
