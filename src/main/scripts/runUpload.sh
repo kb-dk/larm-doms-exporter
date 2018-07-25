@@ -57,12 +57,13 @@ ftpUsername
 ftpPassword
 
 EOF
+    exit $1
 }
 
-[ -z "$fileOutputDirectory" ] && print_usage && exit 2
-[ -z "$ftpServer" ] && print_usage && exit 3
-[ -z "$ftpUsername" ] && print_usage && exit 4
-[ -z "$ftpPassword" ] && print_usage && exit 5
+[ -z "$fileOutputDirectory" ] && print_usage 2
+[ -z "$ftpServer" ] && print_usage 3
+[ -z "$ftpUsername" ] && print_usage 4
+[ -z "$ftpPassword" ] && print_usage 5
 
 
 # off we go!
