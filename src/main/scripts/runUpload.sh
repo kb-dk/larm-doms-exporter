@@ -4,10 +4,13 @@
 # is uploaded then downloaded again to check for bitwise integrity.
 #
 
-script_path=$(dirname $(readlink -f $0))
-configfile=$(readlink -f $(dirname $(readlink -f $0))/../config/summarise.conf)
-source $configfile
+pushd ${BASH_SOURCE%/*} > /dev/null
+if [[ ! -s ../config/summarise.conf ]]; then
+    echo "summarise.conf is missing" >&2
+fi
+source ../config/summarise.conf
 source "common.sh"
+popd > /dev/null
 
 main()
 {
@@ -42,18 +45,18 @@ FTP
     fi
 }
 
-print_usage()
-{
-    echo "Usage: $(basename $0) "
-    echo
-    echo "Settings will be sourced from this file:"
-    echo "$configfile"
-    echo "and must include:"
-    echo "fileOutputDirectory (the input directory to this script)"
-    echo "ftpServer"
-    echo "ftpUsername"
-    echo "ftpPassword"
-    echo
+print_usage() {
+    cat <<EOF
+
+Usage: $(basename $0)
+Settings will be sourced from the config file summarise.conf
+and must include:
+fileOutputDirectory (the input directory to this script)
+ftpServer
+ftpUsername
+ftpPassword
+
+EOF
 }
 
 [ -z "$fileOutputDirectory" ] && print_usage && exit 2
