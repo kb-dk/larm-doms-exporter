@@ -84,6 +84,7 @@ TIME=$(head -1 timestamp.txt 2> /dev/null)
 : ${TIME:=$1}
 
 check_parameters
+cleanup_log
 do_export
 do_transform
 popd > /dev/null
