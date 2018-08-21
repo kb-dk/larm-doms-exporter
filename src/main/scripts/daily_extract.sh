@@ -11,6 +11,17 @@ check_parameters() {
     fi
 }
 
+remove_tmp_files() {
+    if [ ! -z $OUT ]; then
+        log "Removing tmp file: $OUT"
+        rm $OUT
+    fi
+    if [ ! -z $IDFILE ]; then
+        log "Removing tmp file: $IDFILE"
+        rm $IDFILE
+    fi
+}
+
 do_export() {
     log "Exporting programs with timestamp after $TIME to $OUT"
     FORMAT=csv ./get_solr_docs.sh "stime:{$TIME TO *]  NOT (lhovedgenre:film NOT (lsubject:miniserie OR no:"miniserie" OR no:"thrillerserie" OR no:"tvfilm")) NOT (channel_name:(canal8sport OR tv2sport1hd OR eurosportdk OR idinvestigation OR tv3max)) AND lma_long:"tv"  " stime,recordID $OUT
@@ -19,14 +30,17 @@ do_export() {
         IDFILE=$OUT.ids.dat
         cut -d, -f2 < $OUT > $IDFILE
         ./get_records.sh $IDFILE $EXPORTDIR
-    else
-        log "No new records found since $TIME"
-        exit 0
     fi
 }
 
 do_transform() {
-   for file in $EXPORTDIR/*xml; do
+    if [ -z "$(find $EXPORTDIR -name '*xml')" ]; then
+        log "No new records found since $TIME"
+        remove_tmp_files
+        exit 0
+    fi
+
+    for file in $EXPORTDIR/*xml; do
         local channel_name=`xmllint \
             --xpath "/*[local-name()='record']/*[local-name()='content']/*[local-name()='record']/*[local-name()='metadata']/*[local-name()='DeliverableUnit']/*[local-name()='Metadata']/*[local-name()='PBCoreDescriptionDocument']/*[local-name()='pbcorePublisher']/*[local-name()='publisherRole' and text() = 'channel_name']/../*[local-name()='publisher']/text()" \
             $file`
@@ -44,9 +58,8 @@ do_transform() {
             fi
         fi
 
-   done
+    done
 }
-
 
 function usage() {
     cat <<EOF
@@ -90,4 +103,5 @@ check_parameters
 cleanup_log
 do_export
 do_transform
+remove_tmp_files
 popd > /dev/null
