@@ -6,7 +6,7 @@
         <artifactId>sbprojects-parent</artifactId>
         <version>5</version>
     </parent>
-    <groupId>larm-doms-exporter</groupId>
+    <groupId>dk.kb.larm</groupId>
     <artifactId>larm-doms-exporter</artifactId>
     <version>1.0.9-SNAPSHOT</version>
     <repositories>
