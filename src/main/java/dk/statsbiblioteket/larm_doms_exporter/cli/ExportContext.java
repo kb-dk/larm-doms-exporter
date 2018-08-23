@@ -37,6 +37,7 @@ public class ExportContext {
     private String geckonStreamingserverFolderpath;
 
     private String unknownChannelPage;
+    private File btaRecordIdsFile;
 
     /* etc */
 
@@ -220,6 +221,14 @@ public class ExportContext {
         this.unknownChannelPage = unknownChannelPage;
     }
 
+    public File getBtaRecordIdsFile() {
+        return btaRecordIdsFile;
+    }
+
+    public void setBtaRecordIdsFile(File btaRecordIdsFile) {
+        this.btaRecordIdsFile = btaRecordIdsFile;
+    }
+
     @Override
     public String toString() {
         return "ExportContext{" +
@@ -233,6 +242,7 @@ public class ExportContext {
                 ", domsViewAngle='" + domsViewAngle + '\'' +
                 ", outputDirectory=" + outputDirectory +
                 ", unknownChannelPage=" + unknownChannelPage +
+                (btaRecordIdsFile != null ? ", btaRecordIdsFile=" + btaRecordIdsFile : "") +
                 '}';
     }
 }

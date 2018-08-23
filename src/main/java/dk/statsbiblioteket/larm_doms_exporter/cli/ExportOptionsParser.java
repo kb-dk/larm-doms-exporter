@@ -19,6 +19,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
     protected static final Option CHAOS_CHANNELMAPPING_CFG_OPTION = new Option("chaos_channelmapping_configfile", true, "The chaos channel mapping file");
     protected static final Option WHITELISTED_CHANNELS_OPTION = new Option("whitelisted_channelsfile", true, "The whitelisted channels file");
     protected static final Option BLACKLISTED_CHANNELS_OPTION = new Option("blacklisted_channelsfile", true, "The blacklisted channels file");
+    protected static final Option BTA_RECORD_IDS_FILE_OPTION = new Option("bta_record_ids_file", true, "File with bta ids for export (optional)");
 
     private ExportContext context;
 
@@ -32,6 +33,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         getOptions().addOption(CHAOS_CHANNELMAPPING_CFG_OPTION);
         getOptions().addOption(WHITELISTED_CHANNELS_OPTION);
         getOptions().addOption(BLACKLISTED_CHANNELS_OPTION);
+        getOptions().addOption(BTA_RECORD_IDS_FILE_OPTION);
     }
 
 
@@ -52,6 +54,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         parseChaosChannelMappingConfigFileOption(cmd);
         parseWhitelistedChannelsFileOption(cmd);
         parseBlacklistedChannelsFileOption(cmd);
+        parseBtaRecordIdsFileOption(cmd);
         try {
             readBehaviouralProperties(context);
         } catch (IOException e) {
@@ -175,5 +178,16 @@ public class ExportOptionsParser extends AbstractOptionsParser {
             throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
         }
         context.setBlacklistedChannelsFile(configFile);
+    }
+
+    protected void parseBtaRecordIdsFileOption(CommandLine cmd) throws OptionParseException {
+        String configFileString = cmd.getOptionValue(BTA_RECORD_IDS_FILE_OPTION.getOpt());
+        if (configFileString != null && !configFileString.isEmpty()) {
+            File configFile = new File(configFileString);
+            if (!configFile.exists() || configFile.isDirectory()) {
+                throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
+            }
+            context.setBtaRecordIdsFile(configFile);
+        }
     }
 }

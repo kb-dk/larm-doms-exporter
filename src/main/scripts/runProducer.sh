@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Script for running the producer application.
+# Optionally, a file can be specified as first argument, containing ids of the records to be exported.
+#
 
 SCRIPT_PATH=$(dirname $(readlink -f $0))
 # Set CLASSPATH for the JVM
@@ -17,4 +21,5 @@ java -Dlogback.configurationFile=$confDir/logback.producer.xml $hibernate_log_co
  --behavioural_configfile=$confDir/lde.behaviour.properties \
  --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml \
  --whitelisted_channelsfile=$confDir/whitelistedChannels.csv \
- --blacklisted_channelsfile=$confDir/blacklistedChannels.csv
+ --blacklisted_channelsfile=$confDir/blacklistedChannels.csv \
+ --bta_record_ids_file=$1
