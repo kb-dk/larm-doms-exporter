@@ -11,7 +11,7 @@ import dk.statsbiblioteket.larm_doms_exporter.util.ChannelMapper;
 import dk.statsbiblioteket.util.xml.DOM;
 import dk.statsbiblioteket.util.xml.DefaultNamespaceContext;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -294,7 +295,8 @@ public class DoExportProcessor extends ProcessorChainElement {
         XPath xpath = xpathFactory.newXPath();
         xpath.setNamespaceContext(pbcoreNamespaceContext);
         String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
-        matchingString = StringEscapeUtils.escapeXml(matchingString);
+        matchingString = StringEscapeUtils.escapeXml11(matchingString);
+        matchingString = Matcher.quoteReplacement(matchingString);
         return pattern.matcher(template).replaceAll(matchingString);
     }
 
