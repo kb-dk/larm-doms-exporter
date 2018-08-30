@@ -97,11 +97,8 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     private static NamespaceContext pbcoreNamespaceContext = new PBCoreNamespaceResolver();
 
-    //TODO replace with following library call:
-    //private static NamespaceContext namespaceContext = new DefaultNamespaceContext("http://www.pbcore.org/PBCore/PBCoreNamespace.html", "pbcore");
-    
-    private static NamespaceContext program_broadcast_namespaceContext = new DefaultNamespaceContext("http://doms.statsbiblioteket.dk/types/program_broadcast/0/1/#", "pbc");
-
+    private static NamespaceContext program_broadcast_namespaceContext =
+            new DefaultNamespaceContext(null, "pbc", "http://doms.statsbiblioteket.dk/types/program_broadcast/0/1/#");
 
     @Override
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
