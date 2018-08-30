@@ -52,6 +52,7 @@ public class ConsumerApplication {
     public static void main(String[] args) throws UsageException, OptionParseException {
         logger.info("Entered main method of " + ConsumerApplication.class.getName());
         ExportOptionsParser optionsParser = new ExportOptionsParser();
+        optionsParser.setWhitelistBlacklistOptional(true);
         ExportContext context = null;
         try {
             context = optionsParser.parseOptions(args);

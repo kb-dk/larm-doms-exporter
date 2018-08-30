@@ -22,6 +22,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
     protected static final Option BTA_RECORD_IDS_FILE_OPTION = new Option("bta_record_ids_file", true, "File with bta ids for export (optional)");
 
     private ExportContext context;
+    private boolean whitelistBlacklistOptional = false;
 
     public ExportOptionsParser() {
         super();
@@ -157,6 +158,9 @@ public class ExportOptionsParser extends AbstractOptionsParser {
     protected void parseWhitelistedChannelsFileOption(CommandLine cmd) throws OptionParseException {
         String configFileString = cmd.getOptionValue(WHITELISTED_CHANNELS_OPTION.getOpt());
         if (configFileString == null) {
+            if(whitelistBlacklistOptional){
+                return;
+            }
             parseError(WHITELISTED_CHANNELS_OPTION.toString());
             throw new OptionParseException(WHITELISTED_CHANNELS_OPTION.toString());
         }
@@ -170,6 +174,9 @@ public class ExportOptionsParser extends AbstractOptionsParser {
     protected void parseBlacklistedChannelsFileOption(CommandLine cmd) throws OptionParseException {
         String configFileString = cmd.getOptionValue(BLACKLISTED_CHANNELS_OPTION.getOpt());
         if (configFileString == null) {
+            if(whitelistBlacklistOptional){
+                return;
+            }
             parseError(BLACKLISTED_CHANNELS_OPTION.toString());
             throw new OptionParseException(BLACKLISTED_CHANNELS_OPTION.toString());
         }
@@ -189,5 +196,9 @@ public class ExportOptionsParser extends AbstractOptionsParser {
             }
             context.setBtaRecordIdsFile(configFile);
         }
+    }
+
+    public void setWhitelistBlacklistOptional(boolean whitelistBlacklistOptional) {
+        this.whitelistBlacklistOptional = whitelistBlacklistOptional;
     }
 }
