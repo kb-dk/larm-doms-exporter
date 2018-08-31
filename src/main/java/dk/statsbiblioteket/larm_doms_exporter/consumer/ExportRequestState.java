@@ -16,7 +16,7 @@ public class ExportRequestState {
     private String mediaFileName;
     private boolean isRadio; //or tv
     private Date programStart;
-    private String programBroadcast;
+    private Document programBroadcastDocument;
     
     /* ---------------------------- */
 
@@ -76,11 +76,11 @@ public class ExportRequestState {
         this.programStart = programStart;
     }
     
-    public void setProgramBroadcast(String programBroadcast) {
-        this.programBroadcast = programBroadcast;
+    public void setProgramBroadcastDocument(Document programBroadcast) {
+        this.programBroadcastDocument = programBroadcast;
     }
     
-    public String getProgramBroadcast() {
-        return programBroadcast;
+    public Document getProgramBroadcastDocument() {
+        return programBroadcastDocument;
     }
 }

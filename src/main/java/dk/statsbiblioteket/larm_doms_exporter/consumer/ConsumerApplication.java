@@ -78,7 +78,7 @@ public class ConsumerApplication {
                 processRecord(record, context);
                 logger.info("Finished all processing for " + record.getID());
             } catch (Exception e) {  //Fault Barrier
-                logger.warn("Export processing failed for " + record.getID(), e);
+                logger.error("Export processing failed for " + record.getID(), e);
             }
         }
     }

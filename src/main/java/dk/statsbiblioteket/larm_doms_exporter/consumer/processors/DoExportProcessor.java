@@ -270,7 +270,7 @@ public class DoExportProcessor extends ProcessorChainElement {
         String xpathString = "/pbc:programBroadcast/pbc:channelId";
         XPath xpath = xpathFactory.newXPath();
         xpath.setNamespaceContext(program_broadcast_namespaceContext);
-        return (String) xpath.evaluate(xpathString, state.getProgramBroadcast(), XPathConstants.STRING);
+        return (String) xpath.evaluate(xpathString, state.getProgramBroadcastDocument(), XPathConstants.STRING);
     }
 
     private String substitutePublisher(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {

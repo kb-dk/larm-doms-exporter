@@ -46,7 +46,8 @@ public class IsRadioOrTVProgramCheckerProcessor extends ProcessorChainElement {
                 if (program_broadcast_string == null){
                     throw new ProcessorException("No PROGRAM_BROADCAST found for " + record.getID());
                 }
-                state.setProgramBroadcast(program_broadcast_string);
+                Document program_broadcast_document = DOM.stringToDOM(program_broadcast_string, true);
+                state.setProgramBroadcastDocument(program_broadcast_document);
             } catch (Exception e) {
                 throw new ProcessorException("Failed to get PROGRAM_BROADCAST for " + record.getID(),e);
              }
