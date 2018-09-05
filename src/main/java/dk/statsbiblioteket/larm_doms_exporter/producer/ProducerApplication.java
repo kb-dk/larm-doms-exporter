@@ -62,6 +62,7 @@ public class ProducerApplication {
     public static void main(String[] args) throws UsageException, OptionParseException, InvalidCredentialsException, MethodFailedException, IOException {
         logger.info("Entered main method of " + ProducerApplication.class.getName());
         ExportOptionsParser optionsParser = new ExportOptionsParser();
+        optionsParser.setWhitelistBlacklistOptional(true);
         ExportContext context = null;
         try {
             context = optionsParser.parseOptions(args);
