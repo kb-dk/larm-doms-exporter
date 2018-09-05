@@ -18,13 +18,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Application class which reads information on newly transcoded programs from the BTA database and loads them into
@@ -39,9 +37,7 @@ public class ProducerApplication {
             " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
             " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
             " --behavioural_configfile=$confDir/lde.behaviour.properties\n" +
-            " --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml\n" +
-            " --whitelisted_channelsfile=$confDir/whitelistedChannels.csv\n" +
-            " --blacklisted_channelsfile=$confDir/blacklistedChannels.csv";
+            " --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml";
 
     /**
      * This application pulls information on newly transcoded programs from the BTA database and puts them in the LDE
@@ -60,9 +56,7 @@ public class ProducerApplication {
      " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
      " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
      " --behavioural_configfile=$confDir/lde.behaviour.properties\n" +
-     " --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml\n" +
-     " --whitelisted_channelsfile=$confDir/whitelistedChannels.csv\n" \
-     " --blacklisted_channelsfile=$confDir/blacklistedChannels.csv"
+     " --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml";
      *
      */
     public static void main(String[] args) throws UsageException, OptionParseException, InvalidCredentialsException, MethodFailedException, IOException {
@@ -84,7 +78,7 @@ public class ProducerApplication {
         logger.info("Exiting " + ProducerApplication.class.getName());
     }
 
-    private static void queueNewRecordsForExport(ExportContext context) throws FileNotFoundException {
+    private static void queueNewRecordsForExport(ExportContext context) {
         HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
         DomsExportRecordDAO ldeDao = new DomsExportRecordDAO(hibernateUtil);
         Long startingTimestamp = ldeDao.getMostRecentExportedTimestamp();
@@ -128,31 +122,12 @@ public class ProducerApplication {
         queueRecordsForExport(context, ldeDao, btaRecords);
     }
 
-    private static void queueRecordsForExport(ExportContext context, DomsExportRecordDAO ldeDao, List<BroadcastTranscodingRecord> btaRecords) throws FileNotFoundException {
-        List<String> whitelistedChannels = readFileToList(context.getWhitelistedChannelsFile());
-        List<String> blacklistedChannels = readFileToList(context.getBlacklistedChannelsFile());
-
+    private static void queueRecordsForExport(ExportContext context, DomsExportRecordDAO ldeDao, List<BroadcastTranscodingRecord> btaRecords) {
         int pending = 0;
         int rejected = 0;
         for (BroadcastTranscodingRecord btaRecord: btaRecords) {
             DomsExportRecord ldeDatabaseRecord = ldeDao.readOrCreate(btaRecord.getID());
-            if(blacklistedChannels.contains("\"" + btaRecord.getChannel() + "\"")){
-                ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
-                ldeDatabaseRecord.setState(ExportStateEnum.REJECTED);
-                ldeDao.update(ldeDatabaseRecord);
-                rejected++;
-            }
-            else if(!whitelistedChannels.contains("\"" + btaRecord.getChannel() + "\"")){
-                String warning = String.format("Channel %s is not known. Record %s is rejected. Go to the following page for instructions: %s",
-                        btaRecord.getChannel(), ldeDatabaseRecord.getID(), context.getUnknownChannelPage());
-                System.out.println(warning);
-                logger.warn(warning);
-                ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
-                ldeDatabaseRecord.setState(ExportStateEnum.REJECTED);
-                ldeDao.update(ldeDatabaseRecord);
-                rejected++;
-            }
-            else if (ldeDatabaseRecord.getLastDomsTimestamp() != null && !ldeDatabaseRecord.getState().equals(ExportStateEnum.PENDING)) {  //preexisting record
+            if (ldeDatabaseRecord.getLastDomsTimestamp() != null && !ldeDatabaseRecord.getState().equals(ExportStateEnum.PENDING)) {  //preexisting record
                 ldeDatabaseRecord.setLastDomsTimestamp(new Date(btaRecord.getDomsLatestTimestamp()));
                 ldeDatabaseRecord.setState(ExportStateEnum.PENDING);
                 ldeDao.update(ldeDatabaseRecord);
@@ -172,17 +147,6 @@ public class ProducerApplication {
         }
         logger.info("Added as pending or changed to pending " + pending + " records.");
         logger.info("Rejected {} records", rejected);
-    }
-
-    private static List<String> readFileToList(File file) throws FileNotFoundException {
-        List<String> result = new ArrayList<>();
-        try(Scanner scanner = new Scanner(file)){
-            while (scanner.hasNextLine()) {
-                final String line = scanner.nextLine();
-                result.add(line);
-            }
-        }
-        return result;
     }
 
     private static void usage() {

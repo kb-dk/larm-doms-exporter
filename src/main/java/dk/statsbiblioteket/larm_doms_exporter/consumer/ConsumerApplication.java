@@ -8,6 +8,7 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.BtaStatusFetch
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.DoExportProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.FixerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.HasShardAnalysisCheckerProcessor;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.IsChannelWhitelistedCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.IsRadioOrTVProgramCheckerProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.MarkAsCompleteProcessor;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.SignificantChangeCheckerProcessor;
@@ -43,7 +44,9 @@ public class ConsumerApplication {
      " --lde_hibernate_configfile=$confDir/hibernate.cfg.lde.xml\n" +
      " --bta_hibernate_configfile=$confDir/hibernate.cfg.bta.xml\n" +
      " --infrastructure_configfile=$confDir/lde.infrastructure.properties\n" +
-     " --behavioural_configfile=$confDir/lde.behaviour.properties
+     " --behavioural_configfile=$confDir/lde.behaviour.properties\n +
+     " --whitelisted_channelsfile=$confDir/whitelistedChannels.csv\n" +
+     " --blacklisted_channelsfile=$confDir/blacklistedChannels.csv"
      *
      * @param args
      * @throws UsageException
@@ -85,6 +88,7 @@ public class ConsumerApplication {
 
     private static void processRecord(DomsExportRecord record, ExportContext context) throws ProcessorException {
         ProcessorChainElement radioOrTvChecker = new IsRadioOrTVProgramCheckerProcessor();
+        ProcessorChainElement isChannelWhitelistedCheck = new IsChannelWhitelistedCheckerProcessor();
         ProcessorChainElement hasShardChecker = new HasShardAnalysisCheckerProcessor();
         ProcessorChainElement btaStatus = new BtaStatusFetcherDispatcherProcessor();
         ProcessorChainElement fixer = new FixerProcessor();
@@ -93,6 +97,7 @@ public class ConsumerApplication {
         ProcessorChainElement markAsCompleter = new MarkAsCompleteProcessor();
         ProcessorChainElement completeChain = ProcessorChainElement.makeChain(
                 radioOrTvChecker,      //is radio program
+                isChannelWhitelistedCheck, //is channel whitelisted
                 hasShardChecker,   //has been exported
                 btaStatus,         //has been analysed for holes etc.
                 fixer,             //Guess walltime and output filename for old rejected TV programs
