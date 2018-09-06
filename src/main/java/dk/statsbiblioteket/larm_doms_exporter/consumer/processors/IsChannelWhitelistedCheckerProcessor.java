@@ -44,7 +44,7 @@ public class IsChannelWhitelistedCheckerProcessor extends ProcessorChainElement 
         } catch (Exception e) {
             String warning = String.format("Failed to get channel name from record metadata. Record %s is rejected", record.getID());
             System.out.println(warning);
-            logger.warn(warning);
+            logger.warn(warning, e);
             rejectRecord(record, context);
         }
         if(blacklistedChannels.contains("\"" + channelName + "\"")){
