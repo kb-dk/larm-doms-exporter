@@ -258,7 +258,7 @@ public class DoExportProcessor extends ProcessorChainElement {
         return pattern.matcher(template).replaceAll(chaosStartString);
     }
 
-    private String substituteChannel(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
+    private String substituteChannel(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException, ProcessorException {
         String patternString = "###CHANNEL###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
         String matchingString = getChannelName(state);
@@ -273,14 +273,14 @@ public class DoExportProcessor extends ProcessorChainElement {
         return (String) xpath.evaluate(xpathString, state.getProgramBroadcastDocument(), XPathConstants.STRING);
     }
 
-    private String substitutePublisher(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
+    private String substitutePublisher(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException, ProcessorException {
         String patternString = "###PUBLISHER###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
         String matchingString = getChannelName(state);
         return pattern.matcher(template).replaceAll(channelMapper.getPublisher(matchingString));
     }
 
-    private String substituteLogoFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
+    private String substituteLogoFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException, ProcessorException {
         String patternString = "###LOGO_FILENAME###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
         String matchingString = getChannelName(state);

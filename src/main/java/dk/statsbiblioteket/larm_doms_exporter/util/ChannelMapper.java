@@ -1,6 +1,7 @@
 package dk.statsbiblioteket.larm_doms_exporter.util;
 
 import dk.statsbiblioteket.larm_doms_exporter.cli.ExportContext;
+import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.processors.DoExportProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,6 @@ public class ChannelMapper {
      * key in hashmap is the SB channel_name, found in digitv database for ritzau channelmapping table
      */
     private static HashMap<String, ChaosChannelEntity> chaosChannelMapping;
-    private final static String sb_unknown_channel = "unknown";
-    private final static String chaos_unknown_channel = "Ukendt";
-    private final static String chaos_unknown_logo = "Unknown_logo.png";
 
     private ChannelMapper() {
     }
@@ -54,14 +52,6 @@ public class ChannelMapper {
         }
 
         chaosChannelMapping = new ChannelMapper().parseChaosChannelMapping(chaosChannelMappingConfigFile);
-
-        if (chaosChannelMapping.get(sb_unknown_channel) == null) {
-            //log that unknown entity is missing
-            logger.warn("Did not find channel entity 'unknown' in configuration file; channel will be added to internal map");
-
-            //create unknown entity
-            chaosChannelMapping.put(sb_unknown_channel, new ChaosChannelEntity(chaos_unknown_channel, chaos_unknown_logo));
-        }
     }
 
     public static boolean ensureConfigurationFileExist(String configFilename) throws FileNotFoundException{
@@ -74,18 +64,16 @@ public class ChannelMapper {
         return true;
     }
 
-    public String getChaosChannel(String sbChannel) {
+    public String getChaosChannel(String sbChannel) throws ProcessorException {
         ChaosChannelEntity chaosChannelEntity = chaosChannelMapping.get(sbChannel);
         if(chaosChannelEntity == null) { //Should never happen
-            chaosChannelEntity = chaosChannelMapping.get(sb_unknown_channel);
-            logger.warn("Channel " + sbChannel + " have no mapping. Setting chaos display name to " + chaosChannelEntity.getDisplayName());
-            //TODO: throw exception?
+            throw new ProcessorException("Channel " + sbChannel + " have no mapping. Somehow it escaped the whitelist checker.");
         }
 
         return chaosChannelEntity.getDisplayName();
     }
 
-    public String getPublisher(String sbChannel) {
+    public String getPublisher(String sbChannel) throws ProcessorException {
         if (sbChannel.contains("dr")) {
             return "DR";
         } else {
@@ -93,11 +81,12 @@ public class ChannelMapper {
         }
     }
 
-    public String getLogoFileName(String sbChannel) {
+    public String getLogoFileName(String sbChannel) throws ProcessorException {
         ChaosChannelEntity chaosChannelEntity = chaosChannelMapping.get(sbChannel);
-        if(chaosChannelEntity == null)
-        	chaosChannelEntity = chaosChannelMapping.get(sb_unknown_channel);
-        
+        if(chaosChannelEntity == null){ //Should never happen
+            throw new ProcessorException("Channel " + sbChannel + " have no mapping. Somehow it escaped the whitelist checker.");
+        }
+
         return chaosChannelEntity.getLogoFilename();
     }
     
