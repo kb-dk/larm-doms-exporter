@@ -450,6 +450,9 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 		<xsl:if test=".='tlc'">
 <xsl:text>TLC</xsl:text>
 </xsl:if>
+		<xsl:if test=".='dr'">
+<xsl:text>DR</xsl:text>
+</xsl:if>
 
 
 </xsl:for-each>
@@ -724,6 +727,9 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 <xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 	<xsl:if test=".='tlc'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='dr'">
 <xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 
@@ -1176,6 +1182,11 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 			   <channel>
 				   <sb_channel_name>tlc</sb_channel_name>
 				   <chaos_display_name>TLC</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>dr</sb_channel_name>
+				   <chaos_display_name>DR</chaos_display_name>
 				   <chaos_logo>Unknown_logo.png</chaos_logo>
 			   </channel>
 		   </channels>
