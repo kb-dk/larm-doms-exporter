@@ -44,10 +44,13 @@ do_transform() {
         local channel_name=`xmllint \
             --xpath "/*[local-name()='record']/*[local-name()='content']/*[local-name()='record']/*[local-name()='metadata']/*[local-name()='DeliverableUnit']/*[local-name()='Metadata']/*[local-name()='PBCoreDescriptionDocument']/*[local-name()='pbcorePublisher']/*[local-name()='publisherRole' and text() = 'channel_name']/../*[local-name()='publisher']/text()" \
             $file`
+        local uuid=`xmllint \
+            --xpath "/*[local-name()='record']/*[local-name()='content']/*[local-name()='record']/*[local-name()='metadata']/*[local-name()='DeliverableUnit']/*[local-name()='DeliverableUnitRef']/text()" \
+            $file`
         if grep -q "\"$channel_name\"" ../config/whitelistedChannels.csv ; then
             log "Transforming $file"
             tempfile=$file.larm.xml
-            $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $TRANSFORMEDDIR/. && rm $file
+            $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $TRANSFORMEDDIR/$uuid.xml && rm $file
         else
             if grep -q "\"$channel_name\"" ../config/blacklistedChannels.csv ; then
                 log "Channel $channel_name is blacklisted. Removing $file"
