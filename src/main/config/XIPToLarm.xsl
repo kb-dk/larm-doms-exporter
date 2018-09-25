@@ -453,6 +453,9 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 		<xsl:if test=".='dr'">
 <xsl:text>DR</xsl:text>
 </xsl:if>
+		<xsl:if test=".='regtvhov'">
+<xsl:text>Regional TV - Hovedstaden</xsl:text>
+</xsl:if>
 
 
 </xsl:for-each>
@@ -730,6 +733,9 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 <xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 	<xsl:if test=".='dr'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='regtvhov'">
 <xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 
@@ -1187,6 +1193,11 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 			   <channel>
 				   <sb_channel_name>dr</sb_channel_name>
 				   <chaos_display_name>DR</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>regtvhov</sb_channel_name>
+				   <chaos_display_name>Regional TV - Hovedstaden</chaos_display_name>
 				   <chaos_logo>Unknown_logo.png</chaos_logo>
 			   </channel>
 		   </channels>
