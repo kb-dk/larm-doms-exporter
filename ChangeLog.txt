@@ -1,0 +1,11 @@
+larm-kuana-exporter-2.0.5 released 2018-09-25:
+  * Change names of transformed files to <uuid>.xml, as requested by LARM
+  * Add channels 'dr' and 'regtvhov'
+
+larm-kuana-exporter-2.0.4 released 2018-08-22:
+  * Move project to proper namespace
+
+larm-kuana-exporter-2.0.3 released 2018-08-21:
+  * Store exported and transformed metadata in two different directories
+  * Make logging consistent
+  * Use whitelist and blacklist to determine which records to export
