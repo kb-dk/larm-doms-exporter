@@ -4,9 +4,9 @@
 xmlns:xip="http://www.tessella.com/XIP/v4" xmlns:dc="http://purl.org/dc/elements/1.1/" 
 xmlns:oai="http://www.openarchives.org/OAI/2.0/"
                 xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:exdc="http://www.preservica.com/export/multi-record-dublin-core/v1"
-exclude-result-prefixes="xip oai java javadate javadateParser"
+exclude-result-prefixes="xip oai java javadate javadateParser padding pidhandle xsi walltime pbcore exdc oai_dc dc xs"
 
-xmlns="http://doms.statsbiblioteket.dk/types/larm/0/1/#" xmlns:PBCoreDescriptionDocument="http://www.pbcore.org/PBCore/PBCoreNamespace.html"
+xmlns:PBCoreDescriptionDocument="http://www.pbcore.org/PBCore/PBCoreNamespace.html"
 				xmlns:java="http://xml.apache.org/xalan/java"
 				xmlns:javadate="http://xml.apache.org/xalan/java/java.util.Date"
 				xmlns:javadateParser="http://xml.apache.org/xalan/java/java.text.SimpleDateFormat"
