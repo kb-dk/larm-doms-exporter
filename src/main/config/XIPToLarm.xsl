@@ -146,8 +146,16 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 				
 				<DestinationID>90</DestinationID>
 				<FolderPath></FolderPath>
-				<Filename><xsl:value-of select="//xip:FileRef"/></Filename>
-				<OriginalFilename><xsl:value-of select="//xip:FileRef"/></OriginalFilename>
+
+				<xsl:for-each select="//oai:record/oai:metadata/xip:Manifestation">
+					<xsl:if test="ns2:Active='true' and ns2:TypeRef='2'">
+						<xsl:for-each select=".">
+							<Filename><xsl:value-of select="ns2:ManifestationFile/ns2:FileRef"/></Filename>
+							<OriginalFilename><xsl:value-of select="ns2:ManifestationFile/ns2:FileRef"/></OriginalFilename>
+						</xsl:for-each>
+					</xsl:if>
+				</xsl:for-each>
+
 				<FormatID>49</FormatID>
 					
 				</FileEnvelope>
