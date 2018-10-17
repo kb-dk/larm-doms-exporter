@@ -11,6 +11,7 @@
             <directory>${basedir}</directory>
             <includes>
                 <include>README.md</include>
+                <include>ChangeLog.txt</include>
             </includes>
         </fileSet>
         <fileSet>
