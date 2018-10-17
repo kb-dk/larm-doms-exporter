@@ -26,6 +26,7 @@ public class ExportContext {
     private File outputDirectory;
     private CentralWebservice domsCentralWebservice;
     private DomsExportRecordDAO domsExportRecordDAO;
+    private boolean skipSignificantChangeCheck;
 
     private Long inProductionTimestamp;
     private Long earliestExportBroadcastTimestamp;
@@ -229,6 +230,14 @@ public class ExportContext {
         this.btaRecordIdsFile = btaRecordIdsFile;
     }
 
+    public boolean skipSignificantChangeCheck() {
+        return skipSignificantChangeCheck;
+    }
+
+    public void setSkipSignificantChangeCheck(boolean skipSignificantChangeCheck) {
+        this.skipSignificantChangeCheck = skipSignificantChangeCheck;
+    }
+
     @Override
     public String toString() {
         return "ExportContext{" +
@@ -242,6 +251,7 @@ public class ExportContext {
                 ", domsViewAngle='" + domsViewAngle + '\'' +
                 ", outputDirectory=" + outputDirectory +
                 ", unknownChannelPage=" + unknownChannelPage +
+                ", skipSignificantChangeCheck=" + skipSignificantChangeCheck +
                 (btaRecordIdsFile != null ? ", btaRecordIdsFile=" + btaRecordIdsFile : "") +
                 '}';
     }

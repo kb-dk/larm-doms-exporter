@@ -94,16 +94,29 @@ public class ConsumerApplication {
         ProcessorChainElement significanceChecker = new SignificantChangeCheckerProcessor();
         ProcessorChainElement doExporter = new DoExportProcessor();
         ProcessorChainElement markAsCompleter = new MarkAsCompleteProcessor();
-        ProcessorChainElement completeChain = ProcessorChainElement.makeChain(
-                radioOrTvChecker,      //is radio program
-                isChannelWhitelistedCheck, //is channel whitelisted
-                hasShardChecker,   //has been exported
-                btaStatus,         //has been analysed for holes etc.
-                fixer,             //Guess walltime and output filename for old rejected TV programs
-                significanceChecker, //Change from previous export doms timestamp is significant
-                doExporter,          //Do the export
-                markAsCompleter      //Update the database
-        );
+        ProcessorChainElement completeChain;
+        if(context.skipSignificantChangeCheck()){
+            completeChain = ProcessorChainElement.makeChain(
+                    radioOrTvChecker,      //is radio program
+                    isChannelWhitelistedCheck, //is channel whitelisted
+                    hasShardChecker,   //has been exported
+                    btaStatus,         //has been analysed for holes etc.
+                    fixer,             //Guess walltime and output filename for old rejected TV programs
+                    doExporter,          //Do the export
+                    markAsCompleter      //Update the database
+            );
+        } else {
+            completeChain = ProcessorChainElement.makeChain(
+                    radioOrTvChecker,      //is radio program
+                    isChannelWhitelistedCheck, //is channel whitelisted
+                    hasShardChecker,   //has been exported
+                    btaStatus,         //has been analysed for holes etc.
+                    fixer,             //Guess walltime and output filename for old rejected TV programs
+                    significanceChecker, //Change from previous export doms timestamp is significant
+                    doExporter,          //Do the export
+                    markAsCompleter      //Update the database
+            );
+        }
         completeChain.processIteratively(record, context, new ExportRequestState() );
     }
 

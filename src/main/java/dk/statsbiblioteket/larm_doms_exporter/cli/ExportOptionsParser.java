@@ -20,6 +20,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
     protected static final Option WHITELISTED_CHANNELS_OPTION = new Option("whitelisted_channelsfile", true, "The whitelisted channels file");
     protected static final Option BLACKLISTED_CHANNELS_OPTION = new Option("blacklisted_channelsfile", true, "The blacklisted channels file");
     protected static final Option BTA_RECORD_IDS_FILE_OPTION = new Option("bta_record_ids_file", true, "File with bta ids for export (optional)");
+    protected static final Option SKIP_SIGNIFICANT_CHANGE_CHECK_OPTION = new Option("skip_significant_change_check", false, "Specify whether significant change check should be skipped (false as default)");
 
     private ExportContext context;
     private boolean whitelistBlacklistOptional = false;
@@ -35,6 +36,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         getOptions().addOption(WHITELISTED_CHANNELS_OPTION);
         getOptions().addOption(BLACKLISTED_CHANNELS_OPTION);
         getOptions().addOption(BTA_RECORD_IDS_FILE_OPTION);
+        getOptions().addOption(SKIP_SIGNIFICANT_CHANGE_CHECK_OPTION);
     }
 
 
@@ -56,6 +58,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         parseWhitelistedChannelsFileOption(cmd);
         parseBlacklistedChannelsFileOption(cmd);
         parseBtaRecordIdsFileOption(cmd);
+        parseSkipSignificantChangeOption(cmd);
         try {
             readBehaviouralProperties(context);
         } catch (IOException e) {
@@ -196,6 +199,11 @@ public class ExportOptionsParser extends AbstractOptionsParser {
             }
             context.setBtaRecordIdsFile(configFile);
         }
+    }
+
+    protected void parseSkipSignificantChangeOption(CommandLine cmd) {
+        boolean skipSignificantChangeCheck = cmd.hasOption(SKIP_SIGNIFICANT_CHANGE_CHECK_OPTION.getOpt());
+        context.setSkipSignificantChangeCheck(skipSignificantChangeCheck);
     }
 
     public void setWhitelistBlacklistOptional(boolean whitelistBlacklistOptional) {
