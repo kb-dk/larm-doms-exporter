@@ -454,4 +454,24 @@
         <chaos_display_name>Regional TV - Hovedstaden</chaos_display_name>
         <chaos_logo>Unknown_logo.png</chaos_logo>
     </channel>
+    <channel>
+        <sb_channel_name>SBS Net Syd</sb_channel_name>
+        <chaos_display_name>SBS Net Syd</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>Kaos TV</sb_channel_name>
+        <chaos_display_name>Kaos TV</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>Canal International</sb_channel_name>
+        <chaos_display_name>Canal International</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>TVS - Den Danske Sportskanal</sb_channel_name>
+        <chaos_display_name>TVS - Den Danske Sportskanal</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
 </channels>
