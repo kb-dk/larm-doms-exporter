@@ -1,3 +1,7 @@
+larm-doms-exporter-1.0.18 released 2018-10-17:
+  * Add more channels to whitelist and channelmapping
+  * Add possibility to run consumer application without the significant change check
+
 larm-doms-exporter-1.0.17 released 2018-09-06:
   * Remove possibility to export records with unknown channel
 
