@@ -464,6 +464,18 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 		<xsl:if test=".='regtvhov'">
 <xsl:text>Regional TV - Hovedstaden</xsl:text>
 </xsl:if>
+		<xsl:if test=".='SBS Net Syd'">
+<xsl:text>SBS Net Syd</xsl:text>
+</xsl:if>
+		<xsl:if test=".='Kaos TV'">
+<xsl:text>Kaos TV</xsl:text>
+</xsl:if>
+		<xsl:if test=".='Canal International'">
+<xsl:text>Canal International</xsl:text>
+</xsl:if>
+		<xsl:if test=".='TVS - Den Danske Sportskanal'">
+<xsl:text>TVS - Den Danske Sportskanal</xsl:text>
+</xsl:if>
 
 
 </xsl:for-each>
@@ -744,6 +756,18 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 <xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 	<xsl:if test=".='regtvhov'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='SBS Net Syd'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='Kaos TV'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='Canal International'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='TVS - Den Danske Sportskanal'">
 <xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 
@@ -1206,6 +1230,26 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 			   <channel>
 				   <sb_channel_name>regtvhov</sb_channel_name>
 				   <chaos_display_name>Regional TV - Hovedstaden</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>SBS Net Syd</sb_channel_name>
+				   <chaos_display_name>SBS Net Syd</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>Kaos TV</sb_channel_name>
+				   <chaos_display_name>Kaos TV</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>Canal International</sb_channel_name>
+				   <chaos_display_name>Canal International</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>TVS - Den Danske Sportskanal</sb_channel_name>
+				   <chaos_display_name>TVS - Den Danske Sportskanal</chaos_display_name>
 				   <chaos_logo>Unknown_logo.png</chaos_logo>
 			   </channel>
 		   </channels>
