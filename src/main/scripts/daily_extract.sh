@@ -50,7 +50,18 @@ do_transform() {
         if grep -q "\"$channel_name\"" ../config/whitelistedChannels.csv ; then
             log "Transforming $file"
             tempfile=$file.larm.xml
-            $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile && mv $tempfile $TRANSFORMEDDIR/$uuid.xml && rm $file
+            $XALAN -xsl ../config/XIPToLarm.xsl -in $file -out $tempfile
+            if grep -q "###NO_OBJECT_TYPE###" "$tempfile"; then
+                report_error "formatMediaType not recognised. Moving $file to $STALLEDDIR."
+                mv $file $STALLEDDIR/.
+                rm $tempfile
+            elif grep -q "<PublicationChannel/>" "$tempfile"; then
+                report_error "Someone forgot to update XIPToLarm.xsl with channel '$channel_name'. Moving $file to $STALLEDDIR."
+                mv $file $STALLEDDIR/.
+                rm $tempfile
+            else
+                mv $tempfile $TRANSFORMEDDIR/$uuid.xml && rm $file
+            fi
         else
             if grep -q "\"$channel_name\"" ../config/blacklistedChannels.csv ; then
                 log "Channel $channel_name is blacklisted. Removing $file"

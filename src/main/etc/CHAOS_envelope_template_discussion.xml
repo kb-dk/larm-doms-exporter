@@ -108,6 +108,8 @@ FormatID: Formatid.
 
 ObjectTypeID: Larm radioprogram objekt type: 40
 
+ObjectType: "Jeg foreslår at du tilføjer et ObjectType-element til ObjectEnvelope-elementet som har værdien: 24 for Radioprogrammer og 25 for TV-programmer"
+
     -->
   <Envelope>
     <ObjectEnvelope>
@@ -151,6 +153,7 @@ ObjectTypeID: Larm radioprogram objekt type: 40
         </FileEnvelope>
       </Files>
       <ObjectTypeID>40</ObjectTypeID>
+      <ObjectType>24</ObjectType>
     </ObjectEnvelope>
   </Envelope>
 </EnvelopeContainer>

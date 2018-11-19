@@ -178,6 +178,26 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 				</Files>
 				
 				<ObjectTypeID>69</ObjectTypeID>
+
+				<xsl:variable name="lowercase" select="'abcdefghijklmnopqrstuvwxyz'" />
+				<xsl:variable name="uppercase" select="'ABCDEFGHIJKLMNOPQRSTUVWXYZ'" />
+				<!--Foreslag fra LARM for at specificere om et program er radio eller tv (når filer ikke har file extension):-->
+				<!--"Jeg foreslår at du tilføjer et ObjectType-element til ObjectEnvelope-elementet som har værdien: 24 for Radioprogrammer og 25 for TV-programmer"-->
+				<xsl:choose>
+					<xsl:when test="translate(//xip:Metadata/PBCoreDescriptionDocument:PBCoreDescriptionDocument/pbcore:pbcoreInstantiation/pbcore:formatMediaType, $uppercase, $lowercase)='sound'">
+						<ObjectType>24</ObjectType>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:choose>
+							<xsl:when test="translate(//xip:Metadata/PBCoreDescriptionDocument:PBCoreDescriptionDocument/pbcore:pbcoreInstantiation/pbcore:formatMediaType, $uppercase, $lowercase)='moving image'">
+								<ObjectType>25</ObjectType>
+							</xsl:when>
+							<xsl:otherwise>
+								<ObjectType>###NO_OBJECT_TYPE###</ObjectType>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
 				
 </ObjectEnvelope>
 					<!--</xsl:if>-->

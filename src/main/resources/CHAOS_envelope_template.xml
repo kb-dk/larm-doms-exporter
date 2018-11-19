@@ -74,6 +74,7 @@
                 </FileEnvelope>
             </Files>
             <ObjectTypeID>69</ObjectTypeID>
+            <ObjectType>###OBJECT_TYPE###</ObjectType>
         </ObjectEnvelope>
     </Envelope>
 </EnvelopeContainer>
