@@ -1,9 +1,14 @@
 <channels>
-	<!-- these are radio channels -->
 	<channel>
 		<sb_channel_name>drp1</sb_channel_name>
 		<chaos_display_name>DR P1</chaos_display_name>
 		<chaos_logo>P1_logo.png</chaos_logo>
+	</channel>
+
+	<channel>
+		<sb_channel_name>drk</sb_channel_name>
+		<chaos_display_name>DR K</chaos_display_name>
+		<chaos_logo>Unknown_logo.png</chaos_logo>
 	</channel>
 
 	<!-- this entry is used, if no match can be found -->

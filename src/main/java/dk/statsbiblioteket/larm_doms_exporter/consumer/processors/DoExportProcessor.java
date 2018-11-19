@@ -167,6 +167,7 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteWalltime(result, record, context, state);
             result = substituteStreamingServerFolder(result, record, context, state);
             result = substituteStreamingServerId(result, record, context, state);
+            result = substituteObjectType(result, record, context, state);
         } catch (Exception e) {
             throw new ProcessorException("Error processing " + record.getID(), e);
         }
@@ -310,5 +311,13 @@ public class DoExportProcessor extends ProcessorChainElement {
     private String substituteFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
         Pattern pattern = Pattern.compile("###FILENAME###", Pattern.DOTALL);
         return pattern.matcher(template).replaceAll(state.getMediaFileName());
+    }
+
+    // Foreslag fra LARM for at specificere om et program er radio eller tv (når filer ikke har file extension):
+    // "Jeg foreslår at du tilføjer et ObjectType-element til ObjectEnvelope-elementet som har værdien: 24 for Radioprogrammer og 25 for TV-programmer"
+    private String substituteObjectType(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###OBJECT_TYPE###", Pattern.DOTALL);
+        String objectType = state.isRadio() ? "24" : "25";
+        return pattern.matcher(template).replaceAll(objectType);
     }
 }

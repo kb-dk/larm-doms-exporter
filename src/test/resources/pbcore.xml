@@ -1,0 +1,156 @@
+<PBCoreDescriptionDocument xmlns="http://www.pbcore.org/PBCore/PBCoreNamespace.html">
+    <pbcoreIdentifier>
+        <identifier>
+            00951106121630151106121659052000230010002000100023001230100010001000400020100000Kunstnermøder Filminstruktør Christoffer Boe møder billedhu Kunstnermøder: Filminstruktør Christoffer Boe møder billedhu 010000000000000000000 16:9 130000000000006510610500 000001TvmeterProgram
+        </identifier>
+        <identifierSource>tvmeter</identifierSource>
+    </pbcoreIdentifier>
+    <pbcoreIdentifier>
+        <identifier>5318511RitzauProgram</identifier>
+        <identifierSource>id</identifierSource>
+    </pbcoreIdentifier>
+    <pbcoreTitle>
+        <title>
+            Kunstnermøder: Filminstruktør Christoffer Boe møder billedhugger Ingvar Cronhammar
+        </title>
+        <titleType>titel</titleType>
+    </pbcoreTitle>
+    <pbcoreTitle>
+        <title/>
+        <titleType>originaltitel</titleType>
+    </pbcoreTitle>
+    <pbcoreTitle>
+        <title/>
+        <titleType>episodetitel</titleType>
+    </pbcoreTitle>
+    <pbcoreDescription>
+        <description>
+            "Kunstnermøder" går tæt på nogle af de helt store spørgsmål om kunsten og livet igennem to skabende mennesker. Omdrejningspunktet er den ene kunstners ønske om at møde den anden, som de beundrer, og hvis virke og verden, de fascineres af. De to kommer ofte fra vidt forskellige erhverv.
+        </description>
+        <descriptionType>langomtale1</descriptionType>
+    </pbcoreDescription>
+    <pbcoreDescription>
+        <description/>
+        <descriptionType>langomtale2</descriptionType>
+    </pbcoreDescription>
+    <pbcoreDescription>
+        <description/>
+        <descriptionType>kortomtale</descriptionType>
+    </pbcoreDescription>
+    <pbcoreGenre>
+        <genre>hovedgenre: Dokumentar</genre>
+    </pbcoreGenre>
+    <pbcoreGenre>
+        <genre>undergenre: Dokumentarserie </genre>
+    </pbcoreGenre>
+    <pbcoreGenre>
+        <genre>indhold_emne: Kultur</genre>
+    </pbcoreGenre>
+    <pbcoreCreator>
+        <creator/>
+        <creatorRole>forfatter</creatorRole>
+    </pbcoreCreator>
+    <pbcoreContributor>
+        <contributor/>
+        <contributorRole>medvirkende</contributorRole>
+    </pbcoreContributor>
+    <pbcoreContributor>
+        <contributor/>
+        <contributorRole>instruktion</contributorRole>
+    </pbcoreContributor>
+    <pbcorePublisher>
+        <publisher>drk</publisher>
+        <publisherRole>channel_name</publisherRole>
+    </pbcorePublisher>
+    <pbcorePublisher>
+        <publisher>DR K</publisher>
+        <publisherRole>kanalnavn</publisherRole>
+    </pbcorePublisher>
+    <pbcoreInstantiation>
+        <dateCreated>2010</dateCreated>
+        <dateIssued/>
+        <formatLocation/>
+        <formatMediaType>sound</formatMediaType>
+        <formatStandard>ikke hd</formatStandard>
+        <formatDuration>1730000</formatDuration>
+        <formatAspectRatio>16:9, </formatAspectRatio>
+        <formatColors>farve</formatColors>
+        <formatChannelConfiguration>ikke surround</formatChannelConfiguration>
+        <pbcoreDateAvailable>
+            <dateAvailableStart>2011-06-12T16:30:00+0200</dateAvailableStart>
+            <dateAvailableEnd>2011-06-12T17:00:00+0200</dateAvailableEnd>
+        </pbcoreDateAvailable>
+        <pbcoreFormatID>
+            <formatIdentifier>[INSERT_PBC_FORMAT_ID]</formatIdentifier>
+            <formatIdentifierSource>[INSERT_PBC_FORMAT_ID_SOURCE]</formatIdentifierSource>
+        </pbcoreFormatID>
+        <pbcoreAnnotation>
+            <annotation/>
+        </pbcoreAnnotation>
+    </pbcoreInstantiation>
+    <pbcoreExtension>
+        <extension>antalepisoder:0</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>episodenr:0</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>premiere:ikke premiere</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>genudsendelse:genudsendelse</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>hovedgenre_id:13</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>kanalid:326</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>live:ikke live</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>lydlink:</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>produktionsland:</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>produktionsland_id:0</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>program_id:16680934</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>program_ophold:ikke program ophold</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>undergenre_id:753</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>
+            urllink:www.dr.dk/K/Kultur/Programmer/Kunstnermoede/20101018000026.htm
+        </extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>afsnit_id:0</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>saeson_id:0</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>serie_id:0</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>tekstet:ikke tekstet</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>th:ikke tekstet for hørehæmmede</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>ttv:ikke tekst-tv</extension>
+    </pbcoreExtension>
+    <pbcoreExtension>
+        <extension>showviewcode:48669831</extension>
+    </pbcoreExtension>
+</PBCoreDescriptionDocument>
