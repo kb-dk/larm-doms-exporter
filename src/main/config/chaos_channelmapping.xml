@@ -474,4 +474,9 @@
         <chaos_display_name>TVS - Den Danske Sportskanal</chaos_display_name>
         <chaos_logo>Unknown_logo.png</chaos_logo>
     </channel>
+    <channel>
+        <sb_channel_name>xee</sb_channel_name>
+        <chaos_display_name>Xee</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
 </channels>
