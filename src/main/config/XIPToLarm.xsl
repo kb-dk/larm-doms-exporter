@@ -496,6 +496,9 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 		<xsl:if test=".='TVS - Den Danske Sportskanal'">
 <xsl:text>TVS - Den Danske Sportskanal</xsl:text>
 </xsl:if>
+		<xsl:if test=".='xee'">
+<xsl:text>Xee</xsl:text>
+</xsl:if>
 
 
 </xsl:for-each>
@@ -788,6 +791,9 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 <xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 	<xsl:if test=".='TVS - Den Danske Sportskanal'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
+	<xsl:if test=".='xee'">
 <xsl:text>Unknown_logo.png</xsl:text>
 </xsl:if>
 
@@ -1270,6 +1276,11 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 			   <channel>
 				   <sb_channel_name>TVS - Den Danske Sportskanal</sb_channel_name>
 				   <chaos_display_name>TVS - Den Danske Sportskanal</chaos_display_name>
+				   <chaos_logo>Unknown_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>xee</sb_channel_name>
+				   <chaos_display_name>Xee</chaos_display_name>
 				   <chaos_logo>Unknown_logo.png</chaos_logo>
 			   </channel>
 		   </channels>

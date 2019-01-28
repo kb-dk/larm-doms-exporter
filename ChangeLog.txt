@@ -1,3 +1,6 @@
+larm-kuana-exporter-2.0.8 released 2019-01-28:
+  * Add new channel Xee to xsl and whitelist
+
 larm-kuana-exporter-2.0.7 released 2018-11-21:
   * Add new element to metadata for specifying if program is radio or tv (since files from kuana doesn't have file extensions)
   * Add more channels to whitelist
