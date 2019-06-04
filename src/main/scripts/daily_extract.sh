@@ -24,7 +24,7 @@ remove_tmp_files() {
 
 do_export() {
     log "Exporting programs with timestamp after $TIME to $OUT"
-    FORMAT=csv ./get_solr_docs.sh "stime:{$TIME TO *]  NOT (lhovedgenre:film NOT (lsubject:miniserie OR no:"miniserie" OR no:"thrillerserie" OR no:"tvfilm")) NOT (channel_name:(canal8sport OR tv2sport1hd OR eurosportdk OR idinvestigation OR tv3max)) AND lma_long:"tv"  " stime,recordID $OUT
+    FORMAT=csv ./get_solr_docs.sh "stime:{$TIME TO *]  NOT (lhovedgenre:film NOT (lsubject:miniserie OR no:"miniserie" OR no:"thrillerserie" OR no:"tvfilm")) NOT (channel_name:(canal8sport OR tv2sport1hd OR eurosportdk OR idinvestigation OR tv3max)) AND lma_long:"tv" AND recordID:"pvica*" " stime,recordID $OUT
     if [[ -s $OUT ]]; then
         sort < $OUT | tail -n 1 | cut -d, -f1 > timestamp.txt
         IDFILE=$OUT.ids.dat
