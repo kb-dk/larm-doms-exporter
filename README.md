@@ -19,3 +19,5 @@ The configuration parameters are documented and described in `config/summarise.c
 
 The "persistence layer" consists of a flat file `bin/timestamp.txt` containing the timestamp of the last program exported on the previous run (in the format 2018-01-08T16:39:00Z).
 On first run, the timestamp can be passed as an argument to the daily_extract.sh script and the timestamp file will then be created.
+
+See https://sbforge.org/display/CHAOS/Home for further documentation
