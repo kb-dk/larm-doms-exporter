@@ -8,7 +8,7 @@
     </parent>
     <groupId>dk.kb.larm</groupId>
     <artifactId>larm-kuana-exporter</artifactId>
-    <version>2.0.10-SNAPSHOT</version>
+    <version>2.0.10</version>
     <repositories>
         <repository>
             <id>sbprojects-nexus</id>
@@ -112,7 +112,7 @@
         <connection>scm:git:https://github.com/statsbiblioteket/larm-doms-exporter</connection>
         <developerConnection>scm:git:git@github.com:statsbiblioteket/larm-doms-exporter</developerConnection>
         <url>https://github.com/statsbiblioteket/larm-doms-exporter</url>
-        <tag>HEAD</tag>
+        <tag>larm-kuana-exporter-2.0.10</tag>
     </scm>
 
 </project>
