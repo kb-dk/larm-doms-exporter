@@ -1,3 +1,6 @@
+larm-kuana-exporter-2.0.10 released 2019-09-04:
+  * Query solr index for both radio and tv types of metadata posts
+
 larm-kuana-exporter-2.0.9 released 2019-06-04:
   * Only export pvica records (for some reason, doms records was also exported)
 
