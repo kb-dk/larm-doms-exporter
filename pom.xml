@@ -8,7 +8,7 @@
     </parent>
     <groupId>dk.kb.larm</groupId>
     <artifactId>larm-kuana-exporter</artifactId>
-    <version>2.0.11-SNAPSHOT</version>
+    <version>2.0.10-SNAPSHOT</version>
     <repositories>
         <repository>
             <id>sbprojects-nexus</id>
