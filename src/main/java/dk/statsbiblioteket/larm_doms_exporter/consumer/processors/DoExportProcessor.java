@@ -9,8 +9,9 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.util.ChannelMapper;
 import dk.statsbiblioteket.util.xml.DOM;
+import dk.statsbiblioteket.util.xml.DefaultNamespaceContext;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -95,9 +97,8 @@ public class DoExportProcessor extends ProcessorChainElement {
 
     private static NamespaceContext pbcoreNamespaceContext = new PBCoreNamespaceResolver();
 
-    //TODO replace with following library call:
-    //private static NamespaceContext namespaceContext = new DefaultNamespaceContext("http://www.pbcore.org/PBCore/PBCoreNamespace.html", "pbcore");
-
+    private static NamespaceContext program_broadcast_namespaceContext =
+            new DefaultNamespaceContext(null, "pbc", "http://doms.statsbiblioteket.dk/types/program_broadcast/0/1/#");
 
     @Override
     protected void processThis(DomsExportRecord record, ExportContext context, ExportRequestState state) throws ProcessorException {
@@ -166,6 +167,7 @@ public class DoExportProcessor extends ProcessorChainElement {
             result = substituteWalltime(result, record, context, state);
             result = substituteStreamingServerFolder(result, record, context, state);
             result = substituteStreamingServerId(result, record, context, state);
+            result = substituteObjectType(result, record, context, state);
         } catch (Exception e) {
             throw new ProcessorException("Error processing " + record.getID(), e);
         }
@@ -257,7 +259,7 @@ public class DoExportProcessor extends ProcessorChainElement {
         return pattern.matcher(template).replaceAll(chaosStartString);
     }
 
-    private String substituteChannel(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
+    private String substituteChannel(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException, ProcessorException {
         String patternString = "###CHANNEL###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
         String matchingString = getChannelName(state);
@@ -265,20 +267,21 @@ public class DoExportProcessor extends ProcessorChainElement {
     }
 
     static String getChannelName(ExportRequestState state) throws XPathExpressionException {
-        String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
+//        String xpathString = "/pbcore:PBCoreDescriptionDocument/pbcore:pbcorePublisher[pbcore:publisherRole='channel_name']/pbcore:publisher";
+        String xpathString = "/pbc:programBroadcast/pbc:channelId";
         XPath xpath = xpathFactory.newXPath();
-        xpath.setNamespaceContext(pbcoreNamespaceContext);
-        return (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
+        xpath.setNamespaceContext(program_broadcast_namespaceContext);
+        return (String) xpath.evaluate(xpathString, state.getProgramBroadcastDocument(), XPathConstants.STRING);
     }
 
-    private String substitutePublisher(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
+    private String substitutePublisher(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException, ProcessorException {
         String patternString = "###PUBLISHER###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
         String matchingString = getChannelName(state);
         return pattern.matcher(template).replaceAll(channelMapper.getPublisher(matchingString));
     }
 
-    private String substituteLogoFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException {
+    private String substituteLogoFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state, ChannelMapper channelMapper) throws XPathExpressionException, ProcessorException {
         String patternString = "###LOGO_FILENAME###";
         Pattern pattern = Pattern.compile(patternString, Pattern.DOTALL);
         String matchingString = getChannelName(state);
@@ -290,7 +293,8 @@ public class DoExportProcessor extends ProcessorChainElement {
         XPath xpath = xpathFactory.newXPath();
         xpath.setNamespaceContext(pbcoreNamespaceContext);
         String matchingString = (String) xpath.evaluate(xpathString, state.getPbcoreDocument(), XPathConstants.STRING);
-        matchingString = StringEscapeUtils.escapeXml(matchingString);
+        matchingString = StringEscapeUtils.escapeXml11(matchingString);
+        matchingString = Matcher.quoteReplacement(matchingString);
         return pattern.matcher(template).replaceAll(matchingString);
     }
 
@@ -307,5 +311,13 @@ public class DoExportProcessor extends ProcessorChainElement {
     private String substituteFilename(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
         Pattern pattern = Pattern.compile("###FILENAME###", Pattern.DOTALL);
         return pattern.matcher(template).replaceAll(state.getMediaFileName());
+    }
+
+    // Foreslag fra LARM for at specificere om et program er radio eller tv (når filer ikke har file extension):
+    // "Jeg foreslår at du tilføjer et ObjectType-element til ObjectEnvelope-elementet som har værdien: 24 for Radioprogrammer og 25 for TV-programmer"
+    private String substituteObjectType(String template, DomsExportRecord record, ExportContext context, ExportRequestState state) {
+        Pattern pattern = Pattern.compile("###OBJECT_TYPE###", Pattern.DOTALL);
+        String objectType = state.isRadio() ? "24" : "25";
+        return pattern.matcher(template).replaceAll(objectType);
     }
 }

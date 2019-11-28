@@ -1,373 +1,482 @@
 <channels>
-	<!-- these are radio channels -->
-	<channel>
-		<sb_channel_name>drbo</sb_channel_name>
-		<chaos_display_name>DR Boogieradio</chaos_display_name>
-		<chaos_logo>Unknown_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drboo</sb_channel_name>
-		<chaos_display_name>DR Boogieradio</chaos_display_name>
-		<chaos_logo>Unknown_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drpk</sb_channel_name>
-		<chaos_display_name>DR Klassisk</chaos_display_name>
-		<chaos_logo>drpk_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drmamara</sb_channel_name>
-		<chaos_display_name>DR Mama</chaos_display_name>
-		<chaos_logo>DRmama_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drol</sb_channel_name>
-		<chaos_display_name>DR Oline</chaos_display_name>
-		<chaos_logo>DRol_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp1</sb_channel_name>
-		<chaos_display_name>DR P1</chaos_display_name>
-		<chaos_logo>P1_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp2</sb_channel_name>
-		<chaos_display_name>DR P2</chaos_display_name>
-		<chaos_logo>P2_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp3</sb_channel_name>
-		<chaos_display_name>DR P3</chaos_display_name>
-		<chaos_logo>P3_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4b</sb_channel_name>
-		<chaos_display_name>DR P4 Bornholm</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4blm</sb_channel_name>
-		<chaos_display_name>DR P4 Bornholm</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4o</sb_channel_name>
-		<chaos_display_name>DR P4 Fælles</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4f</sb_channel_name>
-		<chaos_display_name>DR P4 Fyn</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4fyn</sb_channel_name>
-		<chaos_display_name>DR P4 Fyn</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4k94</sb_channel_name>
-		<chaos_display_name>DR P4 K94</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4k</sb_channel_name>
-		<chaos_display_name>DR P4 København</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4miv</sb_channel_name>
-		<chaos_display_name>DR P4 Midt og Vest</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4mv</sb_channel_name>
-		<chaos_display_name>DR P4 Midt og Vest</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4nj</sb_channel_name>
-		<chaos_display_name>DR P4 Nordjylland</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4nor</sb_channel_name>
-		<chaos_display_name>DR P4 Nordjylland</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4o</sb_channel_name>
-		<chaos_display_name>DR P4 Østjylland</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4re</sb_channel_name>
-		<chaos_display_name>DR P4 Regional</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp4s</sb_channel_name>
-		<chaos_display_name>DR P4 Syd</chaos_display_name>
-		<chaos_logo>P4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp5</sb_channel_name>
-		<chaos_display_name>DR P5</chaos_display_name>
-		<chaos_logo>drp5_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp5000</sb_channel_name>
-		<chaos_display_name>DR P5000</chaos_display_name>
-		<chaos_logo>drp5000_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp6b</sb_channel_name>
-		<chaos_display_name>DR P6 Beat</chaos_display_name>
-		<chaos_logo>drp6b_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp7m</sb_channel_name>
-		<chaos_display_name>DR P7 Mix</chaos_display_name>
-		<chaos_logo>drp7m_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drp8j</sb_channel_name>
-		<chaos_display_name>DR P8 Jazz</chaos_display_name>
-		<chaos_logo>drp8j_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drram</sb_channel_name>
-		<chaos_display_name>DR Ramasjang</chaos_display_name>
-		<chaos_logo>drram_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drrar</sb_channel_name>
-		<chaos_display_name>DR Ramasjang</chaos_display_name>
-		<chaos_logo>drrar_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>novafm</sb_channel_name>
-		<chaos_display_name>NOVA fm</chaos_display_name>
-		<chaos_logo>novafm_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>100fm</sb_channel_name>
-		<chaos_display_name>Radio 100FM</chaos_display_name>
-		<chaos_logo>Radio100FM_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>radio2</sb_channel_name>
-		<chaos_display_name>Radio 2</chaos_display_name>
-		<chaos_logo>radio2_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>24syv</sb_channel_name>
-		<chaos_display_name>Radio 24syv</chaos_display_name>
-		<chaos_logo>Radio24syv_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>thevoice</sb_channel_name>
-		<chaos_display_name>THE VOICE</chaos_display_name>
-		<chaos_logo>voice_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2radio</sb_channel_name>
-		<chaos_display_name>TV2 Radio</chaos_display_name>
-		<chaos_logo>tv2radio_logo.png</chaos_logo>
-	</channel>
+    <!-- these are radio channels -->
+    <channel>
+        <sb_channel_name>drbo</sb_channel_name>
+        <chaos_display_name>DR Boogieradio</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drboo</sb_channel_name>
+        <chaos_display_name>DR Boogieradio</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drpk</sb_channel_name>
+        <chaos_display_name>DR Klassisk</chaos_display_name>
+        <chaos_logo>drpk_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drmamara</sb_channel_name>
+        <chaos_display_name>DR Mama</chaos_display_name>
+        <chaos_logo>DRmama_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drol</sb_channel_name>
+        <chaos_display_name>DR Oline</chaos_display_name>
+        <chaos_logo>DRol_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp1</sb_channel_name>
+        <chaos_display_name>DR P1</chaos_display_name>
+        <chaos_logo>P1_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp2</sb_channel_name>
+        <chaos_display_name>DR P2</chaos_display_name>
+        <chaos_logo>P2_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp3</sb_channel_name>
+        <chaos_display_name>DR P3</chaos_display_name>
+        <chaos_logo>P3_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4b</sb_channel_name>
+        <chaos_display_name>DR P4 Bornholm</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4blm</sb_channel_name>
+        <chaos_display_name>DR P4 Bornholm</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4o</sb_channel_name>
+        <chaos_display_name>DR P4 Fælles</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4f</sb_channel_name>
+        <chaos_display_name>DR P4 Fyn</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4fyn</sb_channel_name>
+        <chaos_display_name>DR P4 Fyn</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4k94</sb_channel_name>
+        <chaos_display_name>DR P4 K94</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4k</sb_channel_name>
+        <chaos_display_name>DR P4 København</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4miv</sb_channel_name>
+        <chaos_display_name>DR P4 Midt og Vest</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4mv</sb_channel_name>
+        <chaos_display_name>DR P4 Midt og Vest</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4nj</sb_channel_name>
+        <chaos_display_name>DR P4 Nordjylland</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4nor</sb_channel_name>
+        <chaos_display_name>DR P4 Nordjylland</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4o</sb_channel_name>
+        <chaos_display_name>DR P4 Østjylland</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4re</sb_channel_name>
+        <chaos_display_name>DR P4 Regional</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4s</sb_channel_name>
+        <chaos_display_name>DR P4 Syd</chaos_display_name>
+        <chaos_logo>P4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp5</sb_channel_name>
+        <chaos_display_name>DR P5</chaos_display_name>
+        <chaos_logo>drp5_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp5000</sb_channel_name>
+        <chaos_display_name>DR P5000</chaos_display_name>
+        <chaos_logo>drp5000_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp6b</sb_channel_name>
+        <chaos_display_name>DR P6 Beat</chaos_display_name>
+        <chaos_logo>drp6b_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp7m</sb_channel_name>
+        <chaos_display_name>DR P7 Mix</chaos_display_name>
+        <chaos_logo>drp7m_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp8j</sb_channel_name>
+        <chaos_display_name>DR P8 Jazz</chaos_display_name>
+        <chaos_logo>drp8j_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drram</sb_channel_name>
+        <chaos_display_name>DR Ramasjang</chaos_display_name>
+        <chaos_logo>drram_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drrar</sb_channel_name>
+        <chaos_display_name>DR Ramasjang</chaos_display_name>
+        <chaos_logo>drrar_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>novafm</sb_channel_name>
+        <chaos_display_name>NOVA fm</chaos_display_name>
+        <chaos_logo>novafm_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>100fm</sb_channel_name>
+        <chaos_display_name>Radio 100FM</chaos_display_name>
+        <chaos_logo>Radio100FM_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>radio2</sb_channel_name>
+        <chaos_display_name>Radio 2</chaos_display_name>
+        <chaos_logo>radio2_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>24syv</sb_channel_name>
+        <chaos_display_name>Radio 24syv</chaos_display_name>
+        <chaos_logo>Radio24syv_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>thevoice</sb_channel_name>
+        <chaos_display_name>THE VOICE</chaos_display_name>
+        <chaos_logo>voice_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2radio</sb_channel_name>
+        <chaos_display_name>TV2 Radio</chaos_display_name>
+        <chaos_logo>tv2radio_logo.png</chaos_logo>
+    </channel>
 
-	<!-- this entry is used, if no match can be found -->
-	<!-- IMPORTANT: sb_channel_name must be 'unknown' -->
-	<channel>
-		<sb_channel_name>unknown</sb_channel_name>
-		<chaos_display_name>Ukendt</chaos_display_name>
-		<chaos_logo>Unknown_logo.png</chaos_logo>
-	</channel>
+    <channel>
+        <sb_channel_name>drp4oj</sb_channel_name>
+        <chaos_display_name>DR P4 Østjylland</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>rakl</sb_channel_name>
+        <chaos_display_name>Radio Klassisk</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>voice</sb_channel_name>
+        <chaos_display_name>THE VOICE</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4sj</sb_channel_name>
+        <chaos_display_name>DR P4 Sjælland</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drp4esb</sb_channel_name>
+        <chaos_display_name>DR P4 Esbjerg</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
 
-	<!-- these are tv channels -->
-	<channel>
-		<sb_channel_name>7eren</sb_channel_name>
-		<chaos_display_name>7'eren</chaos_display_name>
-		<chaos_logo>7eren_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>canal9</sb_channel_name>
-		<chaos_display_name>Canal 9</chaos_display_name>
-		<chaos_logo>canal9_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>dk4</sb_channel_name>
-		<chaos_display_name>DK 4</chaos_display_name>
-		<chaos_logo>dk4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drhd</sb_channel_name>
-		<chaos_display_name>DR HD</chaos_display_name>
-		<chaos_logo>drhd_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drultra</sb_channel_name>
-		<chaos_display_name>DR Ultra</chaos_display_name>
-		<chaos_logo>drultra_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>drup</sb_channel_name>
-		<chaos_display_name>DR Update</chaos_display_name>
-		<chaos_logo>drup_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>dr1</sb_channel_name>
-		<chaos_display_name>DR 1</chaos_display_name>
-		<chaos_logo>dr1_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>dr2</sb_channel_name>
-		<chaos_display_name>DR 2</chaos_display_name>
-		<chaos_logo>dr2_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>dr3</sb_channel_name>
-		<chaos_display_name>DR 3</chaos_display_name>
-		<chaos_logo>dr3_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>folketinget</sb_channel_name>
-		<chaos_display_name>Folketingskanalen</chaos_display_name>
-		<chaos_logo>folketinget_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>kanal4</sb_channel_name>
-		<chaos_display_name>Kanal 4</chaos_display_name>
-		<chaos_logo>kanal4_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>kanal5</sb_channel_name>
-		<chaos_display_name>Kanal 5</chaos_display_name>
-		<chaos_logo>kanal5_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>kanal6</sb_channel_name>
-		<chaos_display_name>6'eren</chaos_display_name>
-		<chaos_logo>kanal6_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>kanaloestjylland</sb_channel_name>
-		<chaos_display_name>Kanal Østjylland</chaos_display_name>
-		<chaos_logo>kanaloestjylland_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>ksport</sb_channel_name>
-		<chaos_display_name>Kanal Sport</chaos_display_name>
-		<chaos_logo>ksport_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>sbsnet</sb_channel_name>
-		<chaos_display_name>SBS Net</chaos_display_name>
-		<chaos_logo>sbsnet_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2s</sb_channel_name>
-		<chaos_display_name>TV Syd</chaos_display_name>
-		<chaos_logo>tv2s_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2d</sb_channel_name>
-		<chaos_display_name>TV2</chaos_display_name>
-		<chaos_logo>tv2d_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2born</sb_channel_name>
-		<chaos_display_name>TV2 Bornholm</chaos_display_name>
-		<chaos_logo>tv2born_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2c</sb_channel_name>
-		<chaos_display_name>TV2 Charlie</chaos_display_name>
-		<chaos_logo>tv2c_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2fri</sb_channel_name>
-		<chaos_display_name>TV2 Fri</chaos_display_name>
-		<chaos_logo>tv2fri_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tvfyn</sb_channel_name>
-		<chaos_display_name>TV2 Fyn</chaos_display_name>
-		<chaos_logo>tvfyn_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2l</sb_channel_name>
-		<chaos_display_name>TV2 Lorry</chaos_display_name>
-		<chaos_logo>tv2l_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2news</sb_channel_name>
-		<chaos_display_name>TV2 News</chaos_display_name>
-		<chaos_logo>tv2news_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2n</sb_channel_name>
-		<chaos_display_name>TV2 Nord</chaos_display_name>
-		<chaos_logo>tv2n_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2ost</sb_channel_name>
-		<chaos_display_name>TV2 Øst</chaos_display_name>
-		<chaos_logo>tv2ost_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2sport</sb_channel_name>
-		<chaos_display_name>TV2 Sport</chaos_display_name>
-		<chaos_logo>tv2sport_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2z</sb_channel_name>
-		<chaos_display_name>TV 2 Zulu</chaos_display_name>
-		<chaos_logo>tv2z_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv2oj</sb_channel_name>
-		<chaos_display_name>TV2 Østjylland</chaos_display_name>
-		<chaos_logo>tv2oj_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv3</sb_channel_name>
-		<chaos_display_name>TV3</chaos_display_name>
-		<chaos_logo>tv3_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv3puls</sb_channel_name>
-		<chaos_display_name>TV3 Puls</chaos_display_name>
-		<chaos_logo>tv3puls_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv3p</sb_channel_name>
-		<chaos_display_name>TV3+</chaos_display_name>
-		<chaos_logo>tv3p_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv3sport1hd</sb_channel_name>
-		<chaos_display_name>TV3 sport 1 hd</chaos_display_name>
-		<chaos_logo>tv3sport1hd_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tv3sport2hd</sb_channel_name>
-		<chaos_display_name>TV3 sport 2 hd</chaos_display_name>
-		<chaos_logo>tv3sport2hd_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>tvdk</sb_channel_name>
-		<chaos_display_name>TV Danmark</chaos_display_name>
-		<chaos_logo>tvdk_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>vh1</sb_channel_name>
-		<chaos_display_name>VH1</chaos_display_name>
-		<chaos_logo>vh1_logo.png</chaos_logo>
-	</channel>
-	<channel>
-		<sb_channel_name>voicetv</sb_channel_name>
-		<chaos_display_name>Voice TV</chaos_display_name>
-		<chaos_logo>voicetv_logo.png</chaos_logo>
-	</channel>
+    <!-- these are tv channels -->
+    <channel>
+        <sb_channel_name>7eren</sb_channel_name>
+        <chaos_display_name>7'eren</chaos_display_name>
+        <chaos_logo>7eren_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>canal9</sb_channel_name>
+        <chaos_display_name>Canal 9</chaos_display_name>
+        <chaos_logo>canal9_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>dk4</sb_channel_name>
+        <chaos_display_name>DK 4</chaos_display_name>
+        <chaos_logo>dk4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drhd</sb_channel_name>
+        <chaos_display_name>DR HD</chaos_display_name>
+        <chaos_logo>drhd_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drultra</sb_channel_name>
+        <chaos_display_name>DR Ultra</chaos_display_name>
+        <chaos_logo>drultra_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drup</sb_channel_name>
+        <chaos_display_name>DR Update</chaos_display_name>
+        <chaos_logo>drup_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>dr1</sb_channel_name>
+        <chaos_display_name>DR 1</chaos_display_name>
+        <chaos_logo>dr1_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>dr2</sb_channel_name>
+        <chaos_display_name>DR 2</chaos_display_name>
+        <chaos_logo>dr2_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>dr3</sb_channel_name>
+        <chaos_display_name>DR 3</chaos_display_name>
+        <chaos_logo>dr3_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>folketinget</sb_channel_name>
+        <chaos_display_name>Folketingskanalen</chaos_display_name>
+        <chaos_logo>folketinget_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>kanal4</sb_channel_name>
+        <chaos_display_name>Kanal 4</chaos_display_name>
+        <chaos_logo>kanal4_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>kanal5</sb_channel_name>
+        <chaos_display_name>Kanal 5</chaos_display_name>
+        <chaos_logo>kanal5_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>kanal6</sb_channel_name>
+        <chaos_display_name>6'eren</chaos_display_name>
+        <chaos_logo>kanal6_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>kanaloestjylland</sb_channel_name>
+        <chaos_display_name>Kanal Østjylland</chaos_display_name>
+        <chaos_logo>kanaloestjylland_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>ksport</sb_channel_name>
+        <chaos_display_name>Kanal Sport</chaos_display_name>
+        <chaos_logo>ksport_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>sbsnet</sb_channel_name>
+        <chaos_display_name>SBS Net</chaos_display_name>
+        <chaos_logo>sbsnet_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2s</sb_channel_name>
+        <chaos_display_name>TV Syd</chaos_display_name>
+        <chaos_logo>tv2s_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2d</sb_channel_name>
+        <chaos_display_name>TV2</chaos_display_name>
+        <chaos_logo>tv2d_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2born</sb_channel_name>
+        <chaos_display_name>TV2 Bornholm</chaos_display_name>
+        <chaos_logo>tv2born_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2c</sb_channel_name>
+        <chaos_display_name>TV2 Charlie</chaos_display_name>
+        <chaos_logo>tv2c_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2fri</sb_channel_name>
+        <chaos_display_name>TV2 Fri</chaos_display_name>
+        <chaos_logo>tv2fri_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tvfyn</sb_channel_name>
+        <chaos_display_name>TV2 Fyn</chaos_display_name>
+        <chaos_logo>tvfyn_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2l</sb_channel_name>
+        <chaos_display_name>TV2 Lorry</chaos_display_name>
+        <chaos_logo>tv2l_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2news</sb_channel_name>
+        <chaos_display_name>TV2 News</chaos_display_name>
+        <chaos_logo>tv2news_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2n</sb_channel_name>
+        <chaos_display_name>TV2 Nord</chaos_display_name>
+        <chaos_logo>tv2n_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2ost</sb_channel_name>
+        <chaos_display_name>TV2 Øst</chaos_display_name>
+        <chaos_logo>tv2ost_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2sport</sb_channel_name>
+        <chaos_display_name>TV2 Sport</chaos_display_name>
+        <chaos_logo>tv2sport_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2z</sb_channel_name>
+        <chaos_display_name>TV 2 Zulu</chaos_display_name>
+        <chaos_logo>tv2z_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2oj</sb_channel_name>
+        <chaos_display_name>TV2 Østjylland</chaos_display_name>
+        <chaos_logo>tv2oj_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv3</sb_channel_name>
+        <chaos_display_name>TV3</chaos_display_name>
+        <chaos_logo>tv3_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv3puls</sb_channel_name>
+        <chaos_display_name>TV3 Puls</chaos_display_name>
+        <chaos_logo>tv3puls_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv3p</sb_channel_name>
+        <chaos_display_name>TV3+</chaos_display_name>
+        <chaos_logo>tv3p_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv3sport1hd</sb_channel_name>
+        <chaos_display_name>TV3 sport 1 hd</chaos_display_name>
+        <chaos_logo>tv3sport1hd_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv3sport2hd</sb_channel_name>
+        <chaos_display_name>TV3 sport 2 hd</chaos_display_name>
+        <chaos_logo>tv3sport2hd_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tvdk</sb_channel_name>
+        <chaos_display_name>TV Danmark</chaos_display_name>
+        <chaos_logo>tvdk_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>vh1</sb_channel_name>
+        <chaos_display_name>VH1</chaos_display_name>
+        <chaos_logo>vh1_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>voicetv</sb_channel_name>
+        <chaos_display_name>Voice TV</chaos_display_name>
+        <chaos_logo>voicetv_logo.png</chaos_logo>
+    </channel>
+
+    <channel>
+        <sb_channel_name>tv3sport</sb_channel_name>
+        <chaos_display_name>TV3 Sport</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tv2mv</sb_channel_name>
+        <chaos_display_name>TV2 Midt/Vest</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>drk</sb_channel_name>
+        <chaos_display_name>DR K</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>boomerang</sb_channel_name>
+        <chaos_display_name>Boomerang</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>mtv</sb_channel_name>
+        <chaos_display_name>MTV</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>eurosportdk</sb_channel_name>
+        <chaos_display_name>Eurosport Danmark version 2</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tlcdanmark</sb_channel_name>
+        <chaos_display_name>TLC Danmark</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>AKTV</sb_channel_name>
+        <chaos_display_name>AKTV</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>EfterskoleTV</sb_channel_name>
+        <chaos_display_name>EfterskoleTV</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>TVGaderummet</sb_channel_name>
+        <chaos_display_name>TVGaderummet</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>tlc</sb_channel_name>
+        <chaos_display_name>TLC</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>dr</sb_channel_name>
+        <chaos_display_name>DR</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>regtvhov</sb_channel_name>
+        <chaos_display_name>Regional TV - Hovedstaden</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>SBS Net Syd</sb_channel_name>
+        <chaos_display_name>SBS Net Syd</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>Kaos TV</sb_channel_name>
+        <chaos_display_name>Kaos TV</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>Canal International</sb_channel_name>
+        <chaos_display_name>Canal International</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>TVS - Den Danske Sportskanal</sb_channel_name>
+        <chaos_display_name>TVS - Den Danske Sportskanal</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
+    <channel>
+        <sb_channel_name>xee</sb_channel_name>
+        <chaos_display_name>Xee</chaos_display_name>
+        <chaos_logo>Unknown_logo.png</chaos_logo>
+    </channel>
 </channels>

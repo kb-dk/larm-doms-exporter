@@ -16,7 +16,8 @@ public class ExportRequestState {
     private String mediaFileName;
     private boolean isRadio; //or tv
     private Date programStart;
-
+    private Document programBroadcastDocument;
+    
     /* ---------------------------- */
 
     public Document getPbcoreDocument() {
@@ -73,5 +74,13 @@ public class ExportRequestState {
 
     public void setProgramStart(Date programStart) {
         this.programStart = programStart;
+    }
+    
+    public void setProgramBroadcastDocument(Document programBroadcast) {
+        this.programBroadcastDocument = programBroadcast;
+    }
+    
+    public Document getProgramBroadcastDocument() {
+        return programBroadcastDocument;
     }
 }

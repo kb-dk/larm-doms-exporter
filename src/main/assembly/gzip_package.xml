@@ -8,6 +8,12 @@
 
     <fileSets>
         <fileSet>
+            <includes>
+                <include>ChangeLog.txt</include>
+                <include>README.md</include>
+            </includes>
+        </fileSet>
+        <fileSet>
             <directory>${basedir}/src/main/config</directory>
             <outputDirectory>config</outputDirectory>
             <excludes>

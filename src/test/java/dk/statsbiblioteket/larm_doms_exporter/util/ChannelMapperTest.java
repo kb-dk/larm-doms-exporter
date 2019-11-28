@@ -34,17 +34,6 @@ public class ChannelMapperTest {
     }
 
     @Test
-    public void testGetChaosChannelUnknown() throws Exception {
-        String ch1 = "drp1234";
-        ExportContext context = new ExportContext();
-        File chaosChannelMappingConfigFile =
-                new File(context.getClass().getClassLoader().getResource(chaosChannelMappingConfigFilename).toURI());
-        context.setChaosChannelMappingConfigFile(chaosChannelMappingConfigFile);
-        ChannelMapper channelMapper = ChannelMapper.getChannelMapper(context);
-        assertEquals("Ukendt", channelMapper.getChaosChannel(ch1));
-    }
-
-    @Test
     public void testGetChaosChannelParseEmptyFile() throws Exception {
         String ch1 = "drp1234";
         ExportContext context = new ExportContext();

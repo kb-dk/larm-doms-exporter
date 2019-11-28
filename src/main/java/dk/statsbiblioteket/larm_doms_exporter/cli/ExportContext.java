@@ -16,6 +16,8 @@ public class ExportContext {
     private File behaviourConfigFile;
     private File infrastructreConfigFile;
     private File chaosChannelMappingConfigFile;
+    private File whitelistedChannelsFile;
+    private File blacklistedChannelsFile;
     private String domsCentralWebserviceUrl;
     private String domsUsername;
     private String domsPassword;
@@ -24,6 +26,7 @@ public class ExportContext {
     private File outputDirectory;
     private CentralWebservice domsCentralWebservice;
     private DomsExportRecordDAO domsExportRecordDAO;
+    private boolean skipSignificantChangeCheck;
 
     private Long inProductionTimestamp;
     private Long earliestExportBroadcastTimestamp;
@@ -33,6 +36,9 @@ public class ExportContext {
 
     private int geckonStreamingserverDestinationId;
     private String geckonStreamingserverFolderpath;
+
+    private String unknownChannelPage;
+    private File btaRecordIdsFile;
 
     /**
      * The root directory of the distribution media files
@@ -96,6 +102,22 @@ public class ExportContext {
 
 	public void setChaosChannelMappingConfigFile(File chaosChannelMappingConfigFile) {
 		this.chaosChannelMappingConfigFile = chaosChannelMappingConfigFile;
+	}
+
+    public File getWhitelistedChannelsFile() {
+		return whitelistedChannelsFile;
+	}
+
+	public void setWhitelistedChannelsFile(File whitelistedChannelsFile) {
+		this.whitelistedChannelsFile = whitelistedChannelsFile;
+	}
+
+    public File getBlacklistedChannelsFile() {
+		return blacklistedChannelsFile;
+	}
+
+	public void setBlacklistedChannelsFile(File blacklistedChannelsFile) {
+		this.blacklistedChannelsFile = blacklistedChannelsFile;
 	}
 
 	public DomsExportRecordDAO getDomsExportRecordDAO() {
@@ -218,6 +240,30 @@ public class ExportContext {
         this.mediaFileDepth = mediaFileDepth;
     }
 
+    public String getUnknownChannelPage() {
+        return unknownChannelPage;
+    }
+
+    public void setUnknownChannelPage(String unknownChannelPage) {
+        this.unknownChannelPage = unknownChannelPage;
+    }
+
+    public File getBtaRecordIdsFile() {
+        return btaRecordIdsFile;
+    }
+
+    public void setBtaRecordIdsFile(File btaRecordIdsFile) {
+        this.btaRecordIdsFile = btaRecordIdsFile;
+    }
+
+    public boolean skipSignificantChangeCheck() {
+        return skipSignificantChangeCheck;
+    }
+
+    public void setSkipSignificantChangeCheck(boolean skipSignificantChangeCheck) {
+        this.skipSignificantChangeCheck = skipSignificantChangeCheck;
+    }
+
     @Override
     public String toString() {
         return "ExportContext{" +
@@ -242,6 +288,9 @@ public class ExportContext {
                 ", geckonStreamingserverFolderpath='" + geckonStreamingserverFolderpath + '\'' +
                 ", mediaFileRoot='" + mediaFileRoot + '\'' +
                 ", mediaFileDepth=" + mediaFileDepth +
+                ", unknownChannelPage=" + unknownChannelPage +
+                ", skipSignificantChangeCheck=" + skipSignificantChangeCheck +
+                (btaRecordIdsFile != null ? ", btaRecordIdsFile=" + btaRecordIdsFile : "") +
                 '}';
     }
 }

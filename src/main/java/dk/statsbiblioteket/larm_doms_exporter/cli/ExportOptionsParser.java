@@ -17,8 +17,13 @@ public class ExportOptionsParser extends AbstractOptionsParser {
     protected static final Option LDE_HIBERNATE_CFG_OPTION = new Option("lde_hibernate_configfile", true, "The hibernate config file");
     protected static final Option BTA_HIBERNATE_CFG_OPTION = new Option("bta_hibernate_configfile", true, "The hibernate config file");
     protected static final Option CHAOS_CHANNELMAPPING_CFG_OPTION = new Option("chaos_channelmapping_configfile", true, "The chaos channel mapping file");
+    protected static final Option WHITELISTED_CHANNELS_OPTION = new Option("whitelisted_channelsfile", true, "The whitelisted channels file");
+    protected static final Option BLACKLISTED_CHANNELS_OPTION = new Option("blacklisted_channelsfile", true, "The blacklisted channels file");
+    protected static final Option BTA_RECORD_IDS_FILE_OPTION = new Option("bta_record_ids_file", true, "File with bta ids for export (optional)");
+    protected static final Option SKIP_SIGNIFICANT_CHANGE_CHECK_OPTION = new Option("skip_significant_change_check", false, "Specify whether significant change check should be skipped (false as default)");
 
     private ExportContext context;
+    private boolean whitelistBlacklistOptional = false;
 
     public ExportOptionsParser() {
         super();
@@ -28,6 +33,10 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         getOptions().addOption(LDE_HIBERNATE_CFG_OPTION);
         getOptions().addOption(BTA_HIBERNATE_CFG_OPTION);
         getOptions().addOption(CHAOS_CHANNELMAPPING_CFG_OPTION);
+        getOptions().addOption(WHITELISTED_CHANNELS_OPTION);
+        getOptions().addOption(BLACKLISTED_CHANNELS_OPTION);
+        getOptions().addOption(BTA_RECORD_IDS_FILE_OPTION);
+        getOptions().addOption(SKIP_SIGNIFICANT_CHANGE_CHECK_OPTION);
     }
 
 
@@ -46,6 +55,10 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         parseLDEHibernateConfigFileOption(cmd);
         parseBTAHibernateConfigFileOption(cmd);
         parseChaosChannelMappingConfigFileOption(cmd);
+        parseWhitelistedChannelsFileOption(cmd);
+        parseBlacklistedChannelsFileOption(cmd);
+        parseBtaRecordIdsFileOption(cmd);
+        parseSkipSignificantChangeOption(cmd);
         try {
             readBehaviouralProperties(context);
         } catch (IOException e) {
@@ -79,6 +92,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
         context.setOutputDirectory(readFileProperty("fileOutputDirectory", props));
         context.setMediaFileDepth(readLongProperty("mediaFileDepth", props));
         context.setMediaFileRoot(readStringProperty("mediaFileRoot", props));
+        context.setUnknownChannelPage(readStringProperty("unknownChannelPage", props));
     }
 
     protected void parseBehaviouralConfigFileOption(CommandLine cmd) throws OptionParseException {
@@ -131,7 +145,7 @@ public class ExportOptionsParser extends AbstractOptionsParser {
                throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
            }
            context.setBtaHibernateConfigurationFile(configFile);
-       }
+    }
 
     protected void parseChaosChannelMappingConfigFileOption(CommandLine cmd) throws OptionParseException {
         String configFileString = cmd.getOptionValue(CHAOS_CHANNELMAPPING_CFG_OPTION.getOpt());
@@ -144,5 +158,57 @@ public class ExportOptionsParser extends AbstractOptionsParser {
             throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
         }
         context.setChaosChannelMappingConfigFile(configFile);
+    }
+
+    protected void parseWhitelistedChannelsFileOption(CommandLine cmd) throws OptionParseException {
+        String configFileString = cmd.getOptionValue(WHITELISTED_CHANNELS_OPTION.getOpt());
+        if (configFileString == null) {
+            if(whitelistBlacklistOptional){
+                return;
+            }
+            parseError(WHITELISTED_CHANNELS_OPTION.toString());
+            throw new OptionParseException(WHITELISTED_CHANNELS_OPTION.toString());
+        }
+        File configFile = new File(configFileString);
+        if (!configFile.exists() || configFile.isDirectory()) {
+            throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
+        }
+        context.setWhitelistedChannelsFile(configFile);
+    }
+
+    protected void parseBlacklistedChannelsFileOption(CommandLine cmd) throws OptionParseException {
+        String configFileString = cmd.getOptionValue(BLACKLISTED_CHANNELS_OPTION.getOpt());
+        if (configFileString == null) {
+            if(whitelistBlacklistOptional){
+                return;
+            }
+            parseError(BLACKLISTED_CHANNELS_OPTION.toString());
+            throw new OptionParseException(BLACKLISTED_CHANNELS_OPTION.toString());
+        }
+        File configFile = new File(configFileString);
+        if (!configFile.exists() || configFile.isDirectory()) {
+            throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
+        }
+        context.setBlacklistedChannelsFile(configFile);
+    }
+
+    protected void parseBtaRecordIdsFileOption(CommandLine cmd) throws OptionParseException {
+        String configFileString = cmd.getOptionValue(BTA_RECORD_IDS_FILE_OPTION.getOpt());
+        if (configFileString != null && !configFileString.isEmpty()) {
+            File configFile = new File(configFileString);
+            if (!configFile.exists() || configFile.isDirectory()) {
+                throw new OptionParseException(configFile.getAbsolutePath() + " is not a file.");
+            }
+            context.setBtaRecordIdsFile(configFile);
+        }
+    }
+
+    protected void parseSkipSignificantChangeOption(CommandLine cmd) {
+        boolean skipSignificantChangeCheck = cmd.hasOption(SKIP_SIGNIFICANT_CHANGE_CHECK_OPTION.getOpt());
+        context.setSkipSignificantChangeCheck(skipSignificantChangeCheck);
+    }
+
+    public void setWhitelistBlacklistOptional(boolean whitelistBlacklistOptional) {
+        this.whitelistBlacklistOptional = whitelistBlacklistOptional;
     }
 }

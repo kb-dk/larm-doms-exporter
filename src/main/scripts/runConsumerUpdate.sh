@@ -17,4 +17,5 @@ java -Dlogback.configurationFile=$confDir/logback.consumer.xml $hibernate_log_co
  --behavioural_configfile=$confDir/lde.behaviour.properties \
  --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml \
  --whitelisted_channelsfile=$confDir/whitelistedChannels.csv \
- --blacklisted_channelsfile=$confDir/blacklistedChannels.csv
+ --blacklisted_channelsfile=$confDir/blacklistedChannels.csv \
+ --skip_significant_change_check

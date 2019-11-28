@@ -16,6 +16,11 @@ import dk.statsbiblioteket.larm_doms_exporter.persistence.dao.HibernateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,9 +59,10 @@ public class ProducerApplication {
      " --chaos_channelmapping_configfile=$confDir/chaos_channelmapping.xml";
      *
      */
-    public static void main(String[] args) throws UsageException, OptionParseException, InvalidCredentialsException, MethodFailedException {
+    public static void main(String[] args) throws UsageException, OptionParseException, InvalidCredentialsException, MethodFailedException, IOException {
         logger.info("Entered main method of " + ProducerApplication.class.getName());
         ExportOptionsParser optionsParser = new ExportOptionsParser();
+        optionsParser.setWhitelistBlacklistOptional(true);
         ExportContext context = null;
         try {
             context = optionsParser.parseOptions(args);
@@ -65,11 +71,15 @@ public class ProducerApplication {
             System.exit(1);
         }
         logger.info("Context initialised: '" + context.toString() + "'");
-        queueRecordsForExport(context);
+        if(context.getBtaRecordIdsFile() != null){
+            queueListedRecordsForExport(context);
+        } else {
+            queueNewRecordsForExport(context);
+        }
         logger.info("Exiting " + ProducerApplication.class.getName());
     }
 
-    private static void queueRecordsForExport(ExportContext context) {
+    private static void queueNewRecordsForExport(ExportContext context) {
         HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
         DomsExportRecordDAO ldeDao = new DomsExportRecordDAO(hibernateUtil);
         Long startingTimestamp = ldeDao.getMostRecentExportedTimestamp();
@@ -85,6 +95,35 @@ public class ProducerApplication {
         List<BroadcastTranscodingRecord> btaRecordsPending = btaDao.getAllTranscodings(startingTimestamp, TranscodingStateEnum.PENDING);
         btaRecords.addAll(btaRecordsPending);
         logger.info("Retrieved " + btaRecords.size() + " records in state COMPLETE or PENDING from bta.");
+        queueRecordsForExport(context, ldeDao, btaRecords);
+    }
+
+    private static void queueListedRecordsForExport(ExportContext context) throws IOException {
+        HibernateUtil hibernateUtil = HibernateUtil.getInstance(context.getLdeHibernateConfigurationFile().getAbsolutePath());
+        DomsExportRecordDAO ldeDao = new DomsExportRecordDAO(hibernateUtil);
+        dk.statsbiblioteket.broadcasttranscoder.persistence.dao.HibernateUtil btaHibernateUtil = dk.statsbiblioteket.broadcasttranscoder.persistence.dao.HibernateUtil.getInstance(context.getBtaHibernateConfigurationFile().getAbsolutePath());
+        BroadcastTranscodingRecordDAO btaDao = new BroadcastTranscodingRecordDAO(btaHibernateUtil);
+
+        File btaRecordIdsFile = context.getBtaRecordIdsFile();
+        logger.info("Retrieving bta records, specified in the file " + btaRecordIdsFile.getAbsolutePath());
+        List<BroadcastTranscodingRecord> btaRecords = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(btaRecordIdsFile))) {
+            String btaRecordId;
+            while ((btaRecordId = br.readLine()) != null) {
+                BroadcastTranscodingRecord btaRecord = btaDao.read("uuid:" + btaRecordId);
+                if(btaRecord == null){
+                    logger.warn("BTA record with id 'uuid:" + btaRecordId + "' not found.");
+                } else if(btaRecord.getTranscodingState().equals(TranscodingStateEnum.COMPLETE) || btaRecord.getTranscodingState().equals(TranscodingStateEnum.PENDING)){
+                    btaRecords.add(btaRecord);
+                }
+            }
+        }
+        logger.info("Retrieved " + btaRecords.size() + " records in state COMPLETE or PENDING from bta.");
+
+        queueRecordsForExport(context, ldeDao, btaRecords);
+    }
+
+    private static void queueRecordsForExport(ExportContext context, DomsExportRecordDAO ldeDao, List<BroadcastTranscodingRecord> btaRecords) {
         int pending = 0;
         int rejected = 0;
         for (BroadcastTranscodingRecord btaRecord: btaRecords) {
