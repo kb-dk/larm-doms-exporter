@@ -1,3 +1,13 @@
+larm-doms-exporter-1.0.22 released 2019-11-28:
+  * As v1.0.21 but with updated ChangeLog.txt
+
+larm-doms-exporter-1.0.21 released 2019-11-28:
+  * Added new file resolver requiring two new infrastructure configuration parameters with the following default values
+    mediaFileRoot=/radio-tv
+    mediaFileDepth=4
+  * Added script bin/reexport/reexport.sh which takes a single uuid as input and forces the reexport of this program
+    on the next run of runConsumer.sh.
+
 larm-doms-exporter-1.0.20 released 2019-01-28:
   * Add new channel Xee to channelmapping and whitelist
 
