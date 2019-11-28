@@ -34,6 +34,16 @@ public class ExportContext {
     private int geckonStreamingserverDestinationId;
     private String geckonStreamingserverFolderpath;
 
+    /**
+     * The root directory of the distribution media files
+     */
+    private String mediaFileRoot;
+
+    /**
+     * The directory depth of media files under the root directory
+     */
+    private Long mediaFileDepth;
+
     /* etc */
 
     public Long getNumExports() {
@@ -192,18 +202,46 @@ public class ExportContext {
         this.geckonStreamingserverFolderpath = geckonStreamingserverFolderpath;
     }
 
+    public String getMediaFileRoot() {
+        return mediaFileRoot;
+    }
+
+    public void setMediaFileRoot(String mediaFileRoot) {
+        this.mediaFileRoot = mediaFileRoot;
+    }
+
+    public Long getMediaFileDepth() {
+        return mediaFileDepth;
+    }
+
+    public void setMediaFileDepth(Long mediaFileDepth) {
+        this.mediaFileDepth = mediaFileDepth;
+    }
+
     @Override
     public String toString() {
         return "ExportContext{" +
-                "hibernateConfigurationFile=" + ldeHibernateConfigurationFile +
+                "ldeHibernateConfigurationFile=" + ldeHibernateConfigurationFile +
+                ", btaHibernateConfigurationFile=" + btaHibernateConfigurationFile +
                 ", behaviourConfigFile=" + behaviourConfigFile +
                 ", infrastructreConfigFile=" + infrastructreConfigFile +
+                ", chaosChannelMappingConfigFile=" + chaosChannelMappingConfigFile +
                 ", domsCentralWebserviceUrl='" + domsCentralWebserviceUrl + '\'' +
                 ", domsUsername='" + domsUsername + '\'' +
-                ", domsPassword='" + "***********" + '\'' +
+                ", domsPassword='" + domsPassword + '\'' +
                 ", seedTimestamp=" + seedTimestamp +
                 ", domsViewAngle='" + domsViewAngle + '\'' +
                 ", outputDirectory=" + outputDirectory +
+                ", domsCentralWebservice=" + domsCentralWebservice +
+                ", domsExportRecordDAO=" + domsExportRecordDAO +
+                ", inProductionTimestamp=" + inProductionTimestamp +
+                ", earliestExportBroadcastTimestamp=" + earliestExportBroadcastTimestamp +
+                ", maxExportsPerRun=" + maxExportsPerRun +
+                ", numExports=" + numExports +
+                ", geckonStreamingserverDestinationId=" + geckonStreamingserverDestinationId +
+                ", geckonStreamingserverFolderpath='" + geckonStreamingserverFolderpath + '\'' +
+                ", mediaFileRoot='" + mediaFileRoot + '\'' +
+                ", mediaFileDepth=" + mediaFileDepth +
                 '}';
     }
 }

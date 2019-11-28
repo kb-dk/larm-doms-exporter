@@ -9,6 +9,8 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorChainElement;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
+import dk.statsbiblioteket.larm_doms_exporter.util.FileResolver;
+import dk.statsbiblioteket.larm_doms_exporter.util.FileResolverImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -69,23 +71,16 @@ public class BtaStatusFetcherDispatcherProcessor extends ProcessorChainElement {
                         logger.debug("No broadcast start time found for {} so it must be an old BES transcoding. Proceeding" +
                                 " with caution.");
                     }
-                    final String transcodingCommand = btaRecord.getTranscodingCommand();
-                    if (transcodingCommand != null) {
-                        String[] splitCommand = transcodingCommand.split("\\s");
-                        String outputFileS = splitCommand[splitCommand.length -1].replaceAll("/temp", "");
-                        File outputFile = new File(outputFileS);
-                        if (outputFile.exists()) {
-                            Long fileTimeStamp = outputFile.lastModified();
-                            state.setOutputFileTimeStamp(fileTimeStamp);
-                            state.setMediaFileName(outputFile.getName());
-                        } else {
-                            logger.warn("Could not find output file: " + outputFileS);
-                            state.setOutputFileTimeStamp(0L);
-                            state.setMediaFileName("");
-                        }
-                    } else {
-                        logger.warn("Could not find output file from null transcoding command for {}.", record.getID());
+                    FileResolver fileResolver = new FileResolverImpl(context.getMediaFileRoot(), context.getMediaFileDepth().intValue());
+                    File mediaFile = fileResolver.findFile(record.getID().replace("uuid:", ""));
+                    if (mediaFile != null) {
+                        Long fileTimeStamp = mediaFile.lastModified();
+                        state.setOutputFileTimeStamp(fileTimeStamp);
+                        state.setMediaFileName(mediaFile.getName());
+                    } else {    //e.g. klausulering
+                        logger.warn("Could not find output file for " + record.getID() );
                         state.setOutputFileTimeStamp(0L);
+                        state.setMediaFileName("");
                     }
                     break;
             }
