@@ -8,7 +8,7 @@
     </parent>
     <groupId>larm-doms-exporter</groupId>
     <artifactId>larm-doms-exporter</artifactId>
-    <version>1.0.22-SNAPSHOT</version>
+    <version>1.0.22</version>
     <repositories>
         <repository>
             <id>sbprojects-nexus</id>
@@ -176,7 +176,7 @@
         <connection>scm:git:https://github.com/statsbiblioteket/larm-doms-exporter</connection>
         <developerConnection>scm:git:git@github.com:statsbiblioteket/larm-doms-exporter</developerConnection>
         <url>https://github.com/statsbiblioteket/larm-doms-exporter</url>
-        <tag>HEAD</tag>
+        <tag>larm-doms-exporter-1.0.22</tag>
     </scm>
 
 </project>
