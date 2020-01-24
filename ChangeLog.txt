@@ -1,3 +1,8 @@
+larm-kuana-exporter-2.0.11 released 2020-01-24:
+  * Add new channel Radio4 to xsl and whitelist
+  * Move tv2sport to blacklist
+  * Add tv2sportx to blacklist
+
 larm-kuana-exporter-2.0.10 released 2019-09-04:
   * Query solr index for both radio and tv types of metadata posts
 
