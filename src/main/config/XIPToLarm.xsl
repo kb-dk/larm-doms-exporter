@@ -603,6 +603,9 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 		<xsl:if test=".='radio2'">
 <xsl:text>radio2_logo.png</xsl:text>
 </xsl:if>
+		<xsl:if test=".='radio4'">
+<xsl:text>Unknown_logo.png</xsl:text>
+</xsl:if>
 		<xsl:if test=".='24syv'">
 <xsl:text>Radio24syv_logo.png</xsl:text>
 </xsl:if>
@@ -968,6 +971,11 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 				   <sb_channel_name>24syv</sb_channel_name>
 				   <chaos_display_name>Radio 24syv</chaos_display_name>
 				   <chaos_logo>Radio24syv_logo.png</chaos_logo>
+			   </channel>
+			   <channel>
+				   <sb_channel_name>radio4</sb_channel_name>
+				   <chaos_display_name>Radio 4</chaos_display_name>
+				   <chaos_logo>Unkonwn_logo.png</chaos_logo>
 			   </channel>
 			   <channel>
 				   <sb_channel_name>thevoice</sb_channel_name>
