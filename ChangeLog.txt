@@ -1,3 +1,6 @@
+larm-kuana-exporter-2.0.12 released 2020-01-29:
+  * Fix missing entry for 'radio4' in xsl
+
 larm-kuana-exporter-2.0.11 released 2020-01-24:
   * Add new channel Radio4 to xsl and whitelist
   * Move tv2sport to blacklist

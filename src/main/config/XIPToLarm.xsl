@@ -306,6 +306,9 @@ xmlns:pbcore="http://www.pbcore.org/PBCore/PBCoreNamespace.html"  xmlns:ns2="htt
 		<xsl:if test=".='radio2'">
 <xsl:text>Radio 2</xsl:text>
 </xsl:if>
+		<xsl:if test=".='radio4'">
+<xsl:text>Radio 4</xsl:text>
+</xsl:if>
 		<xsl:if test=".='24syv'">
 <xsl:text>Radio 24syv</xsl:text>
 </xsl:if>
