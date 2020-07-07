@@ -20,7 +20,7 @@ public class DomsExportRecordDAO extends GenericHibernateDAO<DomsExportRecord, S
      * @return the timestamp.
      */
     public Long getMostRecentExportedTimestamp() {
-       List<DomsExportRecord> records = getSession().createQuery("FROM DomsExportRecord WHERE state = ? ORDER BY lastDomsTimestamp DESC ").setParameter(0, ExportStateEnum.COMPLETE).list();
+       List<DomsExportRecord> records = getSession().createQuery("FROM DomsExportRecord WHERE state = ?0 ORDER BY lastDomsTimestamp DESC ").setParameter(0, ExportStateEnum.COMPLETE).list();
        if (records.isEmpty()) {
            return null;
        } else {
@@ -33,7 +33,7 @@ public class DomsExportRecordDAO extends GenericHibernateDAO<DomsExportRecord, S
      * @return the List of pending exports.
      */
     public List<DomsExportRecord> getPendingExports() {
-       return getSession().createQuery("from DomsExportRecord where state = ? ORDER BY lastDomsTimestamp ASC ")
+       return getSession().createQuery("from DomsExportRecord where state = ?0 ORDER BY lastDomsTimestamp ASC ")
                .setParameter(0, ExportStateEnum.PENDING).list();
     }
 

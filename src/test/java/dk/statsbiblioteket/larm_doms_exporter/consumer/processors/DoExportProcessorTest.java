@@ -5,8 +5,8 @@ import dk.statsbiblioteket.larm_doms_exporter.cli.ExportContext;
 import dk.statsbiblioteket.larm_doms_exporter.consumer.ExportRequestState;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.util.xml.DOM;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 
 import java.io.File;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 
 public class DoExportProcessorTest {
 
-    @Ignore("Manual test")
+    @Disabled("Manual test")
     @Test
     public void testProcessThis() throws Exception {
         DoExportProcessor doExportProcessor = new DoExportProcessor();
