@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,8 +59,8 @@ public class DoExportProcessor extends ProcessorChainElement {
     private static Logger logger = LoggerFactory.getLogger(DoExportProcessor.class);
     public static String XML_TEMPLATE = null;
     public static final String HAS_SHARD = "http://doms.statsbiblioteket.dk/relations/default/0/1/#hasShard";
-    SimpleDateFormat domsDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-    static SimpleDateFormat chaosDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    SimpleDateFormat domsDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.ROOT);
+    static SimpleDateFormat chaosDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ROOT);
 
 
     static {
@@ -130,7 +131,7 @@ public class DoExportProcessor extends ProcessorChainElement {
         logger.info("Writing new export file " + outputFile.getAbsolutePath());
         try {
             FileOutputStream os = new FileOutputStream(tempOutputFile);
-            os.write(result.getBytes());
+            os.write(result.getBytes("utf-8"));
             os.flush();
             os.close();
             context.incrementNumExports();

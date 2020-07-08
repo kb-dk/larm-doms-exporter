@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * For the export of old TV programs. This fixes up the Walltime and Media-file name.
@@ -36,7 +37,7 @@ public class FixerProcessor extends ProcessorChainElement {
             throw new ProcessorException("Error getting start-time. Export state set to FAILED.", e);
         }
         //DOMS start times like 2007-08-19T00:05:00+0200
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSZ");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SSZ", Locale.ROOT);
         Date programDate = null;
         try {
             programDate = sdf.parse(programStartTime);

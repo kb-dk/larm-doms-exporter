@@ -25,6 +25,7 @@ import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * For a previously-exported program, compare the two versions of the DOMS metadata and check whether the
@@ -124,7 +125,7 @@ public class SignificantChangeCheckerProcessor extends ProcessorChainElement {
     }
 
     String getTimeString(long timestamp) {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss:SSS'Z'");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss:SSS'Z'", Locale.ROOT);
         return format.format(new Date(timestamp));
     }
 

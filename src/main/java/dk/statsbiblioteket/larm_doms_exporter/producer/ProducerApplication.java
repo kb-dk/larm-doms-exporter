@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,7 +108,7 @@ public class ProducerApplication {
         File btaRecordIdsFile = context.getBtaRecordIdsFile();
         logger.info("Retrieving bta records, specified in the file " + btaRecordIdsFile.getAbsolutePath());
         List<BroadcastTranscodingRecord> btaRecords = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(btaRecordIdsFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(btaRecordIdsFile, StandardCharsets.UTF_8))) {
             String btaRecordId;
             while ((btaRecordId = br.readLine()) != null) {
                 BroadcastTranscodingRecord btaRecord = btaDao.read("uuid:" + btaRecordId);
