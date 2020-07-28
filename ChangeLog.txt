@@ -1,3 +1,9 @@
+larm-doms-exporter-1.0.23 released 2020-07-28:
+  * Update java version (1.8 -> 11)
+  * Comply with forbidden api
+  * Update junit (4 -> 5), with corresponding changes to tests
+  * Update most external dependencies
+
 larm-doms-exporter-1.0.22 released 2019-11-28:
   * As v1.0.21 but with updated ChangeLog.txt
 
