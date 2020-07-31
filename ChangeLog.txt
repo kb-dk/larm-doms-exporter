@@ -1,3 +1,6 @@
+larm-kuana-exporter-2.0.13 released 2020-07-31:
+  * Update external dependencies
+
 larm-kuana-exporter-2.0.12 released 2020-01-29:
   * Fix missing entry for 'radio4' in xsl
 
