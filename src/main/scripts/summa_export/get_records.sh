@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Takes a list of recordIDs and extracts the full record tree
+# Takes a list of recordIDs and extracts the full record tree.
+#
+# The ID of records that could not be fetched are listed in the file
+# failed.dat in the output folder.
 
 # Requirements: bash, xmllint, curl, sed
 
@@ -48,6 +51,8 @@ check_parameters() {
 # FUNCTIONS
 ################################################################################
 
+# Fetch a record from Summa Storage service and store it on the local file system
+# Input: A single recordID
 get_record() {
     local RECORD_ID="$1"
     local OUT_NAME=$(sed 's/[^a-zA-Z_0-9.]/_/g' <<< "$RECORD_ID").xml
@@ -58,7 +63,11 @@ get_record() {
     echo " - Fetching $OUT_FOLDER/$OUT_NAME"
     if [[ "true" == "$EXPAND" ]]; then
         # expand is ignored
+
+        # Fetch the raw response (entity escaped record XML wrapped in a SOAP envelope)
         local RESPONSE=$(curl -s -G "$SUMMA_STORAGE?method=getCustomRecord&expand=false&legacyMerge=false&escapeContent=false&" --data-urlencode "id=${RECORD_ID}")
+
+        # Check that there is content inside of the SOAP envelope
         if [[ "." != ".$( tr '\n' ' ' <<< "$RESPONSE" | grep "<ns1:getCustomRecordReturn[^>]*>.\{10,\}<\/ns1:getCustomRecordReturn")" ]]; then
             echo "$RESPONSE" | sed -e 's/<soapenv.*<ns1:getCustomRecordReturn[^>]*>//' -e 's/<\/ns1:getCustomRecordReturn.*//' -e 's/&lt;/</g' -e 's/&gt;/>/g' -e 's/&quot;/"/g' -e 's/&amp;/&/g' | xmllint --format - > "$OUT_FOLDER/$OUT_NAME"
         else
@@ -72,6 +81,7 @@ get_record() {
     fi
 }
 
+# Fetch all records for the IDs stored in the file $SOURCE (first command line argument)
 get_records() {
     mkdir -p "$OUT_FOLDER"
     FAILED=0
