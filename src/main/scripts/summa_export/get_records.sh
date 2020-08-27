@@ -58,7 +58,14 @@ get_record() {
     echo " - Fetching $OUT_FOLDER/$OUT_NAME"
     if [[ "true" == "$EXPAND" ]]; then
         # expand is ignored
-        curl -s -G "$SUMMA_STORAGE?method=getCustomRecord&expand=false&legacyMerge=false&escapeContent=false&" --data-urlencode "id=${RECORD_ID}" | sed -e 's/<soapenv.*getCustomRecordReturn[^>]*>//' -e 's/<\/ns1:getCustomRecordReturn.*//' -e 's/&lt;/</g' -e 's/&gt;/>/g' -e 's/&quot;/"/g' -e 's/&amp;/&/g' | xmllint --format - > "$OUT_FOLDER/$OUT_NAME"
+        local RESPONSE=$(curl -s -G "$SUMMA_STORAGE?method=getCustomRecord&expand=false&legacyMerge=false&escapeContent=false&" --data-urlencode "id=${RECORD_ID}")
+        if [[ "." != ".$( tr '\n' ' ' <<< "$RESPONSE" | grep "<ns1:getCustomRecordReturn[^>]*>.\{10,\}<\/ns1:getCustomRecordReturn")" ]]; then
+            echo "$RESPONSE" | sed -e 's/<soapenv.*<ns1:getCustomRecordReturn[^>]*>//' -e 's/<\/ns1:getCustomRecordReturn.*//' -e 's/&lt;/</g' -e 's/&gt;/>/g' -e 's/&quot;/"/g' -e 's/&amp;/&/g' | xmllint --format - > "$OUT_FOLDER/$OUT_NAME"
+        else
+            >&2 echo "Error: The record with the ID '$RECORD_ID' could not be fetched"
+            echo "$RECORD_ID" >> "$OUT_FOLDER/failed.dat"
+            FAILED=$(( FAILED+1 ))
+        fi
     else
         >&2 echo "EXPAND=false not supported yet"
         exit 4
@@ -67,6 +74,7 @@ get_record() {
 
 get_records() {
     mkdir -p "$OUT_FOLDER"
+    FAILED=0
     while read -r RECORD_ID; do
         if [[ "." == ".$RECORD_ID" ]]; then
             continue
@@ -81,4 +89,4 @@ get_records() {
 
 check_parameters "$@"
 get_records
-echo "Finished extracting $(wc -l < "$SOURCE") records, result stored in folder $OUT_FOLDER"
+echo "Finished extracting $(wc -l < "$SOURCE") records ($FAILED failed), result stored in folder $OUT_FOLDER"
