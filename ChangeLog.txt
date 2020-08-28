@@ -1,3 +1,6 @@
+larm-kuana-export-2.0.14
+  * Add a script to extract given record ids
+
 larm-kuana-exporter-2.0.13 released 2020-07-31:
   * Update external dependencies
 
