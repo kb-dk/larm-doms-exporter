@@ -1,42 +1,25 @@
 #!/usr/bin/env bash
 
 #
-# As its name implies, this script is the entry point for the daily extraction of data for larm export.
+# This script mimics daily_extract.sh but works on specific records, rather than all in a daily export.
+# This is for use in recovery, when specific records need to be uploaded to LARM
 #
 
 check_parameters() {
-    if [[ -z "$TIME" ]]; then
-        >&2 echo "Error: Initial time must be specified as parameter or in timestamp.txt"
+    if [[ -z "$IDFILE" ]]; then
+        >&2 echo "Error: Filename needs to be specified"
         usage 2
     fi
 }
 
-remove_tmp_files() {
-    if [ ! -z $OUT ]; then
-        log "Removing tmp file: $OUT"
-        rm $OUT
-    fi
-    if [ ! -z $IDFILE ]; then
-        log "Removing tmp file: $IDFILE"
-        rm $IDFILE
-    fi
-}
-
 do_export() {
-    log "Exporting programs with timestamp after $TIME to $OUT"
-    FORMAT=csv ./get_solr_docs.sh "stime:{$TIME TO *]  NOT (lhovedgenre:film NOT (lsubject:miniserie OR no:"miniserie" OR no:"thrillerserie" OR no:"tvfilm")) NOT (channel_name:(canal8sport OR tv2sport1hd OR eurosportdk OR idinvestigation OR tv3max)) AND lma_long:(radio OR tv) AND recordID:"pvica*" " stime,recordID $OUT
-    if [[ -s $OUT ]]; then
-        sort < $OUT | tail -n 1 | cut -d, -f1 > timestamp.txt
-        IDFILE=$OUT.ids.dat
-        cut -d, -f2 < $OUT > $IDFILE
-        ./get_records.sh $IDFILE $EXPORTDIR
-    fi
+    log "Exporting programs with ids for $IDFILE"
+    ./get_records.sh $IDFILE $EXPORTDIR
 }
 
 do_transform() {
     if [ -z "$(find $EXPORTDIR -name '*xml')" ]; then
-        log "No new records found since $TIME"
-        remove_tmp_files
+        log "No records found in $IDFILE"
         exit 0
     fi
 
@@ -78,16 +61,14 @@ do_transform() {
 function usage() {
     cat <<EOF
 
-Usage:  ./daily_extract.sh [timestamp]
+Usage:  ./record_extract.sh <idfile>
 
-timestamp: The timestamp from which to start extraction. The format is like 2018-01-08T16:39:00Z
-If the file timestamp.txt exists then the value is read from the file and the parameter is ignored.
+idfile: File containing one id per line. The format is like pvica_radioTV:du:016825ca-e54a-4afe-8a8b-8072088d84c8
 
 In addition the script reads four environment variables from the file summarise.conf:
 EXPORTDIR - the directory for exported metadata
 TRANSFORMEDDIR - the directory for transformed metadata
 STALLEDDIR - the directory for stalled program metadata
-SOLR - the Solr endpoint to query
 XALAN - path to the xalan jar-file
 
 EOF
@@ -109,13 +90,10 @@ mkdir -p $TRANSFORMEDDIR
 log "Creating directory $STALLEDDIR if necessary"
 mkdir -p $STALLEDDIR
 
-: ${OUT:="$EXPORTDIR/documents_$(date +%Y%m%d-%H%M%S).dat"}
-TIME=$(head -1 timestamp.txt 2> /dev/null)
-: ${TIME:=$1}
+: ${IDFILE:=$1}
 
 check_parameters
 cleanup_log
 do_export
 do_transform
-remove_tmp_files
 popd > /dev/null
