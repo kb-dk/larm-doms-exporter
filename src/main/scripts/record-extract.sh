@@ -6,8 +6,8 @@
 #
 
 check_parameters() {
-    if [[ -z "$IDFILE" ]]; then
-        >&2 echo "Error: Filename needs to be specified"
+    if [[ -f "$IDFILE" ]]; then
+        >&2 echo "Error: Filename needs to be specified and file needs to exist"
         usage 2
     fi
 }
@@ -76,6 +76,8 @@ EOF
 }
 
 
+: ${IDFILE:=$(readlink -f $1)}
+
 pushd ${BASH_SOURCE%/*} > /dev/null
 if [[ ! -s ../config/summarise.conf ]]; then
     echo "summarise.conf is missing" >&2
@@ -90,7 +92,6 @@ mkdir -p $TRANSFORMEDDIR
 log "Creating directory $STALLEDDIR if necessary"
 mkdir -p $STALLEDDIR
 
-: ${IDFILE:=$1}
 
 check_parameters
 cleanup_log
