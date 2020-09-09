@@ -6,7 +6,7 @@
 #
 
 check_parameters() {
-    if [[ -f "$IDFILE" ]]; then
+    if [[ ! -f "$IDFILE" ]]; then
         >&2 echo "Error: Filename needs to be specified and file needs to exist"
         usage 2
     fi
