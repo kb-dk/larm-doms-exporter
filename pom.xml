@@ -4,7 +4,7 @@
     <parent>
         <groupId>dk.statsbiblioteket.sbprojects</groupId>
         <artifactId>sbprojects-parent</artifactId>
-        <version>23</version>
+        <version>32</version>
     </parent>
     <groupId>larm-doms-exporter</groupId>
     <artifactId>larm-doms-exporter</artifactId>
