@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Does the actual xml export.
@@ -131,7 +132,7 @@ public class DoExportProcessor extends ProcessorChainElement {
         logger.info("Writing new export file " + outputFile.getAbsolutePath());
         try {
             FileOutputStream os = new FileOutputStream(tempOutputFile);
-            os.write(result.getBytes("utf-8"));
+            os.write(result.getBytes(StandardCharsets.UTF_8.name()));
             os.flush();
             os.close();
             context.incrementNumExports();
