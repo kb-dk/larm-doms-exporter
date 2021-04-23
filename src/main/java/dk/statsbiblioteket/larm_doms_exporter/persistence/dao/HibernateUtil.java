@@ -3,7 +3,7 @@ package dk.statsbiblioteket.larm_doms_exporter.persistence.dao;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
 
 import java.io.File;
 
@@ -31,7 +31,7 @@ public class HibernateUtil implements HibernateUtilIF {
         if (instance == null) {
             instance = new HibernateUtil();
             File file = new File(configFilePath);
-            AnnotationConfiguration configure = (new AnnotationConfiguration()).configure(file);
+            Configuration configure = (new Configuration()).configure(file);
             configure.addAnnotatedClass(DomsExportRecord.class);
             factory = configure.buildSessionFactory();
         }

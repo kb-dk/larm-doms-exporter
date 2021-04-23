@@ -4,15 +4,15 @@ import dk.statsbiblioteket.doms.central.InvalidCredentialsException;
 import dk.statsbiblioteket.doms.central.MethodFailedException;
 import dk.statsbiblioteket.larm_doms_exporter.cli.OptionParseException;
 import dk.statsbiblioteket.larm_doms_exporter.cli.UsageException;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
 
 public class ProducerApplicationTest {
 
-    @Ignore
+    @Disabled
     @Test
     public void testMain() throws OptionParseException, IOException, UsageException, InvalidCredentialsException, MethodFailedException {
         String hibernateConfigFile = new File("src/test/config/hibernate.in-memory_unittest.cfg.xml").getAbsolutePath();

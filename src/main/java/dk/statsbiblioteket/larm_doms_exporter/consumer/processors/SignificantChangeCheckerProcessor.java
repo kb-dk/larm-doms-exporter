@@ -9,10 +9,12 @@ import dk.statsbiblioteket.larm_doms_exporter.consumer.ProcessorException;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.DomsExportRecord;
 import dk.statsbiblioteket.larm_doms_exporter.persistence.ExportStateEnum;
 import dk.statsbiblioteket.larm_doms_exporter.util.CentralWebserviceFactory;
-import org.custommonkey.xmlunit.Diff;
-import org.custommonkey.xmlunit.XMLUnit;
+
+import org.xmlunit.diff.Diff;
+import org.xmlunit.builder.DiffBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -23,6 +25,7 @@ import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * For a previously-exported program, compare the two versions of the DOMS metadata and check whether the
@@ -68,10 +71,14 @@ public class SignificantChangeCheckerProcessor extends ProcessorChainElement {
             throw new ProcessorException("Failed to extract the LDE structure from the object bundle for pid " +  record.getID(), e);
         }
 
-        XMLUnit.setIgnoreWhitespace(true);
         try {
-            Diff smallDiff = new Diff(oldStructure, newStructure);
-            if (smallDiff.similar()) {
+            Diff smallDiff = DiffBuilder
+                    .compare(oldStructure)
+                    .withTest(newStructure)
+                    .checkForSimilar()
+                    .ignoreWhitespace()
+                    .build();
+            if (!smallDiff.hasDifferences()) {
                 return false;
             }
         } catch (Exception e) {
@@ -118,7 +125,7 @@ public class SignificantChangeCheckerProcessor extends ProcessorChainElement {
     }
 
     String getTimeString(long timestamp) {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss:SSS'Z'");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss:SSS'Z'", Locale.ROOT);
         return format.format(new Date(timestamp));
     }
 

@@ -5,14 +5,14 @@ import java.io.FileNotFoundException;
 import java.nio.file.*;
 import java.nio.file.attribute.FileAttribute;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import dk.statsbiblioteket.larm_doms_exporter.cli.ExportContext;
 import org.xml.sax.SAXParseException;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 
 /**
  *
@@ -46,14 +46,14 @@ public class ChannelMapperTest {
             try {
                 Files.createFile(moveA);
                 if (!ChannelMapper.ensureConfigurationFileExist(cfgPath)) {
-                    assertFalse("File does not exist", true);
+                    assertFalse(true, "File does not exist");
                 }
                 File chaosChannelMappingConfigFile =
                         new File(context.getClass().getClassLoader().getResource(chaosChannelMappingConfigFilename).toURI());
                 context.setChaosChannelMappingConfigFile(chaosChannelMappingConfigFile);
             }
             catch (NullPointerException ex) {
-                assertFalse("File does not exist", true);
+                assertFalse(true,"File does not exist");
                 return;
             }
 
@@ -62,10 +62,10 @@ public class ChannelMapperTest {
                 assertEquals("Ukendt", channelMapper.getChaosChannel(ch1));
             }
             catch (SAXParseException ex) {
-                assertFalse("Config file could not be parsed", true);
+                assertFalse(true, "Config file could not be parsed");
             }
             catch (FileNotFoundException fnfEx) {
-                assertFalse("Cannot decode empty configuration file", false);
+                assertFalse(false, "Cannot decode empty configuration file");
             }
         }
         finally {
@@ -87,7 +87,7 @@ public class ChannelMapperTest {
             Files.move(moveA, moveB, StandardCopyOption.REPLACE_EXISTING);
             try {
                 if (!ChannelMapper.ensureConfigurationFileExist(cfgPath)) {
-                    assertFalse("File does not exist", true);
+                    assertFalse(true, "File does not exist");
                     return;
                 }
                 File chaosChannelMappingConfigFile =
@@ -95,11 +95,11 @@ public class ChannelMapperTest {
                 context.setChaosChannelMappingConfigFile(chaosChannelMappingConfigFile);
             }
             catch (NullPointerException ex) {
-                assertFalse("File does not exist", false);
+                assertFalse(false, "File does not exist");
                 return;
             }
             catch (FileNotFoundException fnfEx) {
-                assertFalse("File does not exist", false);
+                assertFalse(false, "File does not exist");
                 return;
             }
             ChannelMapper channelMapper = ChannelMapper.getChannelMapper(context);

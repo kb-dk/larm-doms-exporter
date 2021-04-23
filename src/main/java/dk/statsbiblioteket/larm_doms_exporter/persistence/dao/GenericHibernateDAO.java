@@ -3,6 +3,7 @@ package dk.statsbiblioteket.larm_doms_exporter.persistence.dao;
 import org.hibernate.Session;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 
 public class GenericHibernateDAO<T extends Identifiable<PK>, PK extends Serializable> implements GenericDAO<T, PK> {
 
@@ -45,14 +46,13 @@ public class GenericHibernateDAO<T extends Identifiable<PK>, PK extends Serializ
         T result =  (T) sess.get(type, id);
         if (result == null){
             try {
-                result = type.newInstance();
+                result = type.getDeclaredConstructor().newInstance();
                 result.setID(id);
                 sess.save(result);
-            } catch (InstantiationException e) {
-                throw new RuntimeException("Failed to create new hibernate entry",e);
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException  | NoSuchMethodException | IllegalArgumentException e) {
                 throw new RuntimeException("Failed to create new hibernate entry",e);
             }
+
         }
         sess.getTransaction().commit();
         sess.close();

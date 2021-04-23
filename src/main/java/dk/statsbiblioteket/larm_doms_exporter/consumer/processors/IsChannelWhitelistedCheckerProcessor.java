@@ -17,8 +17,10 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -42,7 +44,7 @@ public class IsChannelWhitelistedCheckerProcessor extends ProcessorChainElement 
         try {
             channelName = getChannelName(state);
         } catch (Exception e) {
-            String warning = String.format("Failed to get channel name from record metadata. Record %s is rejected", record.getID());
+            String warning = String.format(Locale.ROOT,"Failed to get channel name from record metadata. Record %s is rejected", record.getID());
             System.out.println(warning);
             logger.warn(warning, e);
             rejectRecord(record, context);
@@ -51,7 +53,7 @@ public class IsChannelWhitelistedCheckerProcessor extends ProcessorChainElement 
             rejectRecord(record, context);
         }
         else if(!whitelistedChannels.contains("\"" + channelName + "\"")){
-            String warning = String.format("Channel %s is not known. Record %s is rejected. Go to the following page for instructions: %s",
+            String warning = String.format(Locale.ROOT, "Channel %s is not known. Record %s is rejected. Go to the following page for instructions: %s",
                     channelName, record.getID(), context.getUnknownChannelPage());
             System.out.println(warning);
             logger.warn(warning);
@@ -78,7 +80,7 @@ public class IsChannelWhitelistedCheckerProcessor extends ProcessorChainElement 
 
     private static List<String> readFileToList(File file) throws ProcessorException {
         List<String> result = new ArrayList<>();
-        try(Scanner scanner = new Scanner(file)){
+        try(Scanner scanner = new Scanner(file, StandardCharsets.UTF_8.displayName(Locale.ROOT))){
             while (scanner.hasNextLine()) {
                 final String line = scanner.nextLine();
                 result.add(line);
